@@ -4,12 +4,12 @@
 
 using ::testing::AtLeast;
 
-/*
+
 TEST (SquareRootTest, PositiveNos) {
     EXPECT_EQ (18.0, 18);
     EXPECT_EQ (25.4, 111);
 }
-*/
+
 TEST (LCDTest, PositiveNos) {
     LCD oLCD;
 

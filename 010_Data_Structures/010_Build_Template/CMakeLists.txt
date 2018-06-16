@@ -13,12 +13,15 @@ LINK_DIRECTORIES("C:/Program Files/googletest/build/googlemock")
 
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/020_build)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-add_executable(${EXE_NAME} 010_src/unittest.cpp
-                     src/*.hpp
-                     src/*.cpp)
+file(GLOB project_SRC
+    "src/*.h"
+    "src/*.cpp"
+)
 
-TARGET_LINK_LIBRARIES(EXE_NAME gtest gmock)
+add_executable(${EXE_NAME} ${project_SRC})
+
+TARGET_LINK_LIBRARIES(${EXE_NAME} gtest gmock)
 
 install(TARGETS ${EXE_NAME} DESTINATION ./bin)
