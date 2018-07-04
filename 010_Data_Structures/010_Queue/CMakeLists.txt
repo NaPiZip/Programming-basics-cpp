@@ -5,12 +5,9 @@ set(EXE_NAME "myapp")
 
 project(${PROJECT_NAME})
 
-INCLUDE_DIRECTORIES("C:/Program Files/googletest/googletest/include")
-INCLUDE_DIRECTORIES("C:/Program Files/googletest/googlemock/include")
 
-LINK_DIRECTORIES("C:/Program Files/googletest/build/googlemock/gtest")
-LINK_DIRECTORIES("C:/Program Files/googletest/build/googlemock")
-
+INCLUDE_DIRECTORIES("C:/Program Files (x86)/googletest-distribution/include")
+LINK_DIRECTORIES("C:/Program Files (x86)/googletest-distribution/lib")
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
