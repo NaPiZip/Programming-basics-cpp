@@ -14,7 +14,7 @@
 </div>
 
 ## Introduction
-This repo contains a collection of code sample which use fundamental technics, algorithm and data structures. I created this repo in order to refresh my knowledge on those elements.
+This repository contains a collection of code sample which use fundamental technics, algorithm and data structures. I created this repo in order to refresh my knowledge on those elements.
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
