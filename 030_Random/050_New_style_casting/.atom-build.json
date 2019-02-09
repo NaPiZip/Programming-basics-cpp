@@ -1,0 +1,5 @@
+{
+  "cmd": "make.exe && Runner.exe",
+  "name": "Makefile",
+  "cwd": "{PROJECT_PATH}\\build"
+}

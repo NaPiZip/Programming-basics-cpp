@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(PROJECT_NAME "Template")
-set(EXE_NAME "myapp")
+set(PROJECT_NAME "Chapter_01")
+set(EXE_NAME "Runner")
 
-project(${PROJECT_NAME})
-
+project(${PROJECT_NAME} LANGUAGES CXX)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic-errors")
 
 INCLUDE_DIRECTORIES("C:/Program Files (x86)/googletest-distribution/include")
 LINK_DIRECTORIES("C:/Program Files (x86)/googletest-distribution/lib")
@@ -18,7 +18,4 @@ file(GLOB project_SRC
 )
 
 add_executable(${EXE_NAME} ${project_SRC})
-
-TARGET_LINK_LIBRARIES(${EXE_NAME} gtest gmock)
-
-install(TARGETS ${EXE_NAME} DESTINATION ./bin)
+target_link_libraries(${EXE_NAME} gtest gmock)
