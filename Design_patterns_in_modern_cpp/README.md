@@ -1,4 +1,4 @@
-<img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.UpYpMIfsXsORJXAR4do7KgAAAA%26pid%3DApi&f=1" alt="GitHub logo" height="62px" width="42px" align="left"><br>
+<img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.UpYpMIfsXsORJXAR4do7KgAAAA%26pid%3DApi&f=1" alt="GitHub logo" height="62px" width="42px" align="left"><br><br>
 
 # Design Patterns in Modern C++
 <div>
