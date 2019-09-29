@@ -19,6 +19,27 @@
 ## Introduction
 This repository contains my notes and source files of the book `Design Patterns in Modern C++` by Dmitri Nesteruk. I created this repository in order to have a centralized space for my code. My notes are not complete by any means, they only consist of content which I thought is helpful.
 
+## Tipps
+<b>How to add `cpplint` to Visual Studio</b>
+1. Install the [tool](https://github.com/google/styleguide):
+```
+$ python -m pip install cpplint
+```
+2. Add external tools to Visual Studio:
+  ```
+  Tools - External tools - Add - Title：cpplint
+  command：cpplint -–output=vs7 $(ItemPath)
+  Initial Directory：$(ItemDir)
+  Use Output Window: checked
+  ```
+3. Add shortcut:
+  ```
+  Tools - Options - Environment - Keyboard
+  Show commands containing：external
+  Tools.ExternalCommand1
+  Press shortcut keys
+  ```
+
 ## Chapter 1: Introduction
 The introduction contains a lot of compressed knowledge which at some point get described in detail in section 9, hence I am not covering those elements, only if I think it makes sense. Nevertheless the SOLID Design Principles is interesting and Important.
 
