@@ -1,10 +1,24 @@
+// Copyright 2019, Nawin
 #include "Workspace.h"
+
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+using ::testing::StartsWith;
+using std::string_literals::operator""s;
+
 
 namespace {
 
-  TEST(AddTest, Positive) {
-    
-    EXPECT_EQ(2+3, Add(2,3));
+  TEST(BasicTest, Positive) {
+    EXPECT_EQ(2+3, 5);
   }
-}//namespace
+
+  TEST(JournalInit, Positive) {
+    Journal obj("asdas"s);
+
+    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));
+    
+  }
+
+}  // namespace
