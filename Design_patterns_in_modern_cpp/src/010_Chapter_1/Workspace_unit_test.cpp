@@ -14,11 +14,20 @@ namespace {
     EXPECT_EQ(2+3, 5);
   }
 
-  TEST(JournalInit, Positive) {
+  TEST(JournalConstructor, Positive) {
     Journal obj("asdas"s);
 
-    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));
-    
+    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));    
+  }
+
+  TEST(JournalAdd, Positive) {
+    Journal obj("asdas"s);
+
+    obj.AddLine("Something");
+    EXPECT_THAT(obj.GetLastLine(), StartsWith("0: "));
+
+    obj.AddLine("Something else");
+    EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
   }
 
 }  // namespace

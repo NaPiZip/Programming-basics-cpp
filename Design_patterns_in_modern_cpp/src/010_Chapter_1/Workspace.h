@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 
+
 /* 
   Single Responsibility Principle (SRP)
 */
@@ -15,6 +16,13 @@ class Journal {
  public:
   explicit Journal(const std::string& title) : title_(title) {}
   const std::string& GetTitle() const { return title_; }
+  void AddLine(const std::string& entry);
+  std::string GetLastLine(void);
+
+};
+
+class PersistenceManager {
+  static void save(const Journal& j, const std::string& filename);
 };
 
 #endif  // _HEADER_WORKSPACE
