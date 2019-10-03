@@ -34,6 +34,22 @@ vector<int> v {1,2,3,4,5,6};     // a vector of ints
 ```
 This helps to prevent implicit conversation.
 
+<b>Constexpr:</b>
+`constexpr` is as a guarantee that the function will be computable at compile-time, which opens a lot of possibilities to outsource tasks to the compiler.
+```
+constexpr double square(double x) { return x*x; }
+
+constexpr double max1 = 1.4*square(17);       // OK 1.4*square(17) is a constant expression
+constexpr double max2 = 1.4*square(var);      // error: var is not a constant expression
+const double max3 = 1.4*square(var);          // OK, may be evaluated at run time
+```
+A `constexpr` function is not allowed to have side effects!
+
+<b>Pointers and stuff</b>
+When we don’t want to modify an argument but still don’t want the cost of copying, we use a `const` reference to it.
+```
+double sum(const vector<double>&)
+```
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
