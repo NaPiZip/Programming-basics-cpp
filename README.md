@@ -14,7 +14,7 @@
 </div>
 
 ## Introduction
-This repository contains a collection C++ study material I used. Containing of code samples which use fundamental technics, algorithm and data structures. I created this repo in order to have a centralized place to track my development process.
+This repository contains a collection C++ study material I used. Consisting of code samples which showing fundamental technics, algorithm and data structures. I created this repo in order to have a centralized place to track my development process.
 
 ## Awesome Resources to improve your C++ Skills
 Here is a list of great references to improve your understanding of C++, containing of blogposts, article or books or just good interactive tools:
