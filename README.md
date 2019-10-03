@@ -14,7 +14,25 @@
 </div>
 
 ## Introduction
-This repository contains a collection of code sample which use fundamental technics, algorithm and data structures. I created this repo in order to refresh my knowledge on those elements.
+This repository contains a collection C++ study material I used. Containing of code samples which use fundamental technics, algorithm and data structures. I created this repo in order to have a centralized place to track my development process.
+
+## Awesome Resources to improve your C++ Skills
+Here is a list of great references to improve your understanding of C++, containing of blogposts, article or books or just good interactive tools:
+
+<b>Blogposts, article and books</b>
+- [Fluentcpp](https://www.fluentcpp.com/) by Jonathan Boccara
+A nice collection of high quality C++ articles which are tutorial based.
+- [ISo Cpp](https://isocpp.org/)
+A website which shows neewsfeeds around C++.
+- [C++ reference](http://www.cplusplus.com/reference/)
+A reference for information's about the C++ standard library
+
+<b>Tools</b>
+- [Compiler Explorer](https://godbolt.org/) by Matt Godbolt
+A nice tool for inspecting assembly for multiple compilers.
+- [Cpp Insights](https://cppinsights.io/) by Andreas Fertig
+A good tool to see how the compiler does a source to source transformation.
+
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
