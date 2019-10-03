@@ -1,4 +1,4 @@
-set(EXE_NAME "010_Chapter_02")
+set(EXE_NAME "020_Chapter_02")
 
 set(CMAKE_CXX_STANDARD 17)
 
