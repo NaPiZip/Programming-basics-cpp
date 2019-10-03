@@ -7,10 +7,7 @@
     </a>
     <a href="https://www.microsoft.com">
         <img src="https://img.shields.io/badge/Windows%2010%20x64-10.0.17134%20Build%2017134-blue.svg"/>
-    </a>
-    <a href="https://cmake.org/">
-        <img src="https://img.shields.io/badge/CMake%20Version-3.12.0--rc2-blue.svg"/>
-    </a>
+    </a>  
 </div>
 
 ## Introduction
