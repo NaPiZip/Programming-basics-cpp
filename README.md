@@ -17,17 +17,17 @@ This repository contains a collection C++ study material I used. Consisting of c
 Here is a list of great references to improve your understanding of C++, containing of blogposts, article or books or just good interactive tools:
 
 <b>Blogposts, article and books</b>
-- [Fluentcpp](https://www.fluentcpp.com/) by Jonathan Boccara
+- [Fluentcpp](https://www.fluentcpp.com/) by Jonathan Boccara<br>
 A nice collection of high quality C++ articles which are tutorial based.
-- [ISo Cpp](https://isocpp.org/)
+- [ISo Cpp](https://isocpp.org/)<br>
 A website which shows newsfeeds around C++.
-- [C++ reference](http://www.cplusplus.com/reference/)
+- [C++ reference](http://www.cplusplus.com/reference/)<br>
 A reference for information's about the C++ standard library
 
 <b>Tools</b>
-- [Compiler Explorer](https://godbolt.org/) by Matt Godbolt
+- [Compiler Explorer](https://godbolt.org/) by Matt Godbolt<br>
 A nice tool for inspecting assembly for multiple compilers.
-- [Cpp Insights](https://cppinsights.io/) by Andreas Fertig
+- [Cpp Insights](https://cppinsights.io/) by Andreas Fertig<br>
 A good tool to see how the compiler does a source to source transformation.
 
 
