@@ -23,7 +23,7 @@ Here is a list of great references to improve your understanding of C++, contain
 - [Fluentcpp](https://www.fluentcpp.com/) by Jonathan Boccara
 A nice collection of high quality C++ articles which are tutorial based.
 - [ISo Cpp](https://isocpp.org/)
-A website which shows neewsfeeds around C++.
+A website which shows newsfeeds around C++.
 - [C++ reference](http://www.cplusplus.com/reference/)
 A reference for information's about the C++ standard library
 
