@@ -12,13 +12,18 @@
 */
 class Journal {
     std::string title_;
-    std::vector<std::string> notes_;
+    std::vector<std::string> notes_;    
  public:
   explicit Journal(const std::string& title) : title_(title) {}
   const std::string& GetTitle() const { return title_; }
   void AddLine(const std::string& entry);
   std::string GetLastLine(void);
 
+  // iterators
+  using iterator = std::vector<std::string>::iterator;
+  iterator begin();
+  iterator end();
+  size_t size();
 };
 
 class PersistenceManager {
