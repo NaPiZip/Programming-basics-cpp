@@ -3,31 +3,59 @@
 #ifndef _HEADER_WORKSPACE
 #define _HEADER_WORKSPACE
 
-#include <vector>
 #include <string>
+#include <variant>
 
+namespace section_2_2 {
 
-/* 
-  Single Responsibility Principle (SRP)
-*/
-class Journal {
-    std::string title_;
-    std::vector<std::string> notes_;    
+struct Vector {
+  int sz = 0;
+  double* element = nullptr;
+};
+
+void VectorInit(Vector& v, int s);
+
+double ReadAndSum(int s);
+}  // namespace section_2_2
+
+namespace section_2_3 {
+
+class Vector {
  public:
-  explicit Journal(const std::string& title) : title_(title) {}
-  const std::string& GetTitle() const { return title_; }
-  void AddLine(const std::string& entry);
-  std::string GetLastLine(void);
-
-  // iterators
-  using iterator = std::vector<std::string>::iterator;
-  iterator begin();
-  iterator end();
-  size_t size();
+  explicit Vector(int s) :element{ new double[s] }, sz{ s } { }
+  double& operator[](int i) { return element[i]; }
+  int size() { return sz; }
+ private:
+  int sz;
+  double* element;
 };
 
-class PersistenceManager {
-  static void save(const Journal& j, const std::string& filename);
+}  // namespace section_2_3
+
+namespace section_2_4 {
+
+enum Type { ptr, num };
+
+struct Node {
+  double x;
 };
+
+union Value {
+  Node* p;
+    int i;
+};
+
+struct Entry {
+  std::string name;
+  Type t;
+  Value v;  // use v.p if t==ptr; use v.i if t==num
+};
+
+struct EntryVariant {
+  std::string name;
+  std::variant < Node*, int > v;
+};
+
+}  // namespace section_2_4
 
 #endif  // _HEADER_WORKSPACE

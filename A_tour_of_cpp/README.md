@@ -19,10 +19,10 @@
 ## Introduction
 This repository contains brief notes and source files of the book `A Tour of C++` by Bjarne Stroustrup. I created this repository in order to have a centralized space for my code. My notes are not complete by any means, they only consist of content which I thought is helpful.
 
-## Chapter 1: Introduction
+## Chapter 1: The Basics
 The introduction pretty much just contains of basics about types, arithmetic, lifetime and a lot more. Here are some elements worth highlighting.
 
-<b>Initialization:</b>
+<b>Initialization</b>
 The preferred way for initialization is to use the curly braces as seen below:
 ```
 int i1 = 7.8;        // i1 becomes 7 (surprise?)
@@ -34,7 +34,7 @@ vector<int> v {1,2,3,4,5,6};     // a vector of ints
 ```
 This helps to prevent implicit conversation.
 
-<b>Constexpr:</b>
+<b>Constexpr</b>
 `constexpr` is as a guarantee that the function will be computable at compile-time, which opens a lot of possibilities to outsource tasks to the compiler.
 ```
 constexpr double square(double x) { return x*x; }
@@ -49,6 +49,27 @@ A `constexpr` function is not allowed to have side effects!
 When we don’t want to modify an argument but still don’t want the cost of copying, we use a `const` reference to it.
 ```
 double sum(const vector<double>&)
+```
+## Chapter 2: User-Defined Types
+This section contains of typical user defined types such as structures, classes, unions and enums.
+
+<b>Variant</b>
+A variant is basically a type save union.
+```
+#include <variant>
+#include <iostream>
+
+auto main() ->int {
+  std::variant<int, float> v {3};
+
+  if(std::holds_alternative<int>(v)) {
+    std::cout << "Variant is int: " << std::get<int>(v) << "\n";
+  }else if (std::holds_alternative<float>(v)) {
+    std::cout << "Variant is float: " << std::get<float>(v) << "\n";
+  } else {
+    std::cout << "Opps something went wrong" << "\n";
+  }
+}
 ```
 
 ## Contributing

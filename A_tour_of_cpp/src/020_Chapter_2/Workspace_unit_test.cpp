@@ -4,60 +4,51 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-using ::testing::StartsWith;
-using ::testing::HasSubstr;
-
-using std::string_literals::operator""s;
-
 
 namespace {
 
+  using ::testing::Ne;
+  using std::string_literals::operator""s;
+
   TEST(BasicTest, Positive) {
-    EXPECT_EQ(2+3, 5);
+    EXPECT_THAT(2+3, 5);
   }
 
-  TEST(JournalConstructor, Positive) {
-    Journal obj("asdas"s);
-
-    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));    
+  TEST(StructVectorInitTest, Positive) {
+    EXPECT_THAT(section_2_2::ReadAndSum(2), Ne(0));
   }
 
-  TEST(JournalAdd, Positive) {
-    Journal obj("asdas"s);
-
-    obj.AddLine("Something");
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("0: "));
-
-    obj.AddLine("Something else");
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
+  TEST(ClassVectorInitTest, Positive) {
+    section_2_3::Vector v{ 4 };
+    EXPECT_THAT(v.size(), 4);
+    EXPECT_THAT(v[0], Ne(0));
   }
 
-  TEST(JournalSize, Positive) {
-    Journal obj("asdas"s);
+  TEST(UnionsAndVriants, Positive) {
+    section_2_4::Entry a;
 
-    obj.AddLine("Something");
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("0: "));
+    // Configuring our type
+    a.name = "Number"s;
+    a.t = section_2_4::Type::num;
+    a.v.i = 5;
 
-    obj.AddLine("Something else");
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
+    section_2_4::EntryVariant b;
+    b.name = "Number"s;
+    b.v = 5;
 
-    EXPECT_THAT(obj.size(), 2);
+    EXPECT_THAT(std::holds_alternative<int>(b.v), true);
+    EXPECT_THAT(std::get<int>(b.v), 5);
   }
 
+  TEST(YestANotherVariant, Positive) {
+    std::variant<int, float> v{ 3 };
 
-  TEST(JournalIterators, Positive) {
-    std::vector<std::string> string_list = { "Something", "Something else" };
-
-    Journal obj("asdas"s);
-
-    obj.AddLine(string_list[0]);
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("0: "));
-    obj.AddLine(string_list[1]);
-    EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
-
-    for (auto it(obj.begin()); it != obj.end(); ++it)
-    {
-      EXPECT_THAT(*it, HasSubstr(string_list[std::distance(obj.begin(), it)]));
+    if (std::holds_alternative<int>(v)) {
+      std::cout << "Variant is int: " << std::get<int>(v) << "\n";
+    } else if (std::holds_alternative<float>(v)) {
+      std::cout << "Variant is float: " << std::get<float>(v) << "\n";
+    } else {
+      std::cout << "Opps something went wrong!\n";
     }
   }
 
