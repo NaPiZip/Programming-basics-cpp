@@ -14,9 +14,9 @@
 This repository contains a collection C++ study material I used. Consisting of code samples which showing fundamental technics, algorithm and data structures. I created this repo in order to have a centralized place to track my development process.
 
 ## Awesome Resources to improve your C++ Skills
-Here is a list of great references to improve your understanding of C++, containing of blogposts, article or books or just good interactive tools:
+Here is a list of great references to improve your understanding of C++, containing of blog posts, article or books or just good interactive tools:
 
-<b>Blogposts, article and books</b>
+<b>Blog posts, article and books</b>
 - [Fluentcpp](https://www.fluentcpp.com/) by Jonathan Boccara<br>
 A nice collection of high quality C++ articles which are tutorial based.
 - [ISo Cpp](https://isocpp.org/)<br>
