@@ -73,7 +73,53 @@ auto main() ->int {
 ```
 
 ## Chapter 3: Modularity
+Covers the separation of declaration and implementation into translation units. `C++20` takes the concept further by introducing modules. The language feature, called modules is not yet ISO C++, but it is an ISO Technical Specification [ModulesTS]. The section also covers exception handling as well as invariants.
 
+<b>Exception handling</b>
+An exception is a problem that arises during the execution of a program. A C++ exception is a response to an exceptional circumstance that arises while a program is running,  the issue should be recoverable otherwise we cannot continue the operation of our program. A pretty straight forward example can be seen here:
+
+```
+void test()
+{
+     try{
+          Vector v(−27);
+     }
+     catch (std::length_error&) {   // do something and rethrow
+          cerr << "test failed: length error\n";
+          throw;   // rethrow
+     }
+     catch (std::bad_alloc&) {      // Ouch! this program is not designed to handle memory exhaustion
+          std::terminate();   // terminate the program
+     }
+}
+```
+
+<b>Structured binding </b>
+Like a reference, a structured binding is an alias to an existing object. Unlike a reference, the type of a structured binding does not have to be a reference type.
+
+```
+...
+std::unordered_map<std::string, float> hash_map;
+    hash_map.emplace("Nawin", 12.3f);
+    hash_map.emplace("Belen", 23.4f);
+
+    for (auto [name, money] : hash_map) {
+      std::cout << name << ' ' << money << "$\n";
+    }
+...
+
+$ struct_binding.exe
+Nawin 12.3$
+Belen 23.4$
+```
+
+## Tipps
+
+## Topics to dive in deeper
+Here is a list of topics I would investigate a bit more in detail:
+- Error handling architectures
+- Contracts
+- Modules
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

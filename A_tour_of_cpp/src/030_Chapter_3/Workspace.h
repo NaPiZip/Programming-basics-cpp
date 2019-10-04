@@ -3,59 +3,23 @@
 #ifndef _HEADER_WORKSPACE
 #define _HEADER_WORKSPACE
 
-#include <string>
-#include <variant>
+namespace my_code {
 
-namespace section_2_2 {
-
-struct Vector {
-  int sz = 0;
-  double* element = nullptr;
-};
-
-void VectorInit(Vector& v, int s);
-
-double ReadAndSum(int s);
-}  // namespace section_2_2
-
-namespace section_2_3 {
-
-class Vector {
+class Complex {
+  int real_,
+    imag_;
  public:
-  explicit Vector(int s) :element{ new double[s] }, sz{ s } { }
-  double& operator[](int i) { return element[i]; }
-  int size() { return sz; }
- private:
-  int sz;
-  double* element;
+  Complex(int re, int im) : real_{ re }, imag_{ im } {}
+  int real() const;
+  int imag() const;
+  bool friend operator==(const Complex& lhs, const Complex &rhs);
 };
 
-}  // namespace section_2_3
+bool operator==(const Complex& lhs, const Complex& rhs);
 
-namespace section_2_4 {
+Complex sqrt(const Complex& number);
+int main();
 
-enum Type { ptr, num };
-
-struct Node {
-  double x;
-};
-
-union Value {
-  Node* p;
-    int i;
-};
-
-struct Entry {
-  std::string name;
-  Type t;
-  Value v;  // use v.p if t==ptr; use v.i if t==num
-};
-
-struct EntryVariant {
-  std::string name;
-  std::variant < Node*, int > v;
-};
-
-}  // namespace section_2_4
+}  //  namespace my_code
 
 #endif  // _HEADER_WORKSPACE
