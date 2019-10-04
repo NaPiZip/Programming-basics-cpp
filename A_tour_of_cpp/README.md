@@ -22,7 +22,7 @@ This repository contains brief notes and source files of the book `A Tour of C++
 ## Chapter 1: The Basics
 The introduction pretty much just contains of basics about types, arithmetic, lifetime and a lot more. Here are some elements worth highlighting.
 
-<b>Initialization</b>
+<b>Initialization</b><br>
 The preferred way for initialization is to use the curly braces as seen below:
 ```
 int i1 = 7.8;        // i1 becomes 7 (surprise?)
@@ -34,7 +34,7 @@ vector<int> v {1,2,3,4,5,6};     // a vector of ints
 ```
 This helps to prevent implicit conversation.
 
-<b>Constexpr</b>
+<b>Constexpr</b><br>
 `constexpr` is as a guarantee that the function will be computable at compile-time, which opens a lot of possibilities to outsource tasks to the compiler.
 ```
 constexpr double square(double x) { return x*x; }
@@ -45,7 +45,7 @@ const double max3 = 1.4*square(var);          // OK, may be evaluated at run tim
 ```
 A `constexpr` function is not allowed to have side effects!
 
-<b>Pointers and stuff</b>
+<b>Pointers and stuff</b><br>
 When we don’t want to modify an argument but still don’t want the cost of copying, we use a `const` reference to it.
 ```
 double sum(const vector<double>&)
@@ -53,7 +53,7 @@ double sum(const vector<double>&)
 ## Chapter 2: User-Defined Types
 This section contains of typical user defined types such as structures, classes, unions and enums.
 
-<b>Variant</b>
+<b>Variant</b><br>
 A variant is basically a type save union.
 ```
 #include <variant>
@@ -75,7 +75,7 @@ auto main() ->int {
 ## Chapter 3: Modularity
 Covers the separation of declaration and implementation into translation units. `C++20` takes the concept further by introducing modules. The language feature, called modules is not yet ISO C++, but it is an ISO Technical Specification [ModulesTS]. The section also covers exception handling as well as invariants.
 
-<b>Exception handling</b>
+<b>Exception handling</b><br>
 An exception is a problem that arises during the execution of a program. A C++ exception is a response to an exceptional circumstance that arises while a program is running,  the issue should be recoverable otherwise we cannot continue the operation of our program. A pretty straight forward example can be seen here:
 
 ```
@@ -94,7 +94,7 @@ void test()
 }
 ```
 
-<b>Structured binding </b>
+<b>Structured binding </b><br>
 Like a reference, a structured binding is an alias to an existing object. Unlike a reference, the type of a structured binding does not have to be a reference type.
 
 ```
