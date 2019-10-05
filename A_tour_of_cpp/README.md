@@ -113,13 +113,64 @@ Nawin 12.3$
 Belen 23.4$
 ```
 
-## Tipps
+## Chapter 4: Classes
+A class is a user-defined type provided to represent a concept in the code of a program. This section covers mainly tree parts:<br>
+- Concrete classes
+- Abstract classes
+- Class hierarchies
 
-## Topics to dive in deeper
+<b>Concrete classes</b><br>
+The idea of concrete classes is to mimic the behavior of built-in types, code can be found under `src/040_Chapter_4`, since this is pretty straight forward so far.
+
+<b>Abstract classes</b><br>
+"Abstract classes act as expressions of general concepts from which more specific classes can be derived. You cannot create an object of an abstract class type; however, you can use pointers and references to abstract class types", link can be found [here](https://docs.microsoft.com/en-us/cpp/cpp/abstract-classes-cpp?view=vs-2019).
+
+```
+class Container {
+ public:
+  virtual double& operator[](int) = 0;
+  virtual int size() const = 0;
+  virtual ~Container() {}
+};
+```
+
+<b>Class hierarchies</b><br>
+A class hierarchy is a set of classes ordered in a lattice created by derivation (e.g., : public). Benefits:
+- Interface inheritance<br>
+An object of a derived class can be used with the a base class pointer.<br>
+- Implementation inheritance<br>
+A base class provides functions or data that simplifies the implementation of derived classes.
+
+<b>Run-time Type Identification RTTI</b><br>
+RTTI is to provide a standard way for a program to determine the type of object during runtime, and is often used in context with polymorphism.
+
+```
+class Base {virtual void use(){}};
+
+class Derived : public Base { };
+
+int main()
+{
+	Base base;
+	Derived derived;
+
+	Base *pb = dynamic_cast<Base*>(&derived);		  // #1
+	Derived *pd = dynamic_cast<Derived*>(&base); 	// #2 fails
+
+  // check pointer after casting!!
+  if(pd)
+    pd->use();
+
+	return 0;
+}
+```
+
+## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
 - Contracts
 - Modules
+- Analyzing the standard library
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
