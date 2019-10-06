@@ -165,6 +165,8 @@ int main()
 }
 ```
 
+## Chapter 5: Essential Operations
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
