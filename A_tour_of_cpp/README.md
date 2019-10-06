@@ -167,12 +167,71 @@ int main()
 
 ## Chapter 5: Essential Operations
 
+<b>Assignment, copy and initialization</b><br>
+There are multiple ways a user defined type gets created:
+```
+class X {
+public:
+     X(Sometype);            // "ordinary constructor": create an object
+     X();                    // default constructor
+     X(const X&);            // copy constructor
+     X(X&&);                 // move constructor
+     X& operator=(const X&); // copy assignment: clean up target and copy
+     X& operator=(X&&);      // move assignment: clean up target and move
+     ~X();                   // destructor: clean up
+     // ...
+};
+```
+<b>Default operations and deleted ones</b><br>
+The keywords `delete` and `default` in a context of a user defined class can be used in order to prevent operations and or to use default compiler implementations. As a rule of thumb when a class has a pointer member, it is usually a good idea to be explicit about copy and move operations. The reason is that a pointer may point to something that the class needs to delete, in which case the default memberwise copy would be wrong.
+```
+class Shape {
+public:
+     Shape() =default;
+     Shape(const Shape&) =delete;            // no copy operations
+     Shape& operator=(const Shape&) =delete;
+     // ...
+};
+
+void copy(Shape& s1, const Shape& s2)
+{
+     s1 = s2;  // error: Shape copy is deleted
+}
+```
+<b>Copying Containers</b><br>
+The default memberwise copy for a container is typically a disaster, due to the fact that the class is responsible for an object accessed through a pointer. We don't want a shallow copy, but a deep one.
+
+```
+class Vector {
+  //...
+ private:
+  int sz_;
+  double* element_;
+};
+     Vector v2 = v1;    // copy v1's representation into v2     
+     v1[0] = 2;         // v2[0] is now also 2!     
+     v2[1] = 3;         // v1[1] is now also 3!
+```
+Note here the element pointer of v2 just gets set to same address as v1, aka shallow copy.
+
+<b>Moving Containers</b><br>
+"C++11 defines two new functions in service of move semantics: a move constructor, and a move assignment operator. Whereas the goal of the copy constructor and copy assignment is to make a copy of one object to another, the goal of the move constructor and move assignment is to move ownership of the resources from one object to another (which is much less expensive than making a copy)", definition form [here](https://www.learncpp.com/cpp-tutorial/15-3-move-constructors-and-move-assignment/).
+```
+class Vector {     // ...     
+  Vector(const Vector& a);               // copy constructor     
+  Vector& operator=(const Vector& a);    // copy assignment     
+  Vector(Vector&& a);                    // move constructor     
+  Vector& operator=(Vector&& a);         // move assignment};
+```
+A move constructor does not take a const argument: after all, a move constructor is supposed to remove the value from its argument. A move assignment is defined similarly.
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
 - Contracts
 - Modules
 - Analyzing the standard library
+- ROOT a modular scientific software toolkit found [here](https://root.cern.ch//).
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
