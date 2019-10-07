@@ -223,7 +223,10 @@ class Vector {     // ...
   Vector(Vector&& a);                    // move constructor     
   Vector& operator=(Vector&& a);         // move assignment};
 ```
-A move constructor does not take a const argument: after all, a move constructor is supposed to remove the value from its argument. A move assignment is defined similarly.
+A move constructor does not take a `const` argument: after all, a move constructor is supposed to remove the value from its argument. A move assignment is defined similarly.
+
+## Chapter 6: Templates
+A template is a class or a function that we parameterize with a set of types or values.
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
