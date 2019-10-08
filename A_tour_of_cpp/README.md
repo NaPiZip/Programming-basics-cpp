@@ -226,7 +226,7 @@ class Vector {     // ...
 A move constructor does not take a `const` argument: after all, a move constructor is supposed to remove the value from its argument. A move assignment is defined similarly.
 
 ## Chapter 6: Templates
-A template is a class or a function that we parameterize with a set of types or values.
+A template is a class or a function that we parameterize with a set of types or values. A good general FAQ, which explains the bits an parts of templates can be found [here](https://isocpp.org/wiki/faq/templates#template-specialization-piecemeal). An explanation to the question: `Why can’t I separate the definition of my templates class from its declaration and put it inside a .cpp file` can also be found there.
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:

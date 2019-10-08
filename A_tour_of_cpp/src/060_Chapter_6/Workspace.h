@@ -4,28 +4,32 @@
 #define _HEADER_WORKSPACE
 
 #include <initializer_list>
+#include <string>
+#include <iostream>
 
-namespace section_5_2 {
+namespace section_6_2 {
+
+template<typename T>
 class Vector {
+ private:
+  T* element_{ nullptr };
+  int sz_;
  public:
-  Vector() {} 
   explicit Vector(int) {}
-  Vector(const Vector& v);  
-  Vector(std::initializer_list<double> list);
+  Vector(const Vector<T>& v);
+  Vector(std::initializer_list<T> list);
+  ~Vector() { if (element_) delete[] element_; }
 
-  Vector(Vector&& v);
-  Vector& operator=(Vector&& v);
+  T& operator[](int i);
+  const T& operator[](int i) const;
 
-  ~Vector() { if(element_) delete[] element_; }
-
-  double& operator[](int i);
+  T* begin();
+  T* end();
 
   int size() const;
- private:
-   double* element_{nullptr};
-  int sz_;
 };
-Vector returnVector();
-}  // namespace section_5_2
+
+#include "Workspace.hxx"
+}  // namespace section_6_2
 
 #endif  // _HEADER_WORKSPACE

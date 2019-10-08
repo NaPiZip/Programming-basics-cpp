@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB project_SRC
     "*.h"
     "*.hpp"
+    "*.hxx"
     "*.c"
     "*.cpp"
 )

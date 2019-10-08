@@ -8,6 +8,13 @@
 #include <iostream>
 #include <utility>
 
+
+void write(const section_6_2::Vector<std::string>& vs) {
+  for (int i = 0; i != vs.size(); ++i) {
+    std::cout << vs[i] << '\n';
+  }
+}
+
 namespace {
 
   using ::testing::Ne;
@@ -18,15 +25,9 @@ namespace {
     EXPECT_THAT(2+3, 5);
   }
 
-  TEST(ExplicitConversion, Positive) {
-    section_5_2::Vector a(3), c;
-    
-    //section_5_2::Vector b = 3; // Does not work due to explicit
-  }
-
   TEST(DeepCopyConstructor, Positive) {
-    section_5_2::Vector a{1,2,3};
-    section_5_2::Vector b(a);
+    section_6_2::Vector<double> a{1,2,3};
+    section_6_2::Vector<double> b(a);
     b[0] = 2;
 
     EXPECT_THAT(a[0], Ne(b[0]));
@@ -34,15 +35,11 @@ namespace {
   }
 
   TEST(MoveConstructor, Positive) {
-    section_5_2::Vector a{ 1,2,3,4 };
-
-    EXPECT_THAT(a.size(), Eq(4));
-
-    section_5_2::Vector b = std::move(a);
-    EXPECT_THAT(a.size(), Eq(0));
-
-    section_5_2::Vector c = section_5_2::returnVector();
-
+    section_6_2::Vector<std::string> a{ "this is some test"s };
+    write(a);
+        
+    for (auto& i : a)
+      std::cout << i << '\n';
   }
 
   }  // namespace
