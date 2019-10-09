@@ -1,6 +1,6 @@
 set(EXE_NAME "060_Chapter_06")
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB project_SRC
     "*.h"

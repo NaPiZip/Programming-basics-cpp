@@ -233,6 +233,7 @@ Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
 - Contracts
 - Modules
+- Concepts
 - Analyzing the standard library
 - ROOT a modular scientific software toolkit found [here](https://root.cern.ch//).
 

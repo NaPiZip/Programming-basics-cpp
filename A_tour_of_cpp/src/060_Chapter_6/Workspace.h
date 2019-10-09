@@ -7,7 +7,17 @@
 #include <string>
 #include <iostream>
 
+
+
 namespace section_6_2 {
+
+
+template<typename T, int N>
+struct Buffer {
+  using value_type = T;
+  constexpr int size() { return N; }
+  T data_[N];
+};
 
 template<typename T>
 class Vector {
@@ -30,6 +40,15 @@ class Vector {
 };
 
 #include "Workspace.hxx"
+
+template<typename T>
+class Vector2 {
+ public:
+  using value_type = T;
+  Vector2(std::initializer_list<T> list);
+  template<typename Iter>
+  Vector2(Iter b, Iter e);
+};
 }  // namespace section_6_2
 
 #endif  // _HEADER_WORKSPACE
