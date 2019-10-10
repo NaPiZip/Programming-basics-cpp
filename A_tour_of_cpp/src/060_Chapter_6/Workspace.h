@@ -25,7 +25,7 @@ class Vector {
   T* element_{ nullptr };
   int sz_;
  public:
-  explicit Vector(int) {}
+  explicit Vector(int sz);
   Vector(const Vector<T>& v);
   Vector(std::initializer_list<T> list);
   ~Vector() { if (element_) delete[] element_; }
@@ -33,22 +33,26 @@ class Vector {
   T& operator[](int i);
   const T& operator[](int i) const;
 
+  void push_back(T val);
+
   T* begin();
   T* end();
 
   int size() const;
 };
 
-#include "Workspace.hxx"
-
 template<typename T>
-class Vector2 {
+class Vector2: public Vector<T> {
  public:
   using value_type = T;
-  Vector2(std::initializer_list<T> list);
+  Vector2(std::initializer_list<T> list) : Vector<T>(list) {}
+
   template<typename Iter>
   Vector2(Iter b, Iter e);
 };
+
+#include "Workspace.hxx"
+
 }  // namespace section_6_2
 
 #endif  // _HEADER_WORKSPACE

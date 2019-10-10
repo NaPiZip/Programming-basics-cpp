@@ -228,6 +228,19 @@ A move constructor does not take a `const` argument: after all, a move construct
 ## Chapter 6: Templates
 A template is a class or a function that we parameterize with a set of types or values. A good general FAQ, which explains the bits an parts of templates can be found [here](https://isocpp.org/wiki/faq/templates#template-specialization-piecemeal). An explanation to the question: `Why can’t I separate the definition of my templates class from its declaration and put it inside a .cpp file` can also be found there.
 
+<b>Template Argument Deduction</b><br>
+"In order to instantiate a function template, every template argument must be known, but not every template argument has to be specified. When possible, the compiler will deduce the missing template arguments from the function arguments", see reference [here](https://en.cppreference.com/w/cpp/language/template_argument_deduction).
+```
+template<typename To, typename From> To convert(From f);
+
+void g(double d)
+{
+    int i = convert<int>(d);    // calls convert<int, double>(double)
+    char c = convert<char>(d);  // calls convert<char, double>(double)
+    int(*ptr)(float) = convert; // instantiates convert<int, float>(float)
+}
+```
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures

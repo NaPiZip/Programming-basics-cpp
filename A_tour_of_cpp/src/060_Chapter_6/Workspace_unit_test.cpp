@@ -24,7 +24,17 @@ namespace {
   TEST(BasicTest, Positive) {
     EXPECT_THAT(2+3, 5);
   }
+  TEST(VectorConstructorInt, Positive) {
+    section_6_2::Vector<double> vec(4);
+    EXPECT_THAT(vec.size(), Eq(4));
+    EXPECT_THAT(vec[0], Eq(0));
+    EXPECT_THAT(vec[1], Eq(0));
+    EXPECT_THAT(vec[2], Eq(0));
+    EXPECT_THAT(vec[3], Eq(0));
 
+    section_6_2::Vector<double> vec_zero(0);
+    EXPECT_THAT(vec_zero.size(), Eq(0));
+  }
   TEST(DeepCopyConstructor, Positive) {
     section_6_2::Vector<double> a{1, 2, 3};
     section_6_2::Vector<double> b(a);
@@ -32,6 +42,15 @@ namespace {
 
     EXPECT_THAT(a[0], Ne(b[0]));
     EXPECT_THAT(b.size(), Eq(3));
+  }
+
+  TEST(VectorPushBack, Positive) {
+    section_6_2::Vector vec{ 1,2,3 };
+    EXPECT_THAT(vec.size(), Eq(3));
+
+    vec.push_back(4);
+    EXPECT_THAT(vec.size(), Eq(4));
+    EXPECT_THAT(vec[3], Eq(4));
   }
 
   TEST(TemplateExample, Positive) {
@@ -54,6 +73,14 @@ namespace {
 
     EXPECT_THAT(p, Eq(p2));
     EXPECT_THAT(p, Eq(p3));
+
+    // Testing if inheretance actually worked as expected
+    section_6_2::Vector2 a{ 1,2,3 };
+    EXPECT_THAT(a.size(), Eq(3));
+    EXPECT_THAT(a[0], Eq(1));
+
+    section_6_2::Vector b{ 3,4,5 };
+    //section_6_2::Vector2 c(b.begin(), b.end());
   }
 
   }  // namespace
