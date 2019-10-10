@@ -241,6 +241,25 @@ void g(double d)
 }
 ```
 
+<b>Function Objects</b><br>
+Functors (Function Objects or Functionals) are simply put `object + ()`. In other words, a functor is any object that can be used with () in the manner of a function.
+
+```
+template<typename C, typename P>
+     // requires Sequence<C> && Callable<P,Value_type<P>>
+int count(const C& c, P pred)
+{
+     int cnt = 0;
+     for (const auto& x : c)
+           if (pred(x))
+                 ++cnt;
+     return cnt;
+}
+
+vector<int> vec{ 1,1,1,10,10};
+count(vec,Less_than{10});
+```
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures

@@ -55,4 +55,27 @@ class Vector2: public Vector<T> {
 
 }  // namespace section_6_2
 
+
+namespace section_6_3 {
+
+template <typename T>
+class Less_than {
+  const T val_;
+ public:
+  explicit Less_than(const T& v) :val_{ v } {}
+  bool operator()(const T& x) const { return x < val_; }
+};
+
+template<typename C, typename P>
+int count(C& c, P pred) {
+  auto cnt = 0;
+  for (const auto& x : c) {
+    if (pred(x))
+      ++cnt;
+  }
+  return cnt;
+}
+
+}  //  namespace section_6_3
+
 #endif  // _HEADER_WORKSPACE

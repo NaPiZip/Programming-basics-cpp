@@ -83,4 +83,14 @@ namespace {
     //section_6_2::Vector2 c(b.begin(), b.end());
   }
 
+  TEST(Functor, Positive) {
+    section_6_3::Less_than a{ 23 };
+    EXPECT_TRUE(a(3), true);
+    section_6_2::Vector2 vec{ 1,1,1,10,10};    
+
+    EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 5 }), Eq(3));
+    EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 20 }), Eq(5));
+  }
+
+
   }  // namespace
