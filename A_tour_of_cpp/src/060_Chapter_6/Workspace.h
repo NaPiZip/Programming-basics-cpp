@@ -83,7 +83,7 @@ constexpr bool Assignable = std::is_assignable<T&, T2>::value;
 
 template<typename T>
 void testAssignable() {
-  static_assert(Assignable < T&, double>, "can't assingn a double");
+  static_assert(Assignable<T&, double>, "can't assingn a double");
   static_assert(Assignable<T&, std::string>, "can't assing a string");
 }
 }  //  namespace section_6_4
