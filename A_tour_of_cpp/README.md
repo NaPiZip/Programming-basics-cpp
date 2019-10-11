@@ -240,7 +240,6 @@ void g(double d)
     int(*ptr)(float) = convert; // instantiates convert<int, float>(float)
 }
 ```
-
 <b>Function Objects</b><br>
 Functors (Function Objects or Functionals) are simply put `object + ()`. In other words, a functor is any object that can be used with () in the manner of a function.
 
@@ -257,7 +256,26 @@ int count(const C& c, P pred)
 }
 
 vector<int> vec{ 1,1,1,10,10};
-count(vec,Less_than{10});
+count(vec, Less_than{10});
+```
+<b>Lambda Expressions</b><br>
+"C++11 introduces lambdas allow you to write an inline, anonymous functor to replace the struct f. For small simple examples this can be cleaner to read (it keeps everything in one place) and potentially simpler to maintain", see [here](https://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-in-c11#7627218).
+```
+vector<int> vec{ 1,1,1,10,10};
+count(vec, [] (int a) -> bool { return a < 10;});
+```
+<b>Aliases</b><br>
+It is very common for a parameterized type to provide an alias for types related to their template arguments.
+```
+template<typename Key, typename Value>
+class Map {
+     // ...
+};
+
+template<typename Value>
+using String_map = Map<string,Value>;
+
+String_map<int> m;  
 ```
 
 ## Topics to dive in deeper in the future

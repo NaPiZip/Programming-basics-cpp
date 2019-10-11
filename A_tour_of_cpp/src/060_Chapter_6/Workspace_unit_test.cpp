@@ -86,10 +86,19 @@ namespace {
   TEST(Functor, Positive) {
     section_6_3::Less_than a{ 23 };
     EXPECT_TRUE(a(3), true);
-    section_6_2::Vector2 vec{ 1,1,1,10,10};    
+    section_6_2::Vector2 vec{ 1,1,1,10,10};
 
     EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 5 }), Eq(3));
     EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 20 }), Eq(5));
+  }
+
+  TEST(Lambda, Positive) {
+    section_6_2::Vector2 vec{ 1,1,1,10,10 };
+    EXPECT_THAT(section_6_3::count(vec, [](int a) -> bool { return a < 5; }), Eq(3));
+  }
+
+  TEST(AssingnAbleType, Positive) {
+    //section_6_4::testAssignable<int>();
   }
 
 
