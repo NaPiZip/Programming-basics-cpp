@@ -166,6 +166,8 @@ int main()
 ```
 
 ## Chapter 5: Essential Operations
+"Some operations, such as initialization, assignment, copy, and move, are fundamental in the sense that language rules make assumptions about them. Other operations, such as == and <<, have conventional meanings that are perilous to ignore", Bjarne Stroustrup.
+
 
 <b>Assignment, copy and initialization</b><br>
 There are multiple ways a user defined type gets created:
@@ -277,6 +279,10 @@ using String_map = Map<string,Value>;
 
 String_map<int> m;  
 ```
+## Chapter 7: Concepts and Generic Programming
+Templates provide a powerful mechanism for compile-time computation and type manipulation that can lead to very compact and efficient code.
+
+"Concepts are named Boolean predicates on template parameters, evaluated at compile time. A concept may be associated with a template (class template, function template, or member function of a class template), in which case it serves as a constraint: it limits the set of arguments that are accepted as template parameters", source can be found [here](https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)).
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
