@@ -39,8 +39,7 @@ const T& section_6_2::Vector<T>::operator[](int i) const {
 template<typename T>
 void section_6_2::Vector<T>::push_back(T val) {
   T* new_data = new T[sz_ + 1];
-  for (auto idx = 0; idx != sz_; ++idx)
-  {
+  for (auto idx = 0; idx != sz_; ++idx) {
     new_data[idx] = element_[idx];
   }
   delete[] element_;
@@ -65,6 +64,6 @@ int section_6_2::Vector<T>::size() const {
 
 template<typename T>
 template<typename Iter>
-section_6_2::Vector2<T>::Vector2(Iter b, Iter e) : Vector<T>(0){
+section_6_2::Vector2<T>::Vector2(Iter b, Iter e) : Vector<T>(0) {
   // @TODO ask in Slack how this works
 }

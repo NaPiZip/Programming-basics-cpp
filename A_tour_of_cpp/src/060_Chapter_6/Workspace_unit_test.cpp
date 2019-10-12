@@ -44,7 +44,7 @@ namespace {
   }
 
   TEST(VectorPushBack, Positive) {
-    section_6_2::Vector vec{ 1,2,3 };
+    section_6_2::Vector vec{ 1, 2, 3 };
     EXPECT_THAT(vec.size(), Eq(3));
 
     vec.push_back(4);
@@ -73,31 +73,31 @@ namespace {
     EXPECT_THAT(p, Eq(p3));
 
     // Testing if inheretance actually worked as expected
-    section_6_2::Vector2 a{ 1,2,3 };
+    section_6_2::Vector2 a{ 1, 2, 3 };
     EXPECT_THAT(a.size(), Eq(3));
     EXPECT_THAT(a[0], Eq(1));
 
-    section_6_2::Vector b{ 3,4,5 };
-    //section_6_2::Vector2 c(b.begin(), b.end());
+    section_6_2::Vector b{ 3, 4, 5 };
+    //  @TODO Get this working without specifying the type
+    //  section_6_2::Vector2 c(b.begin(), b.end());
   }
 
   TEST(Functor, Positive) {
     section_6_3::Less_than a{ 23 };
     EXPECT_TRUE(a(3), true);
-    section_6_2::Vector2 vec{ 1,1,1,10,10};
+    section_6_2::Vector2 vec{ 1, 1, 1, 10, 10};
 
     EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 5 }), Eq(3));
     EXPECT_THAT(section_6_3::count(vec, section_6_3::Less_than{ 20 }), Eq(5));
   }
 
   TEST(Lambda, Positive) {
-    section_6_2::Vector2 vec{ 1,1,1,10,10 };
+    section_6_2::Vector2 vec{ 1, 1, 1, 10, 10 };
     EXPECT_THAT(section_6_3::count(vec, [](int a) -> bool { return a < 5; }), Eq(3));
   }
 
   TEST(ConceptTest, Positive) {
     EXPECT_TRUE(!has_type_member<int>);
   }
-
 
   }  // namespace
