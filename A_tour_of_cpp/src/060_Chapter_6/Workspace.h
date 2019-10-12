@@ -5,12 +5,10 @@
 
 #include <initializer_list>
 #include <string>
-#include <iostream>
 #include <type_traits>
 
 
 namespace section_6_2 {
-
 
 template<typename T, int N>
 struct Buffer {
@@ -52,6 +50,7 @@ class Vector2: public Vector<T> {
 };
 
 #include "Workspace.hxx"
+
 
 }  // namespace section_6_2
 

@@ -5,15 +5,14 @@
 #include "gmock/gmock.h"
 
 #include <string>
-#include <iostream>
 #include <utility>
 
+#include <concepts>
 
-void write(const section_6_2::Vector<std::string>& vs) {
-  for (int i = 0; i != vs.size(); ++i) {
-    std::cout << vs[i] << '\n';
-  }
-}
+// This concept tests whether 'T::type' is a valid type
+template<typename T>
+concept has_type_member = requires { typename T::type; };
+
 
 namespace {
 
@@ -55,7 +54,6 @@ namespace {
 
   TEST(TemplateExample, Positive) {
     section_6_2::Vector<std::string> a{ "this is some test"s };
-    write(a);
 
     for (auto& i : a)
       std::cout << i << '\n';
@@ -97,8 +95,8 @@ namespace {
     EXPECT_THAT(section_6_3::count(vec, [](int a) -> bool { return a < 5; }), Eq(3));
   }
 
-  TEST(AssingnAbleType, Positive) {
-    //section_6_4::testAssignable<int>();
+  TEST(ConceptTest, Positive) {
+    EXPECT_TRUE(!has_type_member<int>);
   }
 
 
