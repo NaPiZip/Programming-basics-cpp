@@ -284,6 +284,61 @@ Templates provide a powerful mechanism for compile-time computation and type man
 
 "Concepts are named Boolean predicates on template parameters, evaluated at compile time. A concept may be associated with a template (class template, function template, or member function of a class template), in which case it serves as a constraint: it limits the set of arguments that are accepted as template parameters", source can be found [here](https://en.wikipedia.org/wiki/Concepts_(C%2B%2B)).
 
+<b>I am skipping concepts for now, due to the fact that MSVC does only add limited functionality</b><br>
+The following code does currently not compile, even with ` /std:c++latest ` .
+
+```
+template<Sequence Seq, Number Num>
+Num sum(Seq s, Num v) {
+  for (const auto& x : s)
+    v += x
+
+    return x;
+}
+```
+<b>Generic Programming</b><br>
+"The form of generic programming supported by C++ centers around the idea of abstracting from concrete, efficient algorithms to obtain generic algorithms that can be combined with different data representations to produce a wide variety of useful software", Stepanov.
+
+<b>Abstraction Using Templates</b><br>
+"It is not a good idea to try to “abstract” by trying to prepare for every conceivable need and technique; start with one concrete examples from real use and try to eliminate inessential details", Bjarne Stroustrup.
+```
+void use(const vector<int>& vec, const list<double>& lst)
+{
+     auto sum = accumulate(begin(vec),end(vec),0.0); // accumulate in a double
+     auto sum2 = accumulate(begin(lst),end(lst),sum);
+     //
+}
+```
+<b>Variadic template</b><br>
+In computer programming, variadic templates are templates that take a variable number of arguments. MSVc is a little bit diffrent in the usage of varidic templates, ther always needs to be a base case, see [here](https://docs.microsoft.com/en-us/cpp/cpp/ellipses-and-variadic-templates?view=vs-2019).
+
+```
+template<typename T>
+void print(T& val) {
+  std::cout << val << '\n';
+}
+
+template<typename T, typename ... Tail>
+void print(T head, Tail... tail) {
+  std::cout << head << ' ';
+  print(tail...);
+}
+...
+print("asd"s, 1, '3', 3, 4.0f);
+```
+"Variadic recursion involves calling a variadic function template by using differing (almost always decreasing) numbers of arguments, and thereby stamping out a different signature every time. <u>A "base case" is still required</u>, but the nature of the recursion is different."
+
+<b>Fold Expressions</b><br>
+Fold expressions are a new way to unpack variadic parameters with operators.
+```
+template<Number ... T>
+int sum2(T... v)
+{
+  return ( ... + v); // add all elements of v to 0
+}
+```
+"Duck typing (“If it walks like a duck and it quacks like a duck, it’s a duck”)."
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
