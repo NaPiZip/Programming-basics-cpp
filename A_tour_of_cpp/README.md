@@ -338,6 +338,8 @@ int sum2(T... v)
 }
 ```
 "Duck typing (“If it walks like a duck and it quacks like a duck, it’s a duck”)."
+## Chapter 8: Overview
+
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
