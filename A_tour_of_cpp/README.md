@@ -279,6 +279,7 @@ using String_map = Map<string,Value>;
 
 String_map<int> m;  
 ```
+
 ## Chapter 7: Concepts and Generic Programming
 Templates provide a powerful mechanism for compile-time computation and type manipulation that can lead to very compact and efficient code.
 
@@ -338,8 +339,17 @@ int sum2(T... v)
 }
 ```
 "Duck typing (“If it walks like a duck and it quacks like a duck, it’s a duck”)."
-## Chapter 8: Overview
 
+## Chapter 8: Overview
+"The C++ Standard Library provides several generic containers, functions to utilize and manipulate these containers, function objects, generic strings and streams, support for some language features, and functions for everyday tasks such as finding the square root of a number", see [here](http://www.cplusplus.com/reference/).
+
+## Chapter 9: Strings and Regular Expressions
+"The standard string class provides support for such objects with an interface similar to that of a standard container of bytes, but adding features specifically designed to operate with strings of single-byte characters", definition can be found [here](http://www.cplusplus.com/reference/string/string/).
+
+Regular expressions are a standardized way to express patterns to be matched against sequences of characters", for details see [here](http://www.cplusplus.com/reference/regex/).
+
+<b>Strings</b><br>
+Small String Optimization (SSO), short strings will not call the allocate function and instead being created in the `string` object it self. When a `string`’s value changes from a short to a long string (and vice versa) its representation adjusts appropriately. An example can be found [here](https://blogs.msmvps.com/gdicanio/2016/11/17/the-small-string-optimization/).
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
@@ -347,6 +357,7 @@ Here is a list of topics I would investigate a bit more in detail:
 - Contracts
 - Modules
 - Concepts
+- Concurrency
 - Analyzing the standard library
 - ROOT a modular scientific software toolkit found [here](https://root.cern.ch//).
 
