@@ -351,6 +351,12 @@ Regular expressions are a standardized way to express patterns to be matched aga
 <b>Strings</b><br>
 Small String Optimization (SSO), short strings will not call the allocate function and instead being created in the `string` object it self. When a `string`’s value changes from a short to a long string (and vice versa) its representation adjusts appropriately. An example can be found [here](https://blogs.msmvps.com/gdicanio/2016/11/17/the-small-string-optimization/).
 
+<b>String Views</b><br>
+Enter `string_view`, a way to wrap an existing string in a non-owning way. 
+The idea is always to store a pair of pointer-to-first-element and size of some existing data array or string.
+
+Such a view-handle class could be passed around cheaply by value and would offer cheap substringing operations (which can be implemented as simple pointer increments and size adjustments).
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
