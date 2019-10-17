@@ -352,10 +352,26 @@ Regular expressions are a standardized way to express patterns to be matched aga
 Small String Optimization (SSO), short strings will not call the allocate function and instead being created in the `string` object it self. When a `string`’s value changes from a short to a long string (and vice versa) its representation adjusts appropriately. An example can be found [here](https://blogs.msmvps.com/gdicanio/2016/11/17/the-small-string-optimization/).
 
 <b>String Views</b><br>
-Enter `string_view`, a way to wrap an existing string in a non-owning way. 
+A `string_view` is a way to wrap an existing string in a non-owning way.
 The idea is always to store a pair of pointer-to-first-element and size of some existing data array or string.
 
 Such a view-handle class could be passed around cheaply by value and would offer cheap substringing operations (which can be implemented as simple pointer increments and size adjustments).
+
+<b>Regular Expressions</b><br>
+"A regular expression, regex or regexp is, in theoretical computer science and formal language theory, a sequence of characters that define a search pattern. Usually this pattern is then used by string searching algorithms for "find" or "find and replace" operations on strings, or for input validation", see definition [here](https://en.wikipedia.org/wiki/Regular_expression).
+
+```
+Ax*            // A, Ax, Axxxx
+Ax+            // Ax, Axxx     Not A
+\d−?\d         // 1-2, 12      Not 1--2
+\w{2}−\d{4,5}  // Ab-1234, XX-54321, 22-5432      Digits are in \w
+(\d*:)?(\d+)   // 12:3, 1:23, 123, :123  Not 123:
+(bs|BS)        // bs, BS       Not bS
+[aeiouy]       // a, o, u      An English vowel, not x
+[^aeiouy]      // x, k         Not an English vowel, not e
+[a^eiouy]      // a, ^, o, u   An English vowel or ^
+```
+A more detailed description of `regex` can be found [here](http://www.informit.com/articles/article.aspx?p=2079020).
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:

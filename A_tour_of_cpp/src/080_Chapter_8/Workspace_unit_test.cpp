@@ -30,7 +30,12 @@ namespace {
     std::string name{ "Nawin" };    
     auto s1 = section_9_3::cat(name, " is the best");
     EXPECT_THAT(s1, Eq("Nawin is the best"));
+  }
 
+  TEST(Regex, Positive) {
+    std::istringstream  is{ "TX77845 \n Banana \n MI40801" };
+
+    section_9_4::use(is);
   }
 
   }  // namespace
