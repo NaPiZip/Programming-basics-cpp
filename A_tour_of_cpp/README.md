@@ -373,6 +373,24 @@ Ax+            // Ax, Axxx     Not A
 ```
 A more detailed description of `regex` can be found [here](http://www.informit.com/articles/article.aspx?p=2079020).
 
+## Input and Output
+As already mentioned, at lowest levels, files are implemented as streams of bytes. A Stream is simply a sequence of bytes. Input and Output operations are supported by the `istream` (input stream) and `ostream` (output stream) classes.
+
+The ostream output operation, referred to as insertion is performed by the insertion operator "<<". The istream input operation, referred to as extraction, is performed by the extraction operator ">>", se details [here](https://codescracker.com/cpp/cpp-input-output.htm). I am skipping here some content since basic I/O operations are pretty straight forward.
+
+<b>I/O State</b><br>
+"In general, the I/O state holds all the information needed to read or write, such as formatting information (§10.6), error state (e.g., has end-of-input been reached?), and what kind of buffering is used", Bjarne Stroustrup.
+The following  table shows the `std::ios::fail` function information, [link](http://www.cplusplus.com/reference/ios/ios/fail/).
+<table>
+<tbody><tr><th rowspan="2"><samp><a href="/ios_base::iostate">iostate</a></samp> value<br>
+(member constants)</th><th rowspan="2">indicates</th><th colspan="5"><samp></samp>functions to check state flags</th></tr>
+<tr><th><samp><a href="/ios::good">good()</a></samp></th><th><samp><a href="/ios::eof">eof()</a></samp></th><th><samp><a href="/ios::fail">fail()</a></samp></th><th><samp><a href="/ios::bad">bad()</a></samp></th><th><samp><a href="/ios::rdstate">rdstate()</a></samp></th></tr>
+<tr><th><samp>goodbit</samp></th><td>No errors (zero value <samp><a href="/ios_base::iostate">iostate</a></samp>)</td><td class="yes"><code>true</code></td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td><samp>goodbit</samp></td></tr>
+<tr><th><samp>eofbit</samp></th><td>End-of-File reached on input operation</td><td class="no"><code>false</code></td><td class="yes"><code>true</code></td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td><samp>eofbit</samp></td></tr>
+<tr><th><samp>failbit</samp></th><td>Logical error on i/o operation</td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td class="yes"><code>true</code></td><td class="no"><code>false</code></td><td><samp>failbit</samp></td></tr>
+<tr><th><samp>badbit</samp></th><td>Read/writing error on i/o operation</td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td class="yes"><code>true</code></td><td class="yes"><code>true</code></td><td><samp>badbit</samp></td></tr>
+</tbody></table>
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
