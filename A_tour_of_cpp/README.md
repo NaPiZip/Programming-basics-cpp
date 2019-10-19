@@ -340,7 +340,7 @@ int sum2(T... v)
 ```
 "Duck typing (“If it walks like a duck and it quacks like a duck, it’s a duck”)."
 
-## Chapter 8: Overview
+## Chapter 8: Library Overview
 "The C++ Standard Library provides several generic containers, functions to utilize and manipulate these containers, function objects, generic strings and streams, support for some language features, and functions for everyday tasks such as finding the square root of a number", see [here](http://www.cplusplus.com/reference/).
 
 ## Chapter 9: Strings and Regular Expressions
@@ -373,7 +373,7 @@ Ax+            // Ax, Axxx     Not A
 ```
 A more detailed description of `regex` can be found [here](http://www.informit.com/articles/article.aspx?p=2079020).
 
-## Input and Output
+## Chapter 10: Input and Output
 As already mentioned, at lowest levels, files are implemented as streams of bytes. A Stream is simply a sequence of bytes. Input and Output operations are supported by the `istream` (input stream) and `ostream` (output stream) classes.
 
 The ostream output operation, referred to as insertion is performed by the insertion operator "<<". The istream input operation, referred to as extraction, is performed by the extraction operator ">>", se details [here](https://codescracker.com/cpp/cpp-input-output.htm). I am skipping here some content since basic I/O operations are pretty straight forward.
@@ -413,7 +413,8 @@ Here is a list of topics I would investigate a bit more in detail:
 - Modules
 - Concepts
 - Concurrency
-- Analyzing the standard library
+- Filesystem standard library
+- Analyzing the standard library coding style
 - ROOT a modular scientific software toolkit found [here](https://root.cern.ch//).
 
 ## Contributing
