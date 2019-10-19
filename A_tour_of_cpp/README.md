@@ -391,6 +391,21 @@ The following  table shows the `std::ios::fail` function information, [link](htt
 <tr><th><samp>badbit</samp></th><td>Read/writing error on i/o operation</td><td class="no"><code>false</code></td><td class="no"><code>false</code></td><td class="yes"><code>true</code></td><td class="yes"><code>true</code></td><td><samp>badbit</samp></td></tr>
 </tbody></table>
 
+<b>File System</b><br>
+"The Filesystem library, ISO/IEC TS 18822:2015, provides facilities for performing operations on file systems and their components, such as paths, regular files, and directories", see [here](https://en.cppreference.com/w/cpp/experimental/fs).
+
+```
+#inlcude <filesystem>
+using std::filesystem::path;
+using std::filesystem::current_path;
+using std::filesystem::exists;
+
+path cwd = current_path(),
+     rel{"../../../a_test_file.txt"};
+
+    exists(cwd / rel);
+```
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
