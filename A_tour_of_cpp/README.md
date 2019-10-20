@@ -406,6 +406,38 @@ path cwd = current_path(),
     exists(cwd / rel);
 ```
 
+## Chapter 11: Containers
+A class with the main purpose of holding objects is commonly called a container. Containers are used to manage collections of objects of a certain kind. There are several different types of containers like deque, list, vector, map etc.
+
+<b>Vector</b><br>
+"A typical implementation of vector (§4.2.2, §5.2) will consist of a handle holding pointers to the first element, one-past-the-last element, and one-past-the-last allocated space", Bjarne Stroustrup.
+```
+template<typename T>
+class Vector {
+     T* elem;     // pointer to first element
+     T* space;    // pointer to first unused (and uninitialized) slot
+     T* last;     // pointer to last slot
+public:
+     // ...
+     int size();                     // number of elements (space-elem)
+     int capacity();                 // number of slots available for elements (last-elem)
+     // ...
+     void reserve(int newsz);        // increase capacity() to newsz
+     // ...
+     void push_back(const T& t);     // copy t into Vector
+     void push_back(T&& t);          // move t into Vector
+};
+```
+<b>List</b><br>
+"Lists are sequence containers that allow non-contiguous memory allocation. As compared to vector, list has slow traversal, but once a position has been found, insertion and deletion are quick. Normally, when we say a List, we talk about doubly linked list. For implementing a singly linked list, we use forward list", see [here](https://www.geeksforgeeks.org/list-cpp-stl/).
+
+<b>Map</b><br>
+"Map is dictionary like data structure. It is a sequence of (key, value) pair, where only single value is associated with each unique key. It is often referred as associative array," see [here](https://www.tutorialspoint.com/cpp_standard_library/map.htm). The standard library offers a balanced binary search tree (usually, a red-black tree) called map.
+
+<b>Unordered map</b><br>
+"Unordered maps are associative containers that store elements formed by the combination of a key value and a mapped value, and which allows for fast retrieval of individual elements based on their keys.
+Internally, the elements in the unordered_map are not sorted in any particular order with respect to either their key or mapped values, but organized into buckets depending on their hash values to allow for fast access to individual elements directly by their key values (with a constant average time complexity on average)," reference is provided [here](http://www.cplusplus.com/reference/unordered_map/unordered_map/).
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
@@ -414,6 +446,7 @@ Here is a list of topics I would investigate a bit more in detail:
 - Concepts
 - Concurrency
 - Filesystem standard library
+- Template metaprogramming
 - Analyzing the standard library coding style
 - ROOT a modular scientific software toolkit found [here](https://root.cern.ch//).
 
