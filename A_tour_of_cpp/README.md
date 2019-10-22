@@ -441,7 +441,14 @@ Internally, the elements in the unordered_map are not sorted in any particular o
 ## Chapter 12: Algorithms
 "We rarely just store objects in a container. We sort them, print them, extract subsets, remove elements, search for objects, etc. Consequently, the standard library provides the most common algorithms for containers in addition to providing the most common container types", Bjarne Stroustrup.
 
+<b>Iterators</b><br>
+"An iterator is an object (like a pointer) that points to an element inside the container. We can use iterators to move through the contents of the container. They can be visualised as something similar to a pointer pointing to some location and we can access content at that particular location using them.
 
+Iterators play a critical role in connecting algorithm with containers along with the manipulation of data stored inside the containers. The most obvious form of iterator is a pointer. A pointer can point to elements in an array, and can iterate through them using the increment operator (++). But, all iterators do not have similar functionality as that of pointers", see reference [here] (https://www.geeksforgeeks.org/introduction-iterators-c/).
+
+```
+void f(vector<Entry>& vec, list<Entry>& lst){     sort(vec.begin(),vec.end());                      // use < for order     unique_copy(vec.begin(),vec.end(),lst.begin());   // don't copy adjacent equal elements}
+```
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
