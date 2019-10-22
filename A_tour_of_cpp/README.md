@@ -438,6 +438,11 @@ public:
 "Unordered maps are associative containers that store elements formed by the combination of a key value and a mapped value, and which allows for fast retrieval of individual elements based on their keys.
 Internally, the elements in the unordered_map are not sorted in any particular order with respect to either their key or mapped values, but organized into buckets depending on their hash values to allow for fast access to individual elements directly by their key values (with a constant average time complexity on average)," reference is provided [here](http://www.cplusplus.com/reference/unordered_map/unordered_map/).
 
+## Chapter 12: Algorithms
+"We rarely just store objects in a container. We sort them, print them, extract subsets, remove elements, search for objects, etc. Consequently, the standard library provides the most common algorithms for containers in addition to providing the most common container types", Bjarne Stroustrup.
+
+
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
