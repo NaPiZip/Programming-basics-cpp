@@ -450,7 +450,7 @@ Iterators play a critical role in connecting algorithm with containers along wit
 void f(vector<Entry>& vec, list<Entry>& lst){     sort(vec.begin(),vec.end());                      // use < for order     unique_copy(vec.begin(),vec.end(),lst.begin());   // don't copy adjacent equal elements}
 ```
 
-<b>Iterator streams</b><br>
+<b>Iterator Streams</b><br>
 If an iterator can be used to access elements of a data container, then what about streams? In keeping with the design, Streams too are data containers and so C++ provides us with iterators to iterate over the elements present in any stream. These iterators are called Stream Iterators. To use these iterators the iterator header file must be included. Link of an example can be found [here](https://www.geeksforgeeks.org/stdistream_iterator-stdostream_iterator-c-stl/).
 
 <b>Predicates</b><br>
@@ -460,6 +460,12 @@ The Predicate parameter is used whenever an algorithm expects a function object 
 std::map<std::string, int> m{ {"Nawin", 1}, {"Belen", 4}, {"JD", 7} };
 auto p2 = find_if(m.begin(), m.end(), [](const std::pair<std::string, int>& r) { return r.second > 4; });
 ```
+
+## Chapter 13: Utilities
+The standard function has several utility functions for number of conversions, variable-length, argument processing, sorting and searching, and random number generation. To use these function the header <cstdlib> is required.
+
+<b>Resource Management</b><br>
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
@@ -467,6 +473,7 @@ Here is a list of topics I would investigate a bit more in detail:
 - Modules
 - Concepts
 - Concurrency
+- Performance measuring
 - Filesystem standard library
 - Template metaprogramming
 - Analyzing the standard library coding style
