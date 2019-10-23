@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+#include <map>
 #include <vector>
 #include <list>
 #include <algorithm>
@@ -52,9 +53,28 @@ namespace {
     std::vector<std::string> vs{ "red", "blue", "green", "green", "orange", "green" };
     for (auto element : section_12_2::find_all(vs, "green"))
       EXPECT_THAT(*element, Eq("green"));
-
   }
 
+  TEST(StreamIter, Positive) {
+    std::ostream_iterator<std::string> oo{ std::cout };
+    //std::istream_iterator<std::string> ii{ std::cin };
+
+    *oo = "Hello, ";
+    ++oo;
+    *oo = "world!";
+  }
+
+  TEST(Predicates, Positive) {
+    std::map<std::string, int> m{ {"Nawin", 1}, {"Belen", 4}, {"JD", 7} };
+    auto p = std::find_if(m.begin(), m.end(), section_12_5::Greater_than{ 4 });
+    auto p2 = find_if(m.begin(), m.end(), [](const std::pair<std::string, int>& r) { return r.second > 4; });
+    
+    EXPECT_THAT(p->first, Eq( "JD"s));
+    EXPECT_THAT(p->second, Eq(7));
+
+   EXPECT_THAT(p2->first, Eq("JD"s));
+   EXPECT_THAT(p2->second, Eq(7));
+  }
 
 
 

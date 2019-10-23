@@ -4,6 +4,7 @@
 #define _HEADER_WORKSPACE
 
 #include <vector>
+#include <utility>
 #include <string>
 #include <string_view>
 #include <ostream>
@@ -20,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const Entry& e);
 std::istream& operator>>(std::istream& is, Entry& e);
 
 bool operator<(const Entry& rhs, const Entry& lhs);
-}  //  namespace section_11_1
+}  //  namespace section_12_1
 
 namespace section_12_2 {
   bool contains_char(std::string_view sv, char c);
@@ -39,8 +40,15 @@ namespace section_12_2 {
     }
     return matches;
   }
+}  //  namespace section_12_2
 
-} //  namespace section_12_2
+namespace section_12_5 {
+  struct Greater_than {
+    int val;
+    Greater_than(int v) : val{v} { }
+    bool operator()(const std::pair<std::string, int>& r) const { return r.second > val; }
+  };
+}  //  namespace section_12_5
 
 
 #endif  // _HEADER_WORKSPACE

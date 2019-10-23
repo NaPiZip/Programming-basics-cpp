@@ -442,7 +442,7 @@ Internally, the elements in the unordered_map are not sorted in any particular o
 "We rarely just store objects in a container. We sort them, print them, extract subsets, remove elements, search for objects, etc. Consequently, the standard library provides the most common algorithms for containers in addition to providing the most common container types", Bjarne Stroustrup.
 
 <b>Iterators</b><br>
-"An iterator is an object (like a pointer) that points to an element inside the container. We can use iterators to move through the contents of the container. They can be visualised as something similar to a pointer pointing to some location and we can access content at that particular location using them.
+"An iterator is an object (like a pointer) that points to an element inside the container. We can use iterators to move through the contents of the container. They can be visualized as something similar to a pointer pointing to some location and we can access content at that particular location using them.
 
 Iterators play a critical role in connecting algorithm with containers along with the manipulation of data stored inside the containers. The most obvious form of iterator is a pointer. A pointer can point to elements in an array, and can iterate through them using the increment operator (++). But, all iterators do not have similar functionality as that of pointers", see reference [here] (https://www.geeksforgeeks.org/introduction-iterators-c/).
 
@@ -450,6 +450,16 @@ Iterators play a critical role in connecting algorithm with containers along wit
 void f(vector<Entry>& vec, list<Entry>& lst){     sort(vec.begin(),vec.end());                      // use < for order     unique_copy(vec.begin(),vec.end(),lst.begin());   // don't copy adjacent equal elements}
 ```
 
+<b>Iterator streams</b><br>
+If an iterator can be used to access elements of a data container, then what about streams? In keeping with the design, Streams too are data containers and so C++ provides us with iterators to iterate over the elements present in any stream. These iterators are called Stream Iterators. To use these iterators the iterator header file must be included. Link of an example can be found [here](https://www.geeksforgeeks.org/stdistream_iterator-stdostream_iterator-c-stl/).
+
+<b>Predicates</b><br>
+The Predicate parameter is used whenever an algorithm expects a function object that when applied to the result of dereferencing the corresponding iterator returns a value testable as true. In other words, if an algorithm takes Predicate pred as its argument and first as its iterator argument, it should work correctly in the construct `if (pred(*first)){...}`. The function object pred shall not apply any non-constant function through the dereferenced iterator. This function object may be a pointer to function, or an object of a type with an appropriate function call operator, from the C++ standard.
+
+```
+std::map<std::string, int> m{ {"Nawin", 1}, {"Belen", 4}, {"JD", 7} };
+auto p2 = find_if(m.begin(), m.end(), [](const std::pair<std::string, int>& r) { return r.second > 4; });
+```
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
