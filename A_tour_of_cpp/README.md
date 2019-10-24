@@ -465,6 +465,50 @@ auto p2 = find_if(m.begin(), m.end(), [](const std::pair<std::string, int>& r) {
 The standard function has several utility functions for number of conversions, variable-length, argument processing, sorting and searching, and random number generation. To use these function the header <cstdlib> is required.
 
 <b>Resource Management</b><br>
+A resource is something that must be acquired and later (explicitly or implicitly) released. Examples are memory, locks, sockets, thread handles, and file handles.
+
+<b>unique_ptr and shared_ptr</b><br>
+Smart pointer is an abstract data type by using which we can make a normal pointer in such way that it can be used as memory management like file handling, network sockets etc., also it can do many things like automatic destruction, reference counting etc.
+```
+std::unique_ptr<T> ptr { new T(value) };
+
+//OR
+
+std::unique_ptr<T> ptr = make_unique<T>(value);
+```
+Where do we use “smart pointers” (such as `unique_ptr`) rather than resource handles with operations designed specifically for the resource (such as `vector` or `thread`)? Unsurprisingly, the answer is “when we need pointer semantics.”
+
+- When we share an object.
+- When we refer to a polymorphic object , we need a pointer (or a reference) because we don’t know the exact type of the object referred to.
+- A shared polymorphic object typically requires `shared_ptr`.
+
+<b>array</b><br>
+An `array` is a fixed-size sequence of elements of a given type where the number of elements is specified at compile time.
+```
+void f(int* p, int sz);    // C-style interface
+
+void g()
+{
+     array<int,10> a;
+
+     f(a,a.size());             // error: no conversion
+     f(&a[0],a.size());         // C-style use
+     f(a.data(),a.size());      // C-style use
+
+     auto p = find(a.begin(),a.end(),777);    // C++/STL-style use
+     // ...
+}
+```
+
+<b>bitset</b><br>
+A set of flags indicating binary conditions such as good/bad, true/false, and on/off is a prefect use case for a `bitset`.
+
+```
+    std::bitset<5> bs1{"10010"};
+    std::bitset<5> not_bs1= ~bs1;
+```
+
+<b>pair and tuple</b><br>
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
