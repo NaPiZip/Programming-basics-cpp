@@ -4,10 +4,10 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+#include <algorithm>
 #include <string>
 #include <iostream>
 #include <bitset>
-
 
 
 namespace {
@@ -26,7 +26,28 @@ namespace {
     std::bitset<5> not_bs1= ~bs1;
 
     EXPECT_THAT(bs1, Eq(~not_bs1));
-    std::cout << (bs1>>2);
   }
+  TEST(TupleAndSet, Positive) {
+    using section_13_4::Record;
 
+    std::vector<Record> v;
+    v.reserve(4);
+    v.emplace_back("Alice"s);
+    v.emplace_back("Bob"s); 
+    v.emplace_back("Carl"s);
+    v.emplace_back("David"s);
+
+    auto er = std::equal_range(v.begin(), v.end(),
+      Record("Carl"s),
+      [](const Record& r1, const Record& r2) {return r1.name < r2.name; });
+
+    EXPECT_THAT((*er.first).name, Eq("Carl"s));
+    EXPECT_THAT((*er.second).name, Eq("David"s));
+
+    std::tuple<std::string, char, int> student{ "Nawin", 'A', 99 };
+
+    EXPECT_THAT(std::get<std::string>(student), Eq("Nawin"));
+    EXPECT_THAT(std::get<1>(student), Eq('A'));
+    EXPECT_THAT(std::get<2>(student), Eq(99));   
+   }
   }  // namespace

@@ -509,6 +509,12 @@ A set of flags indicating binary conditions such as good/bad, true/false, and on
 ```
 
 <b>pair and tuple</b><br>
+`std::pair` is a data type for grouping two values of any desired user or build in type together as a single object. A `std::tuple` is an object that can hold a number of elements. The elements can be of different data types. The elements of tuples are initialized as arguments in order in which they will be accessed.
+
+```
+template <class T1, class T2> struct pair;
+tuple<string,int,double> t1 {"Shark",123,3.14};    // the type is explicitly specified
+```
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
