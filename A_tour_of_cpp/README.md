@@ -567,6 +567,12 @@ public:
 
     // ...
 ```
+
+## Chapter 14: Numerics
+I am not proving any detailed notes for numerics due to the fact that that in general most elements are somewhat known as well as the numerics section is generally not covering new conceptual ideas.
+
+## Chapter 14: Numerics
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures
