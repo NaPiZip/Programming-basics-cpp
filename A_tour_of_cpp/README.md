@@ -77,7 +77,6 @@ Covers the separation of declaration and implementation into translation units. 
 
 <b>Exception handling</b><br>
 An exception is a problem that arises during the execution of a program. A C++ exception is a response to an exceptional circumstance that arises while a program is running,  the issue should be recoverable otherwise we cannot continue the operation of our program. A pretty straight forward example can be seen here:
-
 ```
 void test()
 {
@@ -96,7 +95,6 @@ void test()
 
 <b>Structured binding </b><br>
 Like a reference, a structured binding is an alias to an existing object. Unlike a reference, the type of a structured binding does not have to be a reference type.
-
 ```
 ...
 std::unordered_map<std::string, float> hash_map;
@@ -124,7 +122,6 @@ The idea of concrete classes is to mimic the behavior of built-in types, code ca
 
 <b>Abstract classes</b><br>
 "Abstract classes act as expressions of general concepts from which more specific classes can be derived. You cannot create an object of an abstract class type; however, you can use pointers and references to abstract class types", link can be found [here](https://docs.microsoft.com/en-us/cpp/cpp/abstract-classes-cpp?view=vs-2019).
-
 ```
 class Container {
  public:
@@ -143,7 +140,6 @@ A base class provides functions or data that simplifies the implementation of de
 
 <b>Run-time Type Identification RTTI</b><br>
 RTTI is to provide a standard way for a program to determine the type of object during runtime, and is often used in context with polymorphism.
-
 ```
 class Base {virtual void use(){}};
 
@@ -202,7 +198,6 @@ void copy(Shape& s1, const Shape& s2)
 ```
 <b>Copying Containers</b><br>
 The default memberwise copy for a container is typically a disaster, due to the fact that the class is responsible for an object accessed through a pointer. We don't want a shallow copy, but a deep one.
-
 ```
 class Vector {
   //...
@@ -244,7 +239,6 @@ void g(double d)
 ```
 <b>Function Objects</b><br>
 Functors (Function Objects or Functionals) are simply put `object + ()`. In other words, a functor is any object that can be used with () in the manner of a function.
-
 ```
 template<typename C, typename P>
      // requires Sequence<C> && Callable<P,Value_type<P>>
@@ -287,7 +281,6 @@ Templates provide a powerful mechanism for compile-time computation and type man
 
 <b>I am skipping concepts for now, due to the fact that MSVC does only add limited functionality</b><br>
 The following code does currently not compile, even with ` /std:c++latest ` .
-
 ```
 template<Sequence Seq, Number Num>
 Num sum(Seq s, Num v) {
@@ -312,7 +305,6 @@ void use(const vector<int>& vec, const list<double>& lst)
 ```
 <b>Variadic template</b><br>
 In computer programming, variadic templates are templates that take a variable number of arguments. MSVc is a little bit diffrent in the usage of varidic templates, ther always needs to be a base case, see [here](https://docs.microsoft.com/en-us/cpp/cpp/ellipses-and-variadic-templates?view=vs-2019).
-
 ```
 template<typename T>
 void print(T& val) {
@@ -359,7 +351,6 @@ Such a view-handle class could be passed around cheaply by value and would offer
 
 <b>Regular Expressions</b><br>
 "A regular expression, regex or regexp is, in theoretical computer science and formal language theory, a sequence of characters that define a search pattern. Usually this pattern is then used by string searching algorithms for "find" or "find and replace" operations on strings, or for input validation", see definition [here](https://en.wikipedia.org/wiki/Regular_expression).
-
 ```
 Ax*            // A, Ax, Axxxx
 Ax+            // Ax, Axxx     Not A
@@ -393,7 +384,6 @@ The following  table shows the `std::ios::fail` function information, [link](htt
 
 <b>File System</b><br>
 "The Filesystem library, ISO/IEC TS 18822:2015, provides facilities for performing operations on file systems and their components, such as paths, regular files, and directories", see [here](https://en.cppreference.com/w/cpp/experimental/fs).
-
 ```
 #inlcude <filesystem>
 using std::filesystem::path;
@@ -445,7 +435,6 @@ Internally, the elements in the unordered_map are not sorted in any particular o
 "An iterator is an object (like a pointer) that points to an element inside the container. We can use iterators to move through the contents of the container. They can be visualized as something similar to a pointer pointing to some location and we can access content at that particular location using them.
 
 Iterators play a critical role in connecting algorithm with containers along with the manipulation of data stored inside the containers. The most obvious form of iterator is a pointer. A pointer can point to elements in an array, and can iterate through them using the increment operator (++). But, all iterators do not have similar functionality as that of pointers", see reference [here] (https://www.geeksforgeeks.org/introduction-iterators-c/).
-
 ```
 void f(vector<Entry>& vec, list<Entry>& lst){     sort(vec.begin(),vec.end());                      // use < for order     unique_copy(vec.begin(),vec.end(),lst.begin());   // don't copy adjacent equal elements}
 ```
@@ -455,7 +444,6 @@ If an iterator can be used to access elements of a data container, then what abo
 
 <b>Predicates</b><br>
 The Predicate parameter is used whenever an algorithm expects a function object that when applied to the result of dereferencing the corresponding iterator returns a value testable as true. In other words, if an algorithm takes Predicate pred as its argument and first as its iterator argument, it should work correctly in the construct `if (pred(*first)){...}`. The function object pred shall not apply any non-constant function through the dereferenced iterator. This function object may be a pointer to function, or an object of a type with an appropriate function call operator, from the C++ standard.
-
 ```
 std::map<std::string, int> m{ {"Nawin", 1}, {"Belen", 4}, {"JD", 7} };
 auto p2 = find_if(m.begin(), m.end(), [](const std::pair<std::string, int>& r) { return r.second > 4; });
@@ -502,7 +490,6 @@ void g()
 
 <b>bitset</b><br>
 A set of flags indicating binary conditions such as good/bad, true/false, and on/off is a prefect use case for a `bitset`.
-
 ```
     std::bitset<5> bs1{"10010"};
     std::bitset<5> not_bs1= ~bs1;
@@ -510,12 +497,76 @@ A set of flags indicating binary conditions such as good/bad, true/false, and on
 
 <b>pair and tuple</b><br>
 `std::pair` is a data type for grouping two values of any desired user or build in type together as a single object. A `std::tuple` is an object that can hold a number of elements. The elements can be of different data types. The elements of tuples are initialized as arguments in order in which they will be accessed.
-
 ```
 template <class T1, class T2> struct pair;
 tuple<string,int,double> t1 {"Shark",123,3.14};    // the type is explicitly specified
 ```
 
+<b>variant</b><br>
+A variant is basally a more safer option of a union.
+```
+std::variant<int, float> v, w;
+    v = 12; // v contains int
+    int i = std::get<int>(v);
+    w = std::get<int>(v);
+    w = std::get<0>(v); // same effect as the previous line
+    w = v; // same effect as the previous line
+
+//  std::get<double>(v); // error: no double in [int, float]
+//  std::get<3>(v);      // error: valid index values are 0 and 1
+```
+<b>variant</b><br>
+"An `optional` can be seen as a special kind of variant (like a `variant<A,nothing>`) or as a generalization of the idea of an `A*` either pointing to an object or being `nullptr`", Bjarne Stroustrup. The usage is the same as for a genral pointer type.
+
+<b>any</b><br>
+An `any` is basically a generalization of an variant for build in types or user types, it also could be empty.
+```
+std::any a = 1;
+
+try {
+  std::cout << std::any_cast<float>(a) << '\n';
+} catch (const std::bad_any_cast& e) {
+  std::cout << e.what() << '\n';
+}
+```
+<b>Allocators</b><br>
+"Allocators are used by the C++ Standard Library to handle the allocation and deallocation of elements stored in containers. All C++ Standard Library containers except std::array have a template parameter of type allocator<Type>, where Type represents the type of the container element", see [here](https://docs.microsoft.com/en-us/cpp/standard-library/allocators?view=vs-2019).
+
+"At the most conceptual level, an allocator is an object that supplies raw memory for use by other objects, especially containers", Pablo Halpern.
+
+A implementation based on the requirements for an allocator defined by the C++ standard can be found [here](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2271.html#std_allocator).
+
+<b>Time</b><br>
+The `chrono` library provides support for time measuring as well as a high res helper functions.
+
+```
+  high_resolution_clock::time_point t1 = high_resolution_clock::now();
+
+  std::cout << "printing out 1000 stars...\n";
+  for (int i=0; i<1000; ++i) std::cout << "*";
+    std::cout << std::endl;
+
+  high_resolution_clock::time_point t2 = high_resolution_clock::now();
+
+  auto time_span = duration_cast<std::chrono::microseconds>(t2 - t1);
+
+  std::cout << "It took me " << time_span.count() << " seconds.";
+```
+<b>iterator_traits</b><br>
+Generic code that uses iterators, such as the STL algorithms which use them intensely, needs information about them. For example, it needs the type of the object that the iterators refer to. To obtain this information, the STL requires that the iterator it operates on must define a type called `value_type`, see reference [here](https://www.fluentcpp.com/2018/05/08/std-iterator-deprecated/).
+
+```
+class MyIterator
+{
+public:
+    using iterator_category = std::forward_iterator_tag;
+    using value_type = int;
+    using difference_type = int;
+    using pointer = int*;
+    using reference = int&;
+
+    // ...
+```
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures

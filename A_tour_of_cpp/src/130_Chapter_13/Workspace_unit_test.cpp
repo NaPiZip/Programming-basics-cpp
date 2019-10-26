@@ -5,10 +5,14 @@
 #include "gmock/gmock.h"
 
 #include <algorithm>
+#include <mutex>
 #include <string>
 #include <iostream>
 #include <bitset>
+#include <any>
+#include <chrono>
 
+std::mutex m;
 
 namespace {
 
@@ -50,4 +54,60 @@ namespace {
     EXPECT_THAT(std::get<1>(student), Eq('A'));
     EXPECT_THAT(std::get<2>(student), Eq(99));   
    }
+
+  TEST(Variant, Positive) {
+    auto m = section_13_5::compose_message(true);
+    if (std::holds_alternative <std::string>(m))
+      EXPECT_EQ(std::get<std::string>(m), "Something"s);
+    else 
+      EXPECT_EQ(std::get<int>(m), 3);
+  }
+
+  TEST(Any, Positive) {
+    std::any an_int = 1;
+
+    try {
+      EXPECT_EQ(std::any_cast<int>(an_int), 1);
+      std::any_cast<std::string>(an_int);
+    }
+    catch (const std::bad_any_cast & e)
+    {
+      EXPECT_EQ(e.what(), "Bad any_cast"s);
+    }
+    an_int.reset();
+    EXPECT_FALSE(an_int.has_value());
+  }
+
+  TEST(CustomAllocators, Positive) {
+    constexpr int NUMBER_OF_DATA_ELEMENTS = 20;
+    std::list<std::shared_ptr<section_13_6::Event>> q;
+
+    auto t0 = std::chrono::high_resolution_clock::now();
+
+    for (int n = 0; n < NUMBER_OF_DATA_ELEMENTS; ++n) {
+      std::lock_guard lk{ m };
+      q.emplace_back(std::make_shared<section_13_6::Event>());
+    }
+
+    auto t1 = std::chrono::high_resolution_clock::now();
+    std::cout << "Elapesd time: "<< std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << '\n';
+  }
+
+  TEST(IteratorTraits, Positive) {
+    std::vector v{ 1, 684, 3, 48, 12, 38 };
+    std::list   l{ 5 , 6 , 54, 41658, 547 };
+
+    section_13_9::sort(v);
+    section_13_9::sort(l);
+
+    for (const auto e : v)
+      std::cout << e << ' ';
+    
+    std::cout << '\n';
+    
+    for (const auto e : l)
+      std::cout << e << ' ';
+  }
+
+
   }  // namespace
