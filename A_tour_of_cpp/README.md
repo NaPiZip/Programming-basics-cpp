@@ -515,7 +515,7 @@ std::variant<int, float> v, w;
 //  std::get<double>(v); // error: no double in [int, float]
 //  std::get<3>(v);      // error: valid index values are 0 and 1
 ```
-<b>variant</b><br>
+<b>optional</b><br>
 "An `optional` can be seen as a special kind of variant (like a `variant<A,nothing>`) or as a generalization of the idea of an `A*` either pointing to an object or being `nullptr`", Bjarne Stroustrup. The usage is the same as for a genral pointer type.
 
 <b>any</b><br>
