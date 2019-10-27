@@ -4,67 +4,64 @@
 #define _HEADER_WORKSPACE
 
 #include <vector>
-#include <list>
-#include <memory>
-#include <string>
-#include <variant>
-#include <iterator>
+#include <string_view>
+#include <chrono>
 
-namespace section_13_2 {
-std::unique_ptr<int> make_x(int i);
+namespace section_15_2 {
+void f();
+struct F {
+  void operator()();
+};  
+}  //  namespace section_15_2 
 
-struct S {
-  int i;
-  std::string s;
-  double d;
+namespace section_15_3 {
+void f(std::vector<double>& v);
+
+struct F {
+  std::vector<double> data;
+  F(std::vector<double>& vv) : data{ vv } {}
+  void operator()();
 };
-}  //  namespace section_13_2
+}  //  namespace section_15_3
 
-namespace section_13_4 {
-struct Record {
-  std::string name;
-  explicit Record(std::string& n) : name{ n } {}
+
+namespace section_15_4 {
+void f(const std::vector<double>& v, double* res);
+double g(const std::vector<double>& v);
+class F {
+public:
+  F(const std::vector<double>& vv, double* p) : v{ vv }, res{ p } {}
+  void operator()();
+
+private:
+  const std::vector<double>& v;
+  double* res;
 };
-}  //  namespace section_13_4
+}  //  namespace section_15_4 
 
-namespace section_13_5 {
-std::variant<std::string, int> compose_message(bool return_int);
-}  //  namespace section_13_5
+namespace section_15_5 {
+  void mutext_f(std::vector<double>& v);
+  struct Mutext_F: public section_15_3::F {
+    Mutext_F(std::vector<double>& vv): F(vv) {}
+    void operator()();
+  };
+}  //  namespace section_15_5 
 
-namespace section_13_6 {
-struct Event {
-  std::vector<int> data = std::vector<int>(512);
+namespace section_15_6 {
+class Message {
+public:
+  Message(std::string& str, int val) : tag{ str }, data{ val } {}
+  const std::string_view get_tag() { return tag; }
+  int get_data() { return data; }
+private:
+  std::string tag;
+  int data;
 };
 
-}  //  namespace section_13_6
+void producer();
+void consumer();
 
 
-namespace section_13_9 {
-  template<typename C>
-  using Value_type = typename C::value_type;
-
-  template<typename C>
-  using Iterator_type = typename C::iterator;
-
-  template<typename Iter>
-  using Iterator_category = typename std::iterator_traits<Iter>::iterator_category;
-
-  template<typename Ran>
-  void sort_helper(Ran beg, Ran end, std::random_access_iterator_tag) {
-    std::sort(beg, end);
-  }
-  template<typename For>
-  void sort_helper(For beg, For end, std::forward_iterator_tag) {
-    std::vector<Value_type<For>> v{ beg, end };
-    std::sort(v.begin(), v.end());
-    std::copy(v.begin(), v.end(), beg);
-  }
-
-  template<typename C>
-  void sort(C& c) {
-    using iter = Iterator_type<C>;
-    sort_helper(c.begin(), c.end(), Iterator_category<iter>{});
-  }
-}  //  namespace section_13_9 
+}  //  namespace section_15_6
 
 #endif  // _HEADER_WORKSPACE

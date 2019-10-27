@@ -516,7 +516,7 @@ std::variant<int, float> v, w;
 //  std::get<3>(v);      // error: valid index values are 0 and 1
 ```
 <b>optional</b><br>
-"An `optional` can be seen as a special kind of variant (like a `variant<A,nothing>`) or as a generalization of the idea of an `A*` either pointing to an object or being `nullptr`", Bjarne Stroustrup. The usage is the same as for a genral pointer type.
+"An `optional` can be seen as a special kind of variant (like a `variant<A,nothing>`) or as a generalization of the idea of an `A*` either pointing to an object or being `nullptr`", Bjarne Stroustrup. The usage is the same as for a general pointer type.
 
 <b>any</b><br>
 An `any` is basically a generalization of an variant for build in types or user types, it also could be empty.
@@ -530,7 +530,7 @@ try {
 }
 ```
 <b>Allocators</b><br>
-"Allocators are used by the C++ Standard Library to handle the allocation and deallocation of elements stored in containers. All C++ Standard Library containers except std::array have a template parameter of type allocator<Type>, where Type represents the type of the container element", see [here](https://docs.microsoft.com/en-us/cpp/standard-library/allocators?view=vs-2019).
+"Allocators are used by the C++ Standard Library to handle the allocation and deallocation of elements stored in containers. All C++ Standard Library containers except `std::array` have a template parameter of type allocator<Type>, where Type represents the type of the container element", see [here](https://docs.microsoft.com/en-us/cpp/standard-library/allocators?view=vs-2019).
 
 "At the most conceptual level, an allocator is an object that supplies raw memory for use by other objects, especially containers", Pablo Halpern.
 
@@ -571,7 +571,143 @@ public:
 ## Chapter 14: Numerics
 I am not proving any detailed notes for numerics due to the fact that that in general most elements are somewhat known as well as the numerics section is generally not covering new conceptual ideas.
 
-## Chapter 14: Numerics
+## Chapter 15: Concurrency
+"Concurrency, in the context of computer science, is the ability for a program to be decomposed into parts that can run independently of each other. This means that tasks can be executed out of order and the result would still be the same as if they are executed in order", source can be found [here] (https://www.techopedia.com/definition/25146/concurrency-programming).
+
+<b>Tasks and threads</b><br>
+"We call a computation that can potentially be executed concurrently with other computations a task. A thread is the system-level representation of a task in a program", Bjarne Stroustrup.
+```
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+void foo()
+{
+    // simulate expensive operation
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+void bar()
+{
+    // simulate expensive operation
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+int main()
+{
+    std::cout << "starting first helper...\n";
+    std::thread helper1(foo);
+
+    std::cout << "starting second helper...\n";
+    std::thread helper2(bar);
+
+    std::cout << "waiting for helpers to finish..." << std::endl;
+    helper1.join();
+    helper2.join();
+
+    std::cout << "done!\n";
+}
+```
+
+<b>Passing Arguments</b><br>
+Task usually need data to work on, these can be passed to the task function.
+```
+void f();                 // function
+
+struct F {                // function object
+     void operator()();   // F's call operator (§6.3.2)
+};
+
+vector<double> some_vec {1,2,3,4,5,6,7,8,9};
+vector<double> vec2 {10,11,12,13,14};
+
+thread t1 {f,ref(some_vec)};   // f(some_vec) executes in a separate thread
+thread t2 {F{vec2}};
+```
+
+<b>Returning Results</b><br>
+Alternatively instead of passing arguments by reference and modifying the data in place it is also possible to pass an additional argument for the result.
+```
+void f(const vector<double>& v, double* res)
+double g(const vector<double>&);
+
+double res1;
+double res2;
+double res3;
+
+thread t1 {f,cref(vec1),&res1};        // f(vec1,&res1) executes in a separate thread
+thread t2 {F{vec2,&res2}};             // F{vec2,&res2}() executes in a separate thread
+thread t3 {[&](){res3 = g(vec3);}};    // capture local variables by reference
+```
+
+<b>Sharing Data</b><br>
+Sometimes threads need to share data. In that case, the access has to be synchronized so that at most one task at a time has access.
+```
+mutex m; // controlling mutex
+int sh;  // shared data
+
+void f()
+{
+     scoped_lock lck {m};        // acquire mutex
+     sh += 7;                    // manipulate shared data
+}    // release mutex implicitly
+```
+The `scoped_lock` ensures that no other thread is accessing the shared data, while reading an writing its value.
+
+<b>Waiting for Events</b><br>
+A `thread` sometimes needs to wait for events, this could be a timer expiring or a signal. The basic support for communicating using external events is provided by `condition_variables` found in `<condition_variable>`.
+```
+std::mutex m;
+std::condition_variable cv;
+std::string data;
+bool ready = false;
+bool processed = false;
+
+void worker_thread()
+{
+    // Wait until main() sends data
+    std::unique_lock<std::mutex> lk(m);
+    cv.wait(lk, []{return ready;});
+
+    // after the wait, we own the lock.
+    std::cout << "Worker thread is processing data\n";
+    data += " after processing";
+
+    // Send data back to main()
+    processed = true;
+    std::cout << "Worker thread signals data processing completed\n";
+
+    // Manual unlocking is done before notifying, to avoid waking up
+    // the waiting thread only to block again (see notify_one for details)
+    lk.unlock();
+    cv.notify_one();
+}
+
+int main()
+{
+    std::thread worker(worker_thread);
+
+    data = "Example data";
+    // send data to the worker thread
+    {
+        std::lock_guard<std::mutex> lk(m);
+        ready = true;
+        std::cout << "main() signals data ready for processing\n";
+    }
+    cv.notify_one();
+
+    // wait for the worker
+    {
+        std::unique_lock<std::mutex> lk(m);
+        cv.wait(lk, []{return processed;});
+    }
+    std::cout << "Back in main(), data = " << data << '\n';
+
+    worker.join();
+}
+```
+<b>future and promise</b><br>
+"The important point about future and promise is that they enable a transfer of a value between two tasks without explicit use of a lock; “the system” implements the transfer efficiently", Bjarne Stroustrup.
 
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
