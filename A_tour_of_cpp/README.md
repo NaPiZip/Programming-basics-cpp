@@ -709,6 +709,24 @@ int main()
 <b>future and promise</b><br>
 "The important point about future and promise is that they enable a transfer of a value between two tasks without explicit use of a lock; “the system” implements the transfer efficiently", Bjarne Stroustrup.
 
+```
+void print_int (std::future<int>& fut) {
+  int x = fut.get();
+  std::cout << "value: " << x << '\n';
+}
+
+int main ()
+{
+  std::promise<int> prom;                      // create promise
+  std::future<int> fut = prom.get_future();    // engagement with future
+  std::thread th1 (print_int, std::ref(fut));  // send future to new thread
+  prom.set_value (10);                         // fulfill promise
+                                               // (synchronizes with getting the future)
+  th1.join();
+  return 0;
+}
+```
+
 ## Topics to dive in deeper in the future
 Here is a list of topics I would investigate a bit more in detail:
 - Error handling architectures

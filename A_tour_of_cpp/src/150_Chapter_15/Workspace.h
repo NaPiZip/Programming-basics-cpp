@@ -6,6 +6,8 @@
 #include <vector>
 #include <string_view>
 #include <chrono>
+#include <future>
+
 
 namespace section_15_2 {
 void f();
@@ -63,5 +65,10 @@ void consumer();
 
 
 }  //  namespace section_15_6
+
+namespace section_15_7 {
+  void f(std::promise<std::string>& px);
+  void g(std::future<std::string>& fx);
+}  //  namespace section_15_7
 
 #endif  // _HEADER_WORKSPACE

@@ -64,14 +64,16 @@ void section_15_6::consumer() {
   while (true) {
     t0 = std::chrono::steady_clock::now();
     std::unique_lock lock{ mtex };
-    mcond.wait(lock, []() {return !mqueue.empty(); });
+    std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
+    if (mqueue.empty())
+      break;
     auto msg = mqueue.front();
     size = mqueue.size();
     mqueue.pop();
     lock.unlock();
     t1 = std::chrono::steady_clock::now();
     std::cout << msg.get_tag() << msg.get_data() << " of " << size;
-    std::cout << " time diff: " << std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << '\n';
+    std::cout << " time diff: " << std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << '\n';    
   }
 }
 
@@ -82,5 +84,28 @@ void section_15_6::producer() {
     mqueue.emplace(Message(std::string("Something: "), count++));
     mcond.notify_one();
     std::this_thread::sleep_for(std::chrono::milliseconds{ 100});
+    if (count >= 10)
+      break;
+  }
+}
+
+void section_15_7::f(std::promise<std::string>& px) {
+  try {
+    std::string result{ "A string to promise" };
+    std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
+    px.set_value(result);
+  }
+  catch (...) {
+    px.set_exception(std::current_exception());
+  }
+}
+
+void section_15_7::g(std::future<std::string>& fx) {
+  try {
+    std::string v = fx.get();
+    std::cout << v << '\n';
+  } catch (...)
+  {
+    std::cout << "Should handle the error \n";
   }
 }

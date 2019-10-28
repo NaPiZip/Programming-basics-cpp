@@ -79,11 +79,25 @@ namespace {
   }
   
   TEST(Signals, Positive) {
-    std::thread t1{ section_15_6::consumer },
-                t2{ section_15_6::producer };
+    std::thread t1{ section_15_6::producer },
+                t2{ section_15_6::consumer };
 
     t1.join();
     t2.join();
+  }
+
+  TEST(FutureAndPromism, Positive) {
+    std::promise<std::string> prom;
+    std::future<std::string> fut = prom.get_future();
+
+    std::thread t1{ section_15_7::g, std::ref(fut) };
+
+    section_15_7::f(prom);
+
+    t1.join();
+
+    std::cout << fut.get();
+    
   }
 
   }  // namespace
