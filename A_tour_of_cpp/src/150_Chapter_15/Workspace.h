@@ -69,6 +69,10 @@ void consumer();
 namespace section_15_7 {
   void f(std::promise<std::string>& px);
   void g(std::future<std::string>& fx);
+
+  double accumu(double* beg, double* end, double init);
+  double comp2(std::vector<double>& v);
+  double comp4(std::vector<double>& v);
 }  //  namespace section_15_7
 
 #endif  // _HEADER_WORKSPACE

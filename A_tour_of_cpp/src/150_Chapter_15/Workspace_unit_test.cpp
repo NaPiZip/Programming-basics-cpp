@@ -9,6 +9,7 @@
 #include <chrono>
 #include <string>
 #include <iostream>
+#include <numeric>
 
 
 namespace {
@@ -94,10 +95,18 @@ namespace {
 
     section_15_7::f(prom);
 
-    t1.join();
-
-    std::cout << fut.get();
-    
+    t1.join(); 
   }
+
+  TEST(PackedTask, Positive) {
+    std::vector<double> v{ 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0 };
+    EXPECT_THAT(section_15_7::comp2(v), Eq(36));
+
+    std::vector<double> v2(1001);
+    std::iota(v2.begin(), v2.end(), 0.0);
+
+    EXPECT_THAT(section_15_7::comp4(v2), Eq(500500));
+  }
+
 
   }  // namespace
