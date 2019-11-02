@@ -72,11 +72,24 @@ namespace {
     EXPECT_DOUBLE_EQ(v1[1], 1.0);
     EXPECT_DOUBLE_EQ(v1[2], 1.0);
 
-
     // x,y,z r,g,b functions
     EXPECT_DOUBLE_EQ(v1.x(), v1.r());
     EXPECT_DOUBLE_EQ(v1.y(), v1.g());
     EXPECT_DOUBLE_EQ(v1.z(), v1.b());
+
+    // lenght()
+    v1 = { 2,2,1 };
+    EXPECT_DOUBLE_EQ(v1.length(), 3.0);
+
+    // squared_length()
+    EXPECT_DOUBLE_EQ(v1.squared_length(), 9.0);
+
+    // make_unit_vector()
+    v1.make_unit_vector();
+    EXPECT_DOUBLE_EQ(v1.length(), 1.0);
+
+
+
 
     // operator>>
     std::istringstream is{ "5. 6. 7."s };
