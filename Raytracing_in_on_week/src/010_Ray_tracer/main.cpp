@@ -22,9 +22,5 @@ auto main() -> int {
     }
   }
   fd.close();
-
-  vec3 v{ 1.0, 2.0 ,3.0 };
-
-
   return 0;
 }
