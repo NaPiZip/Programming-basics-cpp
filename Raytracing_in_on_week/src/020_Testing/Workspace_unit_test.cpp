@@ -3,6 +3,7 @@
 #include "gmock/gmock.h"
 
 #include "vec3.h"
+#include "ray.h"
 
 #include <iostream>
 
@@ -42,7 +43,7 @@ namespace {
     EXPECT_DOUBLE_EQ(v1[2], 0.0);
 
     // operator*=
-    v1 = { 1., 2., 3. };
+    v1 = vec3{ 1., 2., 3. };
     v1 *= v1;
     EXPECT_DOUBLE_EQ(v1[0], 1.0);
     EXPECT_DOUBLE_EQ(v1[1], 4.0);
@@ -78,7 +79,7 @@ namespace {
     EXPECT_DOUBLE_EQ(v1.z(), v1.b());
 
     // lenght()
-    v1 = { 2,2,1 };
+    v1 = vec3{ 2., 2., 1. };
     EXPECT_DOUBLE_EQ(v1.length(), 3.0);
 
     // squared_length()
@@ -87,9 +88,6 @@ namespace {
     // make_unit_vector()
     v1.make_unit_vector();
     EXPECT_DOUBLE_EQ(v1.length(), 1.0);
-
-
-
 
     // operator>>
     std::istringstream is{ "5. 6. 7."s };
@@ -104,7 +102,7 @@ namespace {
     EXPECT_THAT(oss.str(), "(x,y,z): 5, 6, 7\n"s);
 
     // operator+ -
-    v1 = { 1., 2., 3. };
+    v1 = vec3{ 1., 2., 3. };
     v2 = -v1;
     EXPECT_DOUBLE_EQ(-v1[0], v2[0]);
     EXPECT_DOUBLE_EQ(-v1[1], v2[1]);
@@ -157,5 +155,18 @@ namespace {
     EXPECT_DOUBLE_EQ(v2[2], 3.);
   }
 
+  TEST(RayTest, Positive) {
+    vec3 A{ 0.0, 0.0, 0.0 },
+         B{ 0.0, 1.0, 0.0 };
+
+    ray r(A, B);
+    EXPECT_THAT(r.origin(), Eq(A));
+    EXPECT_THAT(r.direction(), Eq(B));
+
+    EXPECT_THAT(r.point_at_paprameter(1), Eq(A+B));
+
+
+        
+  }
  
 }  // namespace
