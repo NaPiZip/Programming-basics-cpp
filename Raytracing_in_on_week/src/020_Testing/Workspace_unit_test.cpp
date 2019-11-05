@@ -4,6 +4,7 @@
 
 #include "vec3.h"
 #include "ray.h"
+#include "hittable.h"
 
 #include <iostream>
 
@@ -164,9 +165,19 @@ namespace {
     EXPECT_THAT(r.direction(), Eq(B));
 
     EXPECT_THAT(r.point_at_paprameter(1), Eq(A+B));
-
-
-        
   }
- 
+
+  template <typename T>
+  class Mock_hittable : public hittable<T> {
+  public:
+    MOCK_METHOD(bool, hit, (const ray<T> r, T t_min, T t_max, hit_record<T>& rec), (const, override));
+  };
+
+  TEST(Hitrecord, Positive) {
+    class Mock_hittable<double> a;
+    // https ://stackoverflow.com/questions/25487301/how-to-use-gmock-to-test-that-a-class-calls-its-base-class-methods
+    // have to figue out proper testing in gmock
+  };
+
+   
 }  // namespace
