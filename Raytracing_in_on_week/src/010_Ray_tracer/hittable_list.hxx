@@ -1,7 +1,7 @@
 template<typename T>
 hittable_list<T>::hittable_list(hittable<T>** l, int n) {
   list = l;
-  list_size = n
+  list_size = n;
 }
 
 

@@ -4,7 +4,10 @@
 
 #include "vec3.h"
 #include "ray.h"
+#include "sphere.h"
+
 #include "hittable.h"
+#include "hittable_list.h"
 
 #include <iostream>
 
@@ -173,10 +176,18 @@ namespace {
     MOCK_METHOD(bool, hit, (const ray<T> r, T t_min, T t_max, hit_record<T>& rec), (const, override));
   };
 
+  // https ://stackoverflow.com/questions/25487301/how-to-use-gmock-to-test-that-a-class-calls-its-base-class-methods
+  // have to figue out proper testing in gmock
+
   TEST(Hitrecord, Positive) {
-    class Mock_hittable<double> a;
-    // https ://stackoverflow.com/questions/25487301/how-to-use-gmock-to-test-that-a-class-calls-its-base-class-methods
-    // have to figue out proper testing in gmock
+    sphere s{ vec3{0.0, 0.0, -1.0}, 1.0 };
+    ray r{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, -1.0} };
+    hit_record<double> record{};
+
+    s.hit(r, 0.0, 1000.0, record);
+    EXPECT_THAT(record.normal, Eq(vec3{ 0.0, 0.0, -1.0 }));
+    EXPECT_THAT(record.p, Eq(vec3{ 0.0, 0.0, -2.0 }));
+    EXPECT_THAT(record.t, Eq(2.0));
   };
 
    

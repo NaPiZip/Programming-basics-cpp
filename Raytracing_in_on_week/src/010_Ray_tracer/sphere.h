@@ -4,7 +4,7 @@
 #include"hittable.h"
 
 template<typename T>
-class sphere: public hittable {
+class sphere: public hittable<T> {
 public:
   sphere();
   sphere(vec3<T> cen, T rad) : center{ cen }, radius{ rad } {}
