@@ -3,6 +3,7 @@
 
 #include"hittable.h"
 
+
 template<typename T>
 class hittable_list: public hittable<T> {
 public:

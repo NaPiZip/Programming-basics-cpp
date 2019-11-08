@@ -10,6 +10,7 @@
 #include "hittable_list.h"
 
 #include <iostream>
+#include <memory>
 
 using std::string_literals::operator""s;
 using ::testing::Eq;
@@ -169,26 +170,32 @@ namespace {
 
     EXPECT_THAT(r.point_at_paprameter(1), Eq(A+B));
   }
-
-  template <typename T>
-  class Mock_hittable : public hittable<T> {
-  public:
-    MOCK_METHOD(bool, hit, (const ray<T> r, T t_min, T t_max, hit_record<T>& rec), (const, override));
-  };
-
-  // https ://stackoverflow.com/questions/25487301/how-to-use-gmock-to-test-that-a-class-calls-its-base-class-methods
-  // have to figue out proper testing in gmock
-
+  
   TEST(Hitrecord, Positive) {
     sphere s{ vec3{0.0, 0.0, -1.0}, 1.0 };
     ray r{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, -1.0} };
     hit_record<double> record{};
 
     s.hit(r, 0.0, 1000.0, record);
-    EXPECT_THAT(record.normal, Eq(vec3{ 0.0, 0.0, -1.0 }));
-    EXPECT_THAT(record.p, Eq(vec3{ 0.0, 0.0, -2.0 }));
-    EXPECT_THAT(record.t, Eq(2.0));
+    EXPECT_THAT(record.normal, Eq(vec3{ 0.0, 0.0, 1.0 }));
+    EXPECT_THAT(record.p, Eq(vec3{ 0.0, 0.0, 0.0 }));
+    EXPECT_THAT(record.t, Eq(0.0));
   };
+
+  TEST(Hitlsit, Positive) {
+    hittable<double>* list[2];
+    list[0] = new  sphere{ vec3{0.0, 0.0, -1.0}, 1.0 };
+    list[1] = new sphere{ vec3{0.0, 0.0, -1.0}, 1.0 };
+    ray r{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, -1.0} };
+
+    hittable<double>* world = new hittable_list<double>(list, 2);
+    
+    hit_record<double> record{};
+    EXPECT_TRUE(world->hit(r, 0.0, 1000.0, record));
+    EXPECT_THAT(record.normal, Eq(vec3{ 0.0, 0.0, 1.0 }));
+    EXPECT_THAT(record.p, Eq(vec3{ 0.0, 0.0, 0.0 }));
+    EXPECT_THAT(record.t, Eq(0.0));
+  }
 
    
 }  // namespace
