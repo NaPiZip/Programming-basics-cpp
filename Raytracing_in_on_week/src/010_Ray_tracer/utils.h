@@ -1,8 +1,11 @@
 #ifndef UTILS
 #define UTILS
 
-#include "vec3.h"
-#include "ray.h"
+#include "hittable_list.h"
+#include "sphere.h"
+
+#include <limits>
+
 
 template <typename T>
 T hitSphere(const vec3<T>& center, T radius, const ray<T>& r) {
@@ -33,4 +36,19 @@ vec3<T> color(const ray<T> r) {
   return (1.0 - t) * vec3<T>(1.0, 1.0, 1.0) + t * vec3<T>(0.5, 0.7, 1.0);
 }
 
+
+template<typename T>
+vec3<T> color(const ray<T>& r, hittable<T>* world) {
+  hit_record<T> rec{};
+
+  if (world->hit(r, 0.0, std::numeric_limits<float>::max(), rec))
+    return 0.5 * vec3(rec.normal.x() + 1,
+                      rec.normal.y() + 1,
+                      rec.normal.z() + 1);
+  else {
+    vec3<T> unit_direction = unit_vector(r.direction());
+     T t = 0.5 * (unit_direction.y() + 1.0);
+    return (1.0 - t) * vec3<T>(1.0, 1.0, 1.0) + t * vec3<T>(0.5, 0.7, 1.0);
+  }
+}
 #endif
