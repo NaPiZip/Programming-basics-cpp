@@ -2,15 +2,18 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
+#include "rand.h"
 #include "vec3.h"
 #include "ray.h"
 #include "sphere.h"
+#include "camera.h"
 
 #include "hittable.h"
 #include "hittable_list.h"
 
 #include <iostream>
 #include <memory>
+#include <algorithm>
 
 using std::string_literals::operator""s;
 using ::testing::Eq;
@@ -196,6 +199,20 @@ namespace {
     EXPECT_THAT(record.p, Eq(vec3{ 0.0, 0.0, 0.0 }));
     EXPECT_THAT(record.t, Eq(0.0));
   }
+  TEST(Rand, Positive) {
+    std::vector v(1000, 0.0);
 
+    for(auto& e: v)
+      e = random<double>();
+    
+    std::sort(v.begin(), v.end());
+    auto it = std::unique(v.begin(), v.end());
+    EXPECT_THAT(it, Eq(v.end()));    
+  }
+
+  TEST(Camera, Positive) {
+    camera<double> cam;
+    // just testing if template builds
+  }
    
 }  // namespace

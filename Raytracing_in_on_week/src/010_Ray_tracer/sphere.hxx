@@ -17,7 +17,7 @@ bool sphere<T>::hit(const ray<T> r, T t_min, T t_max, hit_record<T>& rec) const 
       else
         return false;
     };
-    T tmp = (-b - sqrt(discriminant)) / (2.0 * a);
+    T tmp = (-b - sqrt(discriminant)) / (1.0 * a);
     return abc(tmp);
   }
     return false;
