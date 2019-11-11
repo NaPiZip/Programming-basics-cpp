@@ -6,13 +6,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
+using std::string_literals::operator""s;
 
 auto main() -> int {
   constexpr int nx = 400,
                 ny = 200,
-                ns = 1;
-  std::ofstream fd("image2.ppm", std::ofstream::out);
+                ns = 200;
+  std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
   /*
       ( -2, 1,-1 )-----------------------( 2, 1,-1 )
