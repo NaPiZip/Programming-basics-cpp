@@ -41,11 +41,11 @@ template<typename T>
 vec3<T> color(const ray<T>& r, hittable<T>* world) {
   hit_record<T> rec{};
 
-  if (world->hit(r, 0.0, std::numeric_limits<float>::max(), rec))
-    return 0.5 * vec3(rec.normal.x() + 1,
-                      rec.normal.y() + 1,
-                      rec.normal.z() + 1);
-  else {
+  if (world->hit(r, 0.001, std::numeric_limits<float>::max(), rec)) {
+    vec3 target = rec.p + rec.normal + random_in_unit_sphere();
+    return 0.5 * color(ray(rec.p, target - rec.p), world);
+  }
+    else {
     vec3<T> unit_direction = unit_vector(r.direction());
      T t = 0.5 * (unit_direction.y() + 1.0);
     return (1.0 - t) * vec3<T>(1.0, 1.0, 1.0) + t * vec3<T>(0.5, 0.7, 1.0);

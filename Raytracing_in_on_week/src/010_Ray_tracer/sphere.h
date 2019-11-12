@@ -2,6 +2,7 @@
 #define SPHEREH
 
 #include"hittable.h"
+#include "rand.h"
 
 template<typename T>
 class sphere: public hittable<T> {

@@ -229,5 +229,10 @@ namespace {
     EXPECT_THAT(cam.get_ray(1, 1).origin(), origin);
     EXPECT_THAT(cam.get_ray(1, 1).direction(), lower_left_corner + horizontal +vertical);
   }
+
+  TEST(RandSphere, Positive) {
+    EXPECT_TRUE(random_in_unit_sphere() != random_in_unit_sphere());
+  }
+
    
 }  // namespace

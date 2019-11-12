@@ -23,3 +23,13 @@ bool sphere<T>::hit(const ray<T> r, T t_min, T t_max, hit_record<T>& rec) const 
     return false;
 }
 
+
+template<typename T = double>
+vec3<T> random_in_unit_sphere(){
+  vec3<T> p;
+  do {
+    p = 2.0 * vec3(random<T>(), random<T>(), random<T>()) - vec3<T>(1.0, 1.0, 1.0);
+  } while (p.squared_length() >= 1.0);
+
+  return p;
+}

@@ -45,6 +45,7 @@ auto main() -> int {
         col += color(r, world);
       }
       col /= ns;
+      col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
 
       int ir = static_cast<int>(255.99 * col[0]);
       int ig = static_cast<int>(255.99 * col[1]);
