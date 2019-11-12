@@ -7,6 +7,7 @@
 #include "ray.h"
 #include "sphere.h"
 #include "camera.h"
+#include "lambertian.h"
 
 #include "hittable.h"
 #include "hittable_list.h"
@@ -234,5 +235,8 @@ namespace {
     EXPECT_TRUE(random_in_unit_sphere() != random_in_unit_sphere());
   }
 
+  TEST(lambertian, Positive){
+    lambertian l(vec3{ 1.0, 1.0, 1.0 });
+  }
    
 }  // namespace

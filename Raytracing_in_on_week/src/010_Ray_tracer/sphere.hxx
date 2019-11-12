@@ -12,6 +12,7 @@ bool sphere<T>::hit(const ray<T> r, T t_min, T t_max, hit_record<T>& rec) const 
         rec.t = val;
         rec.p = r.point_at_paprameter(val);
         rec.normal = (rec.p - center) / radius;
+        rec.mat_ptr = mat_ptr;
         return true;
       }
       else
