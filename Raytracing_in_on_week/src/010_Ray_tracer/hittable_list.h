@@ -4,7 +4,7 @@
 #include"hittable.h"
 
 
-template<typename T>
+template<typename T = double>
 class hittable_list: public hittable<T> {
 public:
   hittable_list() { }

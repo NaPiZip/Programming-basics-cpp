@@ -13,7 +13,7 @@ using std::string_literals::operator""s;
 auto main() -> int {
   constexpr int nx = 400,
                 ny = 200,
-                ns = 200;
+                ns = 100;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
   /*
@@ -27,7 +27,7 @@ auto main() -> int {
       ( -2,-1,-1 )-----------------------( 2,-1,-1 )
   
   */
-  camera<double> cam;
+  camera cam;
 
   hittable<double>* list[2];
   list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5);

@@ -3,7 +3,7 @@
 
 #include "ray.h"
 
-template<typename T>
+template<typename T = double>
 class camera {
 public:
   camera();

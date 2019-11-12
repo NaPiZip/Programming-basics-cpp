@@ -211,8 +211,23 @@ namespace {
   }
 
   TEST(Camera, Positive) {
-    camera<double> cam;
-    // just testing if template builds
+    camera cam;
+    vec3 lower_left_corner = vec3(-2.0, -1.0, -1.0);
+    vec3 horizontal        = vec3(4.0, 0.0, 0.0);
+    vec3 vertical          = vec3(0.0, 2.0, 0.0);
+    vec3 origin            = vec3(0.0, 0.0, 0.0);
+
+    EXPECT_THAT(cam.get_ray(0, 0).origin(),  origin);
+    EXPECT_THAT(cam.get_ray(0, 0).direction(), lower_left_corner);
+    
+    EXPECT_THAT(cam.get_ray(0, 1).origin(), origin);
+    EXPECT_THAT(cam.get_ray(0, 1).direction(), lower_left_corner + vertical);
+
+    EXPECT_THAT(cam.get_ray(1, 0).origin(), origin);
+    EXPECT_THAT(cam.get_ray(1, 0).direction(), lower_left_corner + horizontal);
+
+    EXPECT_THAT(cam.get_ray(1, 1).origin(), origin);
+    EXPECT_THAT(cam.get_ray(1, 1).direction(), lower_left_corner + horizontal +vertical);
   }
    
 }  // namespace
