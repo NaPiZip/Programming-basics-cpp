@@ -3,14 +3,14 @@
 
 #include "ray.h"
 
-template<typename T>
-class material<T>;
+
+class material;
 
 template<typename T>
 struct hit_record {
   T t;
   vec3<T> p, normal;
-  material<T>* mat_ptr;
+  material* mat_ptr;
 };
 
 template<typename T>

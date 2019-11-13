@@ -4,7 +4,7 @@
 #include "material.h"
 
 template<typename T = double>
-class lambertian: public material<T> {
+class lambertian: public material {
 public:
   lambertian(const vec3<T>& a) : albedo(a) {}
   virtual bool scatter(const ray<T>& r_in, const hit_record<T>& rec,
