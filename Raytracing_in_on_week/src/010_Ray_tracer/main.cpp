@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "camera.h"
 #include "rand.h"
+#include "lambertian.h"
+#include "metal.h"
 
 #include <iostream>
 #include <fstream>
@@ -13,7 +15,7 @@ using std::string_literals::operator""s;
 auto main() -> int {
   constexpr int nx = 400,
                 ny = 200,
-                ns = 1;
+                ns = 100;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
   /*
@@ -29,11 +31,13 @@ auto main() -> int {
   */
   camera cam;
 
-  hittable<double>* list[2];
-  list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5);
-  list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100.0);
+  hittable<double>* list[4];
+  list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5, new lambertian(vec3{ 0.8, 0.3, 0.3 }));
+  list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100.0, new lambertian(vec3{ 0.8, 0.8, 0.0 }));
+  list[2] = new sphere(vec3(1.0, 0.0, -1.0), 0.5, new metal(vec3{ 0.8, 0.6, 0.2 }));
+  list[3] = new sphere(vec3(-1.0, 0.0, -1.0),0.5, new metal(vec3{ 0.8, 0.8, 0.8 }));
 
-  hittable<double>* world = new hittable_list(list, 2);
+  hittable<double>* world = new hittable_list(list, 4);
 
   for (int j = ny - 1; j >= 0; j--) {
     for (int i = 0; i < nx; i++) {
@@ -42,7 +46,7 @@ auto main() -> int {
         double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
                v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
         ray r = cam.get_ray(u, v);
-        col += color(r, world);
+        col += color(r, world,0);
       }
       col /= ns;
       col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));

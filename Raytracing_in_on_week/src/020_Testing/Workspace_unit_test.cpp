@@ -8,6 +8,7 @@
 #include "sphere.h"
 #include "camera.h"
 #include "lambertian.h"
+#include "metal.h"
 
 #include "hittable.h"
 #include "hittable_list.h"
@@ -18,6 +19,7 @@
 
 using std::string_literals::operator""s;
 using ::testing::Eq;
+using ::testing::Ne;
 
 
 namespace {
@@ -235,8 +237,32 @@ namespace {
     EXPECT_TRUE(random_in_unit_sphere() != random_in_unit_sphere());
   }
 
-  TEST(lambertian, Positive){
+  TEST(Lambertian, Positive){
+    hit_record<double> hr{ 1.0, vec3{1.0, 1.0, 1.0},vec3{1.0, 1.0, 1.0}, nullptr };
+    ray r{ vec3{0.0, 0.0, 0.0}, vec3{1.0, 1.0, 1.0} },
+      scatter{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, 0.0} };
+    vec3 attenuation{ 0.0, 0.0, 0.0 };
+
     lambertian l(vec3{ 1.0, 1.0, 1.0 });
+    EXPECT_TRUE(l.scatter(r,hr, attenuation, scatter ));
+    EXPECT_THAT(attenuation, Eq(vec3{ 1.0, 1.0, 1.0 }));
+    EXPECT_THAT(scatter.origin(), Eq(hr.p));
+    EXPECT_THAT(scatter.direction(), Ne(hr.p+hr.normal));
   }
-   
+  TEST(Metal, positive) {
+    hit_record<double> hr{ 1.0, vec3{1.0, 1.0, 1.0},vec3{0.0, 1./sqrt(2.), 1./sqrt(2.)}, nullptr };
+    ray r{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, -1.0} },
+      scatter{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, 0.0} };
+    vec3 attenuation{ 0.0, 0.0, 0.0 };
+
+    metal l(vec3{ 1.0, 1.0, 1.0 });
+    vec3 res = l.reflect(vec3{ 0.0, 0.0, -1.0 }, vec3{ 0.0, 1. / sqrt(2.), 1. / sqrt(2.) });
+    EXPECT_NEAR(res.x(), 0, 0.002);
+    EXPECT_NEAR(res.y(), 1, 0.002);
+    EXPECT_NEAR(res.z(), 0, 0.002);
+
+    EXPECT_TRUE(l.scatter(r, hr, attenuation, scatter));
+    EXPECT_THAT(attenuation, Eq(vec3{ 1.0, 1.0, 1.0 }));
+    EXPECT_THAT(scatter.origin(), Eq(hr.p));
+  }
 }  // namespace
