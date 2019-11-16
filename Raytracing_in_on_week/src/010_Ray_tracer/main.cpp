@@ -5,6 +5,7 @@
 #include "rand.h"
 #include "lambertian.h"
 #include "metal.h"
+#include "dielectric.h"
 
 #include <iostream>
 #include <fstream>
@@ -15,7 +16,7 @@ using std::string_literals::operator""s;
 auto main() -> int {
   constexpr int nx = 400,
                 ny = 200,
-                ns = 100;
+                ns = 10;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
   /*
@@ -31,13 +32,14 @@ auto main() -> int {
   */
   camera cam;
 
-  hittable<double>* list[4];
-  list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5, new lambertian(vec3{ 0.8, 0.3, 0.3 }));
+  hittable<double>* list[5];
+  list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5, new lambertian(vec3{ 0.1, 0.2, 0.5 }));
   list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100.0, new lambertian(vec3{ 0.8, 0.8, 0.0 }));
-  list[2] = new sphere(vec3(1.0, 0.0, -1.0), 0.5, new metal(vec3{ 0.8, 0.6, 0.2 }));
-  list[3] = new sphere(vec3(-1.0, 0.0, -1.0),0.5, new metal(vec3{ 0.8, 0.8, 0.8 }));
+  list[2] = new sphere(vec3(1.0, 0.0, -1.0), 0.5, new metal(vec3{ 0.8, 0.6, 0.2 }, 0.3));
+  list[3] = new sphere(vec3(-1.0, 0.0, -1.0), 0.5, new dielectric(1.3));
+  list[4] = new sphere(vec3(-1.0, 0.0, -1.0), -0.45, new dielectric(1.3));
 
-  hittable<double>* world = new hittable_list(list, 4);
+  hittable<double>* world = new hittable_list(list, 5);
 
   for (int j = ny - 1; j >= 0; j--) {
     for (int i = 0; i < nx; i++) {

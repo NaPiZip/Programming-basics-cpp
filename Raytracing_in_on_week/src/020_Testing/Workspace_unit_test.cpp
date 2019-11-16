@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "lambertian.h"
 #include "metal.h"
+#include "dielectric.h"
 
 #include "hittable.h"
 #include "hittable_list.h"
@@ -255,7 +256,7 @@ namespace {
       scatter{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, 0.0} };
     vec3 attenuation{ 0.0, 0.0, 0.0 };
 
-    metal l(vec3{ 1.0, 1.0, 1.0 });
+    metal l(vec3{ 1.0, 1.0, 1.0 }, 1.0);
     vec3 res = l.reflect(vec3{ 0.0, 0.0, -1.0 }, vec3{ 0.0, 1. / sqrt(2.), 1. / sqrt(2.) });
     EXPECT_NEAR(res.x(), 0, 0.002);
     EXPECT_NEAR(res.y(), 1, 0.002);
@@ -263,6 +264,22 @@ namespace {
 
     EXPECT_TRUE(l.scatter(r, hr, attenuation, scatter));
     EXPECT_THAT(attenuation, Eq(vec3{ 1.0, 1.0, 1.0 }));
+    EXPECT_THAT(scatter.origin(), Eq(hr.p));
+  }
+
+  TEST(Dielectric, positive) {
+    hit_record<double> hr{ 1.0, vec3{1.0, 1.0, 1.0},vec3{0.0, 1. / sqrt(2.), 1. / sqrt(2.)}, nullptr };
+    ray r{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 1. / sqrt(2.), -1. / sqrt(2.)} },
+      scatter{ vec3{0.0, 0.0, 0.0}, vec3{0.0, 0.0, 0.0} };
+    vec3 refracted{ 0.0, 0.0, 0.0 };
+
+    dielectric d(1.5);
+    EXPECT_TRUE(d.refract(r.direction(), vec3{ 0.0, 0.0, +1.0 }, 0.66666, refracted));
+    EXPECT_NEAR(refracted.x(), 0, 0.002);
+    EXPECT_NEAR(refracted.y(), 0.471, 0.002);
+    EXPECT_NEAR(refracted.z(), -0.881, 0.002);
+
+    EXPECT_TRUE(d.scatter(r, hr, refracted, scatter));
     EXPECT_THAT(scatter.origin(), Eq(hr.p));
   }
 }  // namespace
