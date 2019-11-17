@@ -16,29 +16,27 @@ using std::string_literals::operator""s;
 auto main() -> int {
   constexpr int nx = 400,
                 ny = 200,
-                ns = 10;
+                ns = 30;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
-  /*
-      ( -2, 1,-1 )-----------------------( 2, 1,-1 )
-                 |                      | 
-                 |                      | y
-                 |         (0,0,0)      | ^
-                 |                      | |
-                 |                      | |--> x
-                 |                      |                
-      ( -2,-1,-1 )-----------------------( 2,-1,-1 )
-  
-  */
-  camera cam;
+ 
+  camera cam( vec3(-2.0, 2.0, 1.0),
+              vec3(0.0, 0.0, -1.0),
+              vec3(0.0, 1.0, 0.0),
+              20.0, static_cast<double>(nx /ny));
+
 
   hittable<double>* list[5];
+  /*double R = cos(M_PI / 4);
+  list[0] = new sphere(vec3(-R, 0.0, -1.0), R, new lambertian(vec3(0.0, 0.0, 1.0)));
+  list[1] = new sphere(vec3(R, 0.0, -1.0), R, new lambertian(vec3(1.0, 0.0, 0.0)));
+  */
   list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5, new lambertian(vec3{ 0.1, 0.2, 0.5 }));
   list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100.0, new lambertian(vec3{ 0.8, 0.8, 0.0 }));
   list[2] = new sphere(vec3(1.0, 0.0, -1.0), 0.5, new metal(vec3{ 0.8, 0.6, 0.2 }, 0.3));
-  list[3] = new sphere(vec3(-1.0, 0.0, -1.0), 0.5, new dielectric(1.3));
-  list[4] = new sphere(vec3(-1.0, 0.0, -1.0), -0.45, new dielectric(1.3));
-
+  list[3] = new sphere(vec3(-1.0, 0.0, -1.0), 0.5, new dielectric(1.35));
+  list[4] = new sphere(vec3(-1.0, 0.0, -1.0), -0.45, new dielectric(1.35));
+  
   hittable<double>* world = new hittable_list(list, 5);
 
   for (int j = ny - 1; j >= 0; j--) {
