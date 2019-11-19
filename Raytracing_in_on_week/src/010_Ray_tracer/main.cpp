@@ -11,6 +11,11 @@
 #include <fstream>
 #include <string>
 
+#include <vector>
+#include <numeric>
+#include <algorithm>
+#include <chrono>
+
 using std::string_literals::operator""s;
 
 hittable<double>* random_scene() {
@@ -54,8 +59,8 @@ hittable<double>* random_scene() {
 
 
 auto main() -> int {
-  constexpr int nx = 600,
-                ny = 300,
+  constexpr int nx = 200,
+                ny = 100,
                 ns = 1;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
@@ -65,35 +70,42 @@ auto main() -> int {
               vec3(0.0, 1.0, 0.0),
               60.0, static_cast<double>(nx /ny));
 
+  std::chrono::high_resolution_clock::time_point t1, t0;
 
-  hittable<double>* list[5];
-
-  list[0] = new sphere(vec3(0.0, 0.0, -1.0), 0.5, new lambertian(vec3{ 0.1, 0.2, 0.5 }));
-  list[1] = new sphere(vec3(0.0, -100.5, -1.0), 100.0, new lambertian(vec3{ 0.8, 0.8, 0.0 }));
-  list[2] = new sphere(vec3(1.0, 0.0, -1.0), 0.5, new metal(vec3{ 0.8, 0.6, 0.2 }, 0.3));
-  list[3] = new sphere(vec3(-1.0, 0.0, -1.0), 0.5, new dielectric(1.35));
-  list[4] = new sphere(vec3(-1.0, 0.0, -1.0), -0.45, new dielectric(1.35));
-  
   hittable<double>* world = random_scene(); // new hittable_list(list, 5);
+
+  t0 = std::chrono::high_resolution_clock::now();
 
   for (int j = ny - 1; j >= 0; j--) {
     for (int i = 0; i < nx; i++) {
       vec3 col(0.0, 0.0, 0.0);
-      for (int s = 0; s < ns; s++) {
+      
+      vec3<double> a[ns];
+      std::for_each(std::begin(a), std::end(a), [&] (vec3<double>& in) {
         double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
                v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
         ray r = cam.get_ray(u, v);
-        col += color(r, world,0);
+        in = color(r, world, 0);});
+      
+      col = std::accumulate(std::begin(a), std::end(a), vec3<double>{0.0, 0.0, 0.0});
+
+      col /= ns;
+      /*      
+      for (int s = 0; s < ns; s++) {
+        double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
+               v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
+        col += color(cam.get_ray(u, v), world,0);
       }
       col /= ns;
-      col = vec3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
-
-      int ir = static_cast<int>(255.99 * col[0]);
-      int ig = static_cast<int>(255.99 * col[1]);
-      int ib = static_cast<int>(255.99 * col[2]);
-      fd << ir << ' ' << ig << ' ' << ib << '\n';
+      */
+      fd << static_cast<int>(255.99 * sqrt(col[0])) << ' '
+         << static_cast<int>(255.99 * sqrt(col[1])) << ' '
+         << static_cast<int>(255.99 * sqrt(col[2])) << '\n';
     }
   }
+  t1 = std::chrono::high_resolution_clock::now();
+  std::cout << "Elapsed time for random_scene: " << std::chrono::duration_cast<std::chrono::seconds>(t1 - t0).count() << " s \n";
+
   fd.close();
   return 0;
 }

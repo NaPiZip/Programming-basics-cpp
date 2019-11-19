@@ -1,4 +1,13 @@
 template<typename T>
+vec3<T>::vec3(const vec3& rhs) {
+  if (*this != rhs) {
+    e[0] = rhs[0];
+    e[1] = rhs[1];
+    e[2] = rhs[2];
+  }
+}
+
+template<typename T>
 inline vec3<T>& vec3<T>::operator+=(const vec3<T>& v) {
   e[0] = e[0] + v[0];
   e[1] = e[1] + v[1];

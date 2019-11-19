@@ -17,6 +17,8 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
+#include <vector>
+#include <numeric>
 
 using std::string_literals::operator""s;
 using ::testing::Eq;
@@ -26,8 +28,29 @@ using ::testing::Ne;
 namespace {
 
   TEST(Vec3GeneralTests, ShouldPass) {
-    vec3 v1{ 1., 2., 3. },
+    vec3 v1{ 1., 2., 3.},
          v2{ 1., 2., 3.};
+
+    // const copy ctor
+    vec3 v3(v1);
+    EXPECT_DOUBLE_EQ(v3[0], v1[0]);
+    EXPECT_DOUBLE_EQ(v3[1], v1[1]);
+    EXPECT_DOUBLE_EQ(v3[2], v1[2]);
+
+    EXPECT_DOUBLE_EQ(v1[0], 1.0);
+    EXPECT_DOUBLE_EQ(v1[1], 2.0);
+    EXPECT_DOUBLE_EQ(v1[2], 3.0);
+
+    // const = operator
+    vec3 v4 = v1;
+    EXPECT_DOUBLE_EQ(v4[0], v1[0]);
+    EXPECT_DOUBLE_EQ(v4[1], v1[1]);
+    EXPECT_DOUBLE_EQ(v4[2], v1[2]);
+
+    EXPECT_DOUBLE_EQ(v1[0], 1.0);
+    EXPECT_DOUBLE_EQ(v1[1], 2.0);
+    EXPECT_DOUBLE_EQ(v1[2], 3.0);
+
 
     // const operator[]
     EXPECT_DOUBLE_EQ(v1[0], 1.0);
@@ -165,6 +188,19 @@ namespace {
     EXPECT_DOUBLE_EQ(v2[0], 1);
     EXPECT_DOUBLE_EQ(v2[1], 2.);
     EXPECT_DOUBLE_EQ(v2[2], 3.);
+  }
+
+  TEST(Vec3Accumulate, Positive) {
+    vec3<double> a[10], 
+                 sum;
+
+    for (auto it = std::begin(a); it != std::end(a); ++it) {
+      *it = vec3{ 1.0, 1.0, 1.0 };
+    }
+    
+    sum = std::accumulate(std::begin(a), std::end(a), vec3<double>{0.0, 0.0, 0.0});
+
+    EXPECT_THAT(sum, Eq(vec3{ 10.0, 10.0, 10.0 }));
   }
 
   TEST(RayTest, Positive) {
