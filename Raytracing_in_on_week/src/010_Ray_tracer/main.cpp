@@ -15,6 +15,7 @@
 #include <numeric>
 #include <algorithm>
 #include <chrono>
+#include <execution>
 
 using std::string_literals::operator""s;
 
@@ -80,6 +81,7 @@ auto main() -> int {
     for (int i = 0; i < nx; i++) {
       vec3 col(0.0, 0.0, 0.0);
       
+      /*
       vec3<double> a[ns];
       std::for_each(std::begin(a), std::end(a), [&] (vec3<double>& in) {
         double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
@@ -90,14 +92,15 @@ auto main() -> int {
       col = std::accumulate(std::begin(a), std::end(a), vec3<double>{0.0, 0.0, 0.0});
 
       col /= ns;
-      /*      
+      */
+          
       for (int s = 0; s < ns; s++) {
         double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
                v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
         col += color(cam.get_ray(u, v), world,0);
       }
       col /= ns;
-      */
+      
       fd << static_cast<int>(255.99 * sqrt(col[0])) << ' '
          << static_cast<int>(255.99 * sqrt(col[1])) << ' '
          << static_cast<int>(255.99 * sqrt(col[2])) << '\n';

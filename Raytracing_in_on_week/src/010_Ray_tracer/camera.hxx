@@ -27,7 +27,7 @@ camera<T>::camera(vec3<T>& lookfrom, vec3<T>& lookat, vec3<T>& vup, T vFov, T as
 }
 
 template<typename T>
-ray<T> camera<T>::get_ray(T u, T v) {
+ray<T> camera<T>::get_ray(T u, T v) const {
   return ray<T>(origin,
                 lower_left_corner + u * horizontal + v * vertical - origin);
 }

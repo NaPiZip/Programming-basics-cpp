@@ -13,12 +13,15 @@
 
 #include "hittable.h"
 #include "hittable_list.h"
+#include "utils.h"
 
 #include <iostream>
 #include <memory>
 #include <algorithm>
 #include <vector>
 #include <numeric>
+#include <execution>
+#include <chrono>
 
 using std::string_literals::operator""s;
 using ::testing::Eq;
@@ -317,5 +320,43 @@ namespace {
 
     EXPECT_TRUE(d.scatter(r, hr, refracted, scatter));
     EXPECT_THAT(scatter.origin(), Eq(hr.p));
+  }
+
+  TEST(Optimize, Positive) {
+    std::chrono::high_resolution_clock::time_point t0, t1;
+
+    constexpr int nx = 20,
+                  ny = 20,
+                  ns = 2000;
+    double R = cos(M_PI / 4);
+
+
+    vec3 col(0.0, 0.0, 0.0);
+    camera cam(vec3(-2.0, 2.0, 1.0),
+               vec3(0.0, 0.0, -1.0),
+               vec3(0.0, 1.0, 0.0),
+               60.0, static_cast<double>(nx / ny));
+
+    hittable<double>* list[2];
+    list[0] = new sphere(vec3(-R, 0.0, -1.0), R, new lambertian(vec3(0.0, 0.0, 1.0)));
+    list[1] = new sphere(vec3(R, 0.0, -1.0), R, new lambertian(vec3(1.0, 0.0, 0.0)));
+
+    hittable<double>* world = new hittable_list(list, 2);
+    vec3<double> a[ns];
+      
+   
+    t0 = std::chrono::high_resolution_clock::now();
+    std::for_each(std::begin(a), std::end(a), [&](vec3<double> in) {
+      double u = static_cast<double>(1 + random<double>()) / static_cast<double>(nx),
+              v = static_cast<double>(1 + random<double>()) / static_cast<double>(ny);
+      col += color(cam.get_ray(u, v), world, 0);
+      });
+
+    col /= ns;  
+
+    t1 = std::chrono::high_resolution_clock::now();
+
+    std::cout << "Diff in ms: ";
+    std::cout << std::chrono::duration_cast<std::chrono::microseconds>((t1 - t0)).count() << "\n";
   }
 }  // namespace

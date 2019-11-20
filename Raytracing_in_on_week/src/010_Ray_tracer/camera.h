@@ -10,7 +10,7 @@ public:
   
   camera();
   camera(vec3<T>& lookfrom, vec3<T>& lookat, vec3<T>& vup, T vFov, T aspect);
-  ray<T> get_ray(T u, T v);
+  ray<T> get_ray(T u, T v) const ;
 
 private:
   vec3<T> origin, lower_left_corner, horizontal, vertical;
