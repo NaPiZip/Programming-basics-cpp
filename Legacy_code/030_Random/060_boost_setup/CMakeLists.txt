@@ -1,36 +1,28 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 set(PROJECT_NAME "accumulaters")
 set(EXE_NAME "example")
 
 project(${PROJECT_NAME} LANGUAGES CXX)
-set(CMAKE_PREFIX_PATH E:/010_GitHub/boost/stage/lib/cmake/Boost-1.72.0)
 
-find_package(boost REQUIRED 1.72.0 serialization regex)
+set(Boost_DEBUG OFF)
+set(Boost_USE_STATIC_LIBS       OFF)
+set(Boost_USE_MULTITHREADED     ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+
+find_package(boost 1.72.0 REQUIRED serialization)
+
+if(NOT Boost_FOUND)
+    message(fatal_error "Boost was not found. See FindBoost.cmake for details.")
+endif()
 
 file(GLOB project_SRC
     "*.h"
     "*.cpp"
 )
 
-if(NOT Boost_FOUND)
-    message(fatal_error "Boost was not found. See FindBoost.cmake for details.")
-endif()
-
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
     add_executable(${EXE_NAME} ${project_SRC})
-    target_link_libraries(${EXE_NAME} ${Boost_LIBRARIES})
-    message(STATUS ${Boost_LIBRARIES})
 endif()
-
-
-#INCLUDE_DIRECTORIES($ENV{Boost_INCLUDEDIR})
-#LINK_DIRECTORIES($ENV{Boost_LIBRARYDIR})
-
-#file(GLOB project_SRC
-#    "*.h"
-#    "*.cpp"
-#)
-
-#add_executable(${EXE_NAME} ${project_SRC})
