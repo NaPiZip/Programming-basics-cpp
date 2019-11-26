@@ -1,4 +1,4 @@
-set(EXE_NAME "Ray_tracer")
+set(EXE_NAME "ray_tracer")
 
 set(CMAKE_CXX_STANDARD 20)
 
