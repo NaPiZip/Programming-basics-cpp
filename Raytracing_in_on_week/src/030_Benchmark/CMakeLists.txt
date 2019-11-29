@@ -14,5 +14,5 @@ file(GLOB project_SRC
 )
 
 include_directories(${CELERO_INCLUDE_DIRS})
-link_directories(${CELERO_LIBRARIES})
-add_executable(${RUNNER_NAME} ${project_SRC})
+add_executable(${RUNNER_NAME} ${project_SRC} )
+target_link_libraries(${RUNNER_NAME} ${CELERO_LIBRARIES})
