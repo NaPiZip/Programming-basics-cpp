@@ -29,6 +29,12 @@ public:
             (this->e[1] == v[1]) &&
             (this->e[2] == v[2]);
   }
+
+  inline bool operator!=(const vec3<T>& v) const {
+    return  (this->e[0] != v[0]) ||
+      (this->e[1] != v[1]) ||
+      (this->e[2] != v[2]);
+  }
   
   inline vec3& operator+=(const vec3& );
   inline vec3& operator-=(const vec3& );
