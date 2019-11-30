@@ -158,7 +158,7 @@ BASELINE(ColorLoop, Baseline, 300, 2000)
 {
   constexpr int nx = 200,
     ny = 200,
-    ns = 10;
+    ns = 100;
   hittable<double>* world = create_hittable(nx, ny, ns);
 
   camera cam(vec3(-2.0, 2.0, 1.0),
@@ -182,7 +182,7 @@ BENCHMARK(ColorLoop, StdAlgorithm, 300, 2000)
 {
   constexpr int nx = 200,
     ny = 200,
-    ns = 10;
+    ns = 100;
   hittable<double>* world = create_hittable(nx, ny, ns);
 
   camera cam(vec3(-2.0, 2.0, 1.0),
@@ -208,7 +208,7 @@ BENCHMARK(ColorLoop, StdAlgorithmParalel, 300, 2000)
 {
   constexpr int nx = 200,
     ny = 200,
-    ns = 10;
+    ns = 100;
   hittable<double>* world = create_hittable(nx, ny, ns);
 
   camera cam(vec3(-2.0, 2.0, 1.0),
