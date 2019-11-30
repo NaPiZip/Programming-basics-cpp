@@ -19,9 +19,23 @@
 ## Introduction
 This repository contains my notes and source files of the book `Ray Tracing in One Weekend ` by Peter Shirley. I created this repository in order to have a centralized space for my code. My notes are not complete by any means, they only consist of content which I thought is helpful, the resources can be found [here](https://raytracing.github.io/books/RayTracingInOneWeekend.html).
 
-## Chapter 1: Overview
+I am not documenting the chapters of the book because I think it is pretty well written and everything is explained very nicely.
+
+## Notes
+The following picture is showing an example of the ray tracer in action, it is pretty amazing how simple the code is an what it can do.
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/NaPiZip/Programming-basics-cpp/master/Raytracing_in_on_week/images/cover.JPG"/></p>
 
 
+I also tried to test the `Celero` benchmarking tool, which can be fond [here](https://github.com/DigitalInBlue/Celero).
+I did some benchmarks which show the behavior of increasing the resolution, since the `main` function has two for loops, it's clear that increasing the dimension by 2 is almost doubling the runtime (see `InnerLoopNx`). I also did a benchmark on the antialiasing in `main`, because I was wondering if I could make the code faster. Using a `for_each` loop and `std::accumulate` did increase the time by the factor two. Surprisingly a standard algorithm with `std::execution::par` is slightly slower than the regular `for_each`. This was more of a fun exercise.
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/NaPiZip/Programming-basics-cpp/master/Raytracing_in_on_week/images/benchmark.JPG"/></p>
+
+**Result:
+Do not guess, benchmark it!**
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
