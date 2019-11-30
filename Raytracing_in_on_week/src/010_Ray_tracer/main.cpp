@@ -60,9 +60,9 @@ hittable<double>* random_scene() {
 
 
 auto main() -> int {
-  constexpr int nx = 200,
-                ny = 100,
-                ns = 1;
+  constexpr int nx = 800,
+                ny = 600,
+                ns = 50;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
  
@@ -80,20 +80,7 @@ auto main() -> int {
   for (int j = ny - 1; j >= 0; j--) {
     for (int i = 0; i < nx; i++) {
       vec3 col(0.0, 0.0, 0.0);
-      
-      /*
-      vec3<double> a[ns];
-      std::for_each(std::begin(a), std::end(a), [&] (vec3<double>& in) {
-        double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
-               v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
-        ray r = cam.get_ray(u, v);
-        in = color(r, world, 0);});
-      
-      col = std::accumulate(std::begin(a), std::end(a), vec3<double>{0.0, 0.0, 0.0});
-
-      col /= ns;
-      */
-          
+                    
       for (int s = 0; s < ns; s++) {
         double u = static_cast<double>(i + random<double>()) / static_cast<double>(nx),
                v = static_cast<double>(j + random<double>()) / static_cast<double>(ny);
