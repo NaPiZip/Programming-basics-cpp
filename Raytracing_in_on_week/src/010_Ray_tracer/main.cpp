@@ -61,15 +61,15 @@ hittable<double>* random_scene() {
 
 auto main() -> int {
   constexpr int nx = 800,
-                ny = 600,
+                ny = 800,
                 ns = 50;
   std::ofstream fd("image ns_"s+ std::to_string(ns) +".ppm"s, std::ofstream::out);
   fd << "P3\n" << nx << ' ' << ny << "\n255\n";
  
-  camera cam( vec3(-2.0, 2.0, 1.0),
+  camera cam( vec3(-2.0, 5.0, 3.0),
               vec3(0.0, 0.0, -1.0),
               vec3(0.0, 1.0, 0.0),
-              60.0, static_cast<double>(nx /ny));
+              80.0, static_cast<double>(nx /ny));
 
   std::chrono::high_resolution_clock::time_point t1, t0;
 
