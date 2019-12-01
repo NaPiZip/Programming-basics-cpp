@@ -22,10 +22,10 @@ This repository contains my notes and source files of the book `Ray Tracing in O
 I am not documenting the chapters of the book because I think it is pretty well written and everything is explained very nicely.
 
 ## Notes
-The following picture is showing an example of the ray tracer in action, it is pretty amazing how simple the code is an what it can do.
+The following picture shows an example of the ray tracer in action, it is pretty amazing how simple the code is and what it can do. I generated the image based on the final section of the book, whit small changes to the camera position and antialiasing.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/NaPiZip/Programming-basics-cpp/master/Raytracing_in_on_week/images/cover.JPG"/></p>
+<img src="https://raw.githubusercontent.com/NaPiZip/Programming-basics-cpp/master/Raytracing_in_on_week/images/cover.JPG" height="50%" width="50%" align="center"/></p>
 
 
 I also tried to test the `Celero` benchmarking tool, which can be fond [here](https://github.com/DigitalInBlue/Celero).
