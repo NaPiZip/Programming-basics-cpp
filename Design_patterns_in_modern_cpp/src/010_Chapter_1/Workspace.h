@@ -21,12 +21,16 @@ class Journal {
 
   // iterators
   using iterator = std::vector<std::string>::iterator;
+  using const_iterator = std::vector<std::string>::const_iterator;
   iterator begin();
+  const_iterator begin()const;
   iterator end();
+  const_iterator end() const;
   size_t size();
 };
 
 class PersistenceManager {
+public:
   static void save(const Journal& j, const std::string& filename);
 };
 
