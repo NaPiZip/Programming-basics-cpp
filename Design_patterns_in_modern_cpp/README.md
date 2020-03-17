@@ -41,7 +41,7 @@ $ python -m pip install cpplint
   ```
 
 ## Chapter 1: Introduction
-The introduction contains a lot of compressed knowledge which at some point get described in detail in section 9, hence I am not covering those elements, only if I think it makes sense. Nevertheless the SOLID Design Principles is interesting and Important.
+The introduction contains a lot of compressed knowledge which at some point get described in detail in section 9, hence I am not covering those elements, only if I think it makes sense. Nevertheless the SOLID Design Principles is interesting and important.
 
 ### The SOLID Design Principles
 SOLID is an acronym which stands for the following design principles (and their abbreviations):
@@ -50,6 +50,14 @@ SOLID is an acronym which stands for the following design principles (and their 
 - Liskov Substitution Principle (LSP)
 - Interface Segregation Principle (ISP)
 - Dependency Inversion Principle (DIP)
+
+**Single Responsibility Principle (SRP)**
+A class should only have one purpose, this helps to remove coupling as well as create better abstractions, which are easier to understand. This helps to eliminate the need of changing classes since the class has only one purpose. As general antipattern is the `God object`, meaning objects which are trying to implement as many concerns as possible.
+
+**Open-Closed Principle (OCP)**
+The open closed principle describes the fact that a class should be open for extensions but closed for changes, this means in order to add functionality, the class should be easily extendable without recompiling everything. Only by adding the behavior which should extend the class.
+
+**Liskov Substitution Principle LSP**
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

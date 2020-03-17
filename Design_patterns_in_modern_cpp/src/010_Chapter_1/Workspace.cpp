@@ -2,7 +2,7 @@
 
 #include "Workspace.h"
 #include <fstream>
-
+#include <iostream>
 using std::string_literals::operator ""s;
 
 void Journal::AddLine(const std::string& entry) {
@@ -42,4 +42,41 @@ void PersistenceManager::save(const Journal& j, const std::string& filename) {
   {
     ofs << *c_it;
   }
+}
+
+ProductFilter::Items ProductFilter::by_color(Items i, Color c) {
+  Items results;
+  for (const auto& element : i) {
+    if (element->color_ == c)
+      results.push_back(element);
+  }
+  return results;
+}
+
+bool ColorPredicate::operator()(Product* item) {
+  return item->color_ == c_;
+}
+
+bool SizePredicate::operator()(Product* item) {
+  return item->size_ == s_;
+}
+
+
+std::vector<Product*> GeneralFilter::filter(const std::vector<Product*>& items, predicate<Product>& p) {
+  std::vector<Product*> results;
+  for (const auto& element : items) {
+    if (p(element))
+      results.push_back(element);
+  }
+  return results;
+}
+
+
+std::vector<Product*> GeneralLambdaFilter::filter(const std::vector<Product*>& items, bool(*p)(const Product& i)) {
+  std::vector<Product*> results;
+  for (const auto& element : items) {
+    if (p(*element))
+      results.push_back(element);
+  }
+  return results;
 }
