@@ -80,3 +80,11 @@ std::vector<Product*> GeneralLambdaFilter::filter(const std::vector<Product*>& i
   }
   return results;
 }
+
+Rectangle RectangleFactory::create_rectangle(int width, int height) {
+  return Rectangle(width, height);
+}
+
+Rectangle RectangleFactory::create_square(int size) {
+  return Square(size);
+}

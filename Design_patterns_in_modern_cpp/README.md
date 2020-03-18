@@ -58,6 +58,8 @@ A class should only have one purpose, this helps to remove coupling as well as c
 The open closed principle describes the fact that a class should be open for extensions but closed for changes, this means in order to add functionality, the class should be easily extendable without recompiling everything. Only by adding the behavior which should extend the class.
 
 **Liskov Substitution Principle LSP**
+If an interface takes an object of its base class, it should equally take an object
+of its sub class without anything breaking, or unexpected behavior.
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

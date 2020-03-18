@@ -16,6 +16,5 @@ file(GLOB project_SRC
     "src/*.h"
     "src/*.cpp"
 )
-
 add_executable(${EXE_NAME} ${project_SRC})
 target_link_libraries(${EXE_NAME} gtest gmock)

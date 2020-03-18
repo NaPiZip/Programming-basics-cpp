@@ -70,4 +70,83 @@ struct GeneralLambdaFilter : LambdaFilter<Product> {
   std::vector<Product*> filter(const std::vector<Product*>& items, bool(*p)(const Product& i)) override;
 };
 
+
+class Rectangle {
+protected:
+  int width_, height_;
+
+public:
+  Rectangle(int width, int height) : width_{ width }, height_{ height } {}
+  
+  int get_width() const { return width_; }
+  virtual void set_width(int width) { width_ = width; }
+
+  int get_height() const { return height_; }
+  virtual void set_height(int height) { height_ = height; }
+
+  int area() const { return width_ * height_; }
+  bool is_squared() const { return width_ == height_; }
+
+};
+
+class Square : public Rectangle {
+public:
+  Square(int size) : Rectangle(size, size) {}
+  void set_width(int width) override { width_ = width; }
+  void set_height(int height) override { height_= height; }
+
+};
+
+struct RectangleFactory {
+  static Rectangle create_rectangle(int width, int height);
+  static Rectangle create_square(int size);
+};
+
+struct Document;
+
+struct IMachine {
+  virtual void print(const std::vector<Document*>& docs) = 0;
+  virtual void fax(const std::vector<Document*>& docs) = 0;
+  virtual void scan(const std::vector<Document*>& docs) = 0;
+};
+
+struct MyFavouritePrinter : public IMachine {
+  void print(const std::vector<Document*>& docs) override {}
+  void  fax(const std::vector<Document*>& docs)  override {}
+  void scan(const std::vector<Document*>& docs) override {}
+};
+
+struct IPrinter {
+  virtual void print(const std::vector<Document*>& docs) = 0;
+};
+
+struct IScanner {
+  virtual void scan(const std::vector<Document*>& docs) = 0;
+};
+
+struct IFax {
+  virtual void fax(const std::vector<Document*>& docs) = 0;
+};
+
+struct Scanner : public IScanner {
+  void scan(const std::vector<Document*>& docs) {}
+};
+
+struct IScanPrintMachine : public IScanner, IPrinter {};
+
+
+struct Machine : public IScanPrintMachine {
+  IPrinter* printer_;
+  IScanner* scanner_;
+
+  Machine(IPrinter& printer, IScanner& scanner) : printer_{ &printer }, scanner_{ &scanner } {}
+
+  void print(const std::vector<Document*>& docs) override {
+    printer_->print(docs);
+  }
+  void scan(const std::vector<Document*>& docs) override {
+    scanner_->scan(docs);
+  }
+};
+
 #endif  // _HEADER_WORKSPACE

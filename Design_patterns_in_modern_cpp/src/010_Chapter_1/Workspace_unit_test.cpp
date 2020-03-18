@@ -22,7 +22,7 @@ namespace {
 
   TEST(BasicTest, Positive) {
     EXPECT_EQ(2+3, 5);
-  }
+ }
 
   TEST(JournalConstructor, Positive) {
     Journal obj("asdas"s);
@@ -105,7 +105,7 @@ namespace {
     auto filtered = ProductFilter::by_color(product_list, Color::Green);
 
     EXPECT_THAT(filtered.size(), 2);
-    EXPECT_THAT((filtered[0]->name_), StrCaseEq("Apple"));
+    EXPECT_THAT(filtered[0]->name_, StrCaseEq("Apple"));
     EXPECT_THAT(filtered[1]->name_, StrCaseEq("Tree"));
   }
 
@@ -119,7 +119,7 @@ namespace {
 
     auto filtered_color = f.filter(product_list, pred_color);
     EXPECT_THAT(filtered_color.size(), 2);
-    EXPECT_THAT((filtered_color[0]->name_), StrCaseEq("Apple"));
+    EXPECT_THAT(filtered_color[0]->name_, StrCaseEq("Apple"));
     EXPECT_THAT(filtered_color[1]->name_, StrCaseEq("Tree"));
 
     SizePredicate pred_size(Size::Small);
@@ -134,4 +134,33 @@ namespace {
     EXPECT_THAT(lambda.size(), 1);
     EXPECT_THAT((lambda[0]->name_), StrCaseEq("House"));
   }
+
+  TEST(BasicinheritanceLiskovSub, BreakingTest) {
+    Rectangle* r = &RectangleFactory::create_rectangle(5,1);
+    Rectangle* s = &RectangleFactory::create_square(5);
+
+    EXPECT_NE(r->area(), s->area());
+
+    r->set_height(5);
+
+    EXPECT_EQ(r->area(), s->area());
+
+    auto f = [](Rectangle* p) {
+      int w = p->get_width();
+      p->set_height(2);
+      std::cout << "Expecting the area to be " << 2 * w << '\n';
+      std::cout << "But actual is " << p->area() << '\n';
+    };
+    r->set_width(30);
+
+    f(r);
+    f(s);  
+  }
+
+
+  TEST(InterfaceSegregation, Positive) {
+
+   
+  }
+
 }  // namespace
