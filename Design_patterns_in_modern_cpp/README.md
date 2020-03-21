@@ -40,10 +40,10 @@ $ python -m pip install cpplint
   Press shortcut keys
   ```
 
-## Chapter 1: Introduction
+### Chapter 1: Introduction
 The introduction contains a lot of compressed knowledge which at some point get described in detail in section 9, hence I am not covering those elements, only if I think it makes sense. Nevertheless the SOLID Design Principles is interesting and important.
 
-### The SOLID Design Principles
+#### The SOLID Design Principles
 SOLID is an acronym which stands for the following design principles (and their abbreviations):
 - Single Responsibility Principle (SRP)
 - Open-Closed Principle (OCP)
@@ -67,6 +67,13 @@ Interface should also follow the rule of SRP, meaning it's not recommended to cr
 **Dependency Inversion Principle (DIP)**
 "High-level modules should not depend on low-level modules. Both
 should depend on abstractions."[Robert C. Martin](https://www.goodreads.com/author/show/45372.Robert_C_Martin).
+
+## Chapter 2: Creational Patterns
+Creational patterns are answering the question about how a complex object should be created. This makes sense when a creation of the object is not trivial, meaning the construction process is complicated. This is where the creational patterns come in play.
+
+### Builder
+The builder pattern is one way of taking care of the creation of a object.
+
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

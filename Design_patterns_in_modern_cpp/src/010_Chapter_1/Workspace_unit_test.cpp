@@ -5,6 +5,7 @@
 #include "gmock/gmock.h"
 
 #include <filesystem>
+#include <sstream>
 #include <fstream>
 #include <string>
 #include <memory>
@@ -156,8 +157,5 @@ namespace {
     f(s);
   }
 
-
-  TEST(InterfaceSegregation, Positive) {
-  }
 
 } // namespace
