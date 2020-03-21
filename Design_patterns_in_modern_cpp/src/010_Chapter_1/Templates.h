@@ -3,16 +3,16 @@
 
 template <typename T>
 struct predicate {
-  virtual bool operator()(T* item) = 0;
+  virtual auto operator()(T* item) -> bool = 0;
 };
 
 template <typename T>
 struct Filter {
-  virtual std::vector<T*> filter(const std::vector<T*>& items, predicate<T>& p) = 0;
+  virtual auto filter(const std::vector<T*>& items, predicate<T>& p) -> std::vector<T*> = 0;
 };
 
 template <typename T>
 struct LambdaFilter {
-  virtual std::vector<T*> filter(const std::vector<T*>& items, bool(*p)(const T& i)) = 0;
+  virtual auto filter(const std::vector<T*>& items, bool(*p)(const T& i)) -> std::vector<T*> = 0;
 };
 

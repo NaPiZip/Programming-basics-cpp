@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <memory>
 
 
 using ::testing::StartsWith;
@@ -21,13 +22,13 @@ using std::string_literals::operator""s;
 namespace {
 
   TEST(BasicTest, Positive) {
-    EXPECT_EQ(2+3, 5);
- }
+    EXPECT_EQ(2 + 3, 5);
+  }
 
   TEST(JournalConstructor, Positive) {
     Journal obj("asdas"s);
 
-    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));    
+    EXPECT_THAT(obj.GetTitle(), StartsWith("asd"));
   }
 
   TEST(JournalAdd, Positive) {
@@ -63,15 +64,14 @@ namespace {
     obj.AddLine(string_list[1]);
     EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
 
-    for (Journal::iterator it = obj.begin(); it != obj.end(); ++it)
-    {
+    for (auto it = obj.begin(); it != obj.end(); ++it) {
       EXPECT_THAT(*it, HasSubstr(string_list[std::distance(obj.begin(), it)]));
     }
   }
 
   TEST(JournalSave, Positive) {
     std::string filename = "example.txt"s;
-    std::vector<std::string> content_list = { "asada"s, "Something"s, "Something else"s};
+    std::vector<std::string> content_list = { "asada"s, "Something"s, "Something else"s };
 
     Journal obj(content_list[0]);
 
@@ -79,7 +79,7 @@ namespace {
     EXPECT_THAT(obj.GetLastLine(), StartsWith("0: "));
     obj.AddLine(content_list[2]);
     EXPECT_THAT(obj.GetLastLine(), StartsWith("1: "));
-    
+
     PersistenceManager::save(obj, filename);
 
     EXPECT_THAT(std::filesystem::exists(filename), IsTrue);
@@ -98,9 +98,9 @@ namespace {
   }
 
   TEST(BasicFilterNotOpenForExtensions, Positive) {
-    std::vector<Product*> product_list = { new Product{"Apple", Color::Green, Size::Small},
-                                           new Product{"Tree", Color::Green, Size::Large},
-                                           new Product{"House", Color::Blue, Size::Large}};
+    std::vector<Product*> product_list = { new Product{ "Apple", Color::Green, Size::Small },
+      new Product{ "Tree", Color::Green, Size::Large },
+      new Product{ "House", Color::Blue, Size::Large } };
 
     auto filtered = ProductFilter::by_color(product_list, Color::Green);
 
@@ -110,12 +110,12 @@ namespace {
   }
 
   TEST(BasicFilterOpenForExtensions, Positive) {
-    std::vector<Product*> product_list = { new Product{"Apple", Color::Green, Size::Small},
-                                           new Product{"Tree", Color::Green, Size::Large},
-                                           new Product{"House", Color::Blue, Size::Large} };
+    std::vector<Product*> product_list = { new Product{ "Apple", Color::Green, Size::Small },
+      new Product{ "Tree", Color::Green, Size::Large },
+      new Product{ "House", Color::Blue, Size::Large } };
 
     GeneralFilter f;
-    ColorPredicate pred_color(Color::Green);    
+    ColorPredicate pred_color(Color::Green);
 
     auto filtered_color = f.filter(product_list, pred_color);
     EXPECT_THAT(filtered_color.size(), 2);
@@ -125,18 +125,17 @@ namespace {
     SizePredicate pred_size(Size::Small);
     auto filtered_size = f.filter(product_list, pred_size);
     EXPECT_THAT(filtered_size.size(), 1);
-    EXPECT_THAT((filtered_size[0]->name_), StrCaseEq("Apple"));  
+    EXPECT_THAT((filtered_size[0]->name_), StrCaseEq("Apple"));
 
     GeneralLambdaFilter lam;
-    auto lambda = lam.filter(product_list, [](const Product& p) {
-      return p.color_ == Color::Blue; });
+    auto lambda = lam.filter(product_list, [](const Product& p) { return p.color_ == Color::Blue; });
 
     EXPECT_THAT(lambda.size(), 1);
     EXPECT_THAT((lambda[0]->name_), StrCaseEq("House"));
   }
 
   TEST(BasicinheritanceLiskovSub, BreakingTest) {
-    Rectangle* r = &RectangleFactory::create_rectangle(5,1);
+    Rectangle* r = &RectangleFactory::create_rectangle(5, 1);
     Rectangle* s = &RectangleFactory::create_square(5);
 
     EXPECT_NE(r->area(), s->area());
@@ -154,13 +153,11 @@ namespace {
     r->set_width(30);
 
     f(r);
-    f(s);  
+    f(s);
   }
 
 
   TEST(InterfaceSegregation, Positive) {
-
-   
   }
 
-}  // namespace
+} // namespace

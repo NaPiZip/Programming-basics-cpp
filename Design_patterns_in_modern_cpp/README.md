@@ -61,5 +61,12 @@ The open closed principle describes the fact that a class should be open for ext
 If an interface takes an object of its base class, it should equally take an object
 of its sub class without anything breaking, or unexpected behavior.
 
+**The Interface Segregation Principle (ISP)**
+Interface should also follow the rule of SRP, meaning it's not recommended to create interface classes which contain a lot of methods unless the grouping makes sense in the bigger picture. It is often beneficial to split the interfaces this helps the user, in case he does not want to implement all methods, only the one he needs.
+
+**Dependency Inversion Principle (DIP)**
+"High-level modules should not depend on low-level modules. Both
+should depend on abstractions."[Robert C. Martin](https://www.goodreads.com/author/show/45372.Robert_C_Martin).
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
