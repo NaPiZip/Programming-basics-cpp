@@ -72,7 +72,24 @@ should depend on abstractions."[Robert C. Martin](https://www.goodreads.com/auth
 Creational patterns are answering the question about how a complex object should be created. This makes sense when a creation of the object is not trivial, meaning the construction process is complicated. This is where the creational patterns come in play.
 
 ### Builder
-The builder pattern is one way of taking care of the creation of a object.
+The builder pattern is one way of taking care of the creation of a object in a separate class.
+``` c++
+TEST(BuilderPatternIntro, Before) {
+   std::string words[] = { "Hello", "world" };
+   HtmlElement list("ul", "");
+   for (auto w : words)
+     list.elements_.emplace_back(HtmlElement{ "li", w });
+   std::cout << list.str();
+ }
+
+ TEST(BuilderPatternSimpleBuilder, After) {
+   HtmlBuilder builder{ "ul" };
+   builder.add_child("li", "hello");
+   builder.add_child("li", "world");
+   std::cout << builder.str();
+ }
+```
+### Builder
 
 
 ## Contributing

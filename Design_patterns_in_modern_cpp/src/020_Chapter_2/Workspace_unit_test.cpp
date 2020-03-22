@@ -32,4 +32,39 @@ namespace {
     oss << "</ul>\n";
     std::cout << oss.str();
   }
+
+  TEST(BuilderPatternIntro, ExampleStruct) {
+    std::string words[] = { "Hello", "world" };
+    HtmlElement list("ul", "");
+    for (auto w : words)
+      list.elements_.emplace_back(HtmlElement{ "li", w });
+    std::cout << list.str();
+  }
+
+  TEST(BuilderPatternSimpleBuilder, Example) {
+    HtmlBuilder builder{ "ul" };
+    builder.add_child("li", "hello");
+    builder.add_child("li", "world");
+    std::cout << builder.str();
+  }
+
+  TEST(BuilderPatternFluentBuilder, Example) {
+    HtmlBuilder builder{ "ul" };
+    builder.add_child("li", "hello").add_child("li", "world");
+    std::cout << builder.str();
+  }
+
+  TEST(BuilderPatternFluentBuilder, MoreAdvancedExample) {
+    auto builder = HtmlElemenUpdated::build("ul");
+
+    builder->add_child("li", "hello").add_child("li", "world");
+    std::cout << builder->str();
+  }
+
+  TEST(BuilderPatternGrovyStyleBuilder, Example) {
+    std::cout << P{ 
+      IMG{ "http://awdawd.png" },
+      IMG{ "http://awdawd.png" }
+    };
+  }
 } // namespace
