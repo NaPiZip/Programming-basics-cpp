@@ -64,7 +64,94 @@ struct P : Tag {
 
 struct IMG : Tag {
   explicit IMG(const std::string& url) : Tag{ "img", "" } {
-    attributes_.emplace_back(std::make_pair( "src", url));
+    attributes_.emplace_back(std::make_pair("src", url));
+  }
+};
+
+
+ class PersonAddressBuilder;
+ class PersonJobBuilder;
+ class PersonBuilder;
+
+class Person {
+  //address
+  std::string street_address_, post_code_, city_;
+
+  //employment
+  std::string company_name_, position_;
+  int annual_income_ = 0;
+
+public:
+  Person() {}
+
+  static PersonBuilder create();
+
+  friend std::ostream& operator<<(std::ostream& os, const Person& obj);
+
+  friend class PersonAddressBuilder;
+  friend class PersonJobBuilder;
+  friend class PersonBuilder;
+};
+
+
+class PersonBuilderBase {
+protected:
+  Person& person_;
+  explicit PersonBuilderBase(Person& person) : person_{ person } {}
+
+public:
+  operator Person() {
+    return std::move(person_);
+  }
+
+  PersonAddressBuilder lives(void) ;
+  PersonJobBuilder works(void) ;
+};
+
+class PersonBuilder : public PersonBuilderBase {
+  Person p_;
+
+public:
+  PersonBuilder() : PersonBuilderBase{ p_ } {}
+};
+
+class PersonAddressBuilder : public PersonBuilderBase {
+  using self = PersonAddressBuilder;
+
+public:
+  explicit PersonAddressBuilder(Person& person) : PersonBuilderBase{ person } {}
+  self& at(std::string street_address) {
+    person_.street_address_ = street_address;
+    return *this;
+  }
+  self& with_postcode(std::string post_code) {
+    person_.post_code_ = post_code;
+    return *this;
+  }
+
+  self& in(std::string city) {
+    person_.city_ = city;
+    return *this;
+  };
+};
+
+class PersonJobBuilder : public PersonBuilderBase {
+  using self = PersonJobBuilder;
+
+public:
+  explicit PersonJobBuilder(Person& person) : PersonBuilderBase{ person } {}
+
+  self& at(std::string company) {
+    person_.company_name_ = company;
+    return *this;
+  }
+  self& as_a(std::string pos) {
+    person_.position_ = pos;
+    return *this;
+  }
+  self& earning(int salary) {
+    person_.annual_income_ = salary;
+    return *this;
   }
 };
 #endif // _HEADER_WORKSPACE

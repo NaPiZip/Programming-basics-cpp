@@ -71,8 +71,8 @@ should depend on abstractions."[Robert C. Martin](https://www.goodreads.com/auth
 ## Chapter 2: Creational Patterns
 Creational patterns are answering the question about how a complex object should be created. This makes sense when a creation of the object is not trivial, meaning the construction process is complicated. This is where the creational patterns come in play.
 
-### Builder
-The builder pattern is one way of taking care of the creation of a object in a separate class.
+### Simple Builder
+The builder pattern is one way of taking care of the creation of a object in a separate class. The builder pattern in the following code snipped shows how the building of the `HtmlElement` is done by the `HtmlBuilder`, which shows that the interface is easier to use, and there is no need to know the internal implementation of the `HtmlELement`.
 ``` c++
 TEST(BuilderPatternIntro, Before) {
    std::string words[] = { "Hello", "world" };
@@ -89,8 +89,41 @@ TEST(BuilderPatternIntro, Before) {
    std::cout << builder.str();
  }
 ```
-### Builder
+### Fluent Builder
+The fluent builder basically adds a little bit of functionality to the builder class, allowing e.g. chaining and a more wider scope of adding elements, see code snippet below.
 
+```c++
+TEST(BuilderPatternFluentBuilder, MoreAdvancedExample) {
+  auto builder = HtmlElemenUpdated::build("ul");
+
+  builder->add_child("li", "hello").add_child("li", "world");
+  std::cout << builder->str();
+}
+```
+
+### Groovy-Style Builder
+A groovy style builder is just a way of creating a syntactic way of constructing an object that mimics the syntax of the programming language groovy. The snippet below uses initializer lists to do so.
+```c++
+struct P : Tag {
+  explicit P(const std::string& text) : Tag{ "P", text } {}
+  P(std::initializer_list<Tag> children) : Tag{ "p", children } {}
+};
+
+struct IMG : Tag {
+  explicit IMG(const std::string& url) : Tag{ "img", "" } {
+    attributes_.emplace_back(std::make_pair( "src", url));
+  }
+};
+
+TEST(BuilderPatternGrovyStyleBuilder, Example) {
+   std::cout << P{
+     IMG{ "http://awdawd.png" },
+     IMG{ "http://awdawd.png" }
+   };
+ }
+```
+### Composite Builder
+The composite builder is simply just a aggregation of different builders.
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

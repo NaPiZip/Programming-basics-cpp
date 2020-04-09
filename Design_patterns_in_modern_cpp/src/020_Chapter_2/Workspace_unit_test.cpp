@@ -62,9 +62,22 @@ namespace {
   }
 
   TEST(BuilderPatternGrovyStyleBuilder, Example) {
-    std::cout << P{ 
+    std::cout << P{
       IMG{ "http://awdawd.png" },
       IMG{ "http://awdawd.png" }
     };
+  }
+
+  TEST(CompositeBuilder, Example) {
+    Person p = Person::create()
+                 .lives()
+                   .at("105 W Huron St")
+                   .with_postcode("751455")
+                   .in("London")
+                 .works()
+                   .at("Google")
+                   .earning(10e6);
+    std::cout << p;
+   
   }
 } // namespace
