@@ -40,10 +40,10 @@ $ python -m pip install cpplint
   Press shortcut keys
   ```
 
-### Chapter 1: Introduction
+## Chapter 1: Introduction
 The introduction contains a lot of compressed knowledge which at some point get described in detail in section 9, hence I am not covering those elements, only if I think it makes sense. Nevertheless the SOLID Design Principles is interesting and important.
 
-#### The SOLID Design Principles
+### The SOLID Design Principles
 SOLID is an acronym which stands for the following design principles (and their abbreviations):
 - Single Responsibility Principle (SRP)
 - Open-Closed Principle (OCP)
@@ -68,10 +68,11 @@ Interface should also follow the rule of SRP, meaning it's not recommended to cr
 "High-level modules should not depend on low-level modules. Both
 should depend on abstractions."[Robert C. Martin](https://www.goodreads.com/author/show/45372.Robert_C_Martin).
 
-## Chapter 2: Creational Patterns
+## Part 1: Creational Patterns
 Creational patterns are answering the question about how a complex object should be created. This makes sense when a creation of the object is not trivial, meaning the construction process is complicated. This is where the creational patterns come in play.
 
-### Simple Builder
+### Chapter 2: Builder
+#### Simple Builder
 The builder pattern is one way of taking care of the creation of a object in a separate class. The builder pattern in the following code snipped shows how the building of the `HtmlElement` is done by the `HtmlBuilder`, which shows that the interface is easier to use, and there is no need to know the internal implementation of the `HtmlELement`.
 ``` c++
 TEST(BuilderPatternIntro, Before) {
@@ -89,7 +90,7 @@ TEST(BuilderPatternIntro, Before) {
    std::cout << builder.str();
  }
 ```
-### Fluent Builder
+#### Fluent Builder
 The fluent builder basically adds a little bit of functionality to the builder class, allowing e.g. chaining and a more wider scope of adding elements, see code snippet below.
 
 ```c++
@@ -100,8 +101,7 @@ TEST(BuilderPatternFluentBuilder, MoreAdvancedExample) {
   std::cout << builder->str();
 }
 ```
-
-### Groovy-Style Builder
+#### Groovy-Style Builder
 A groovy style builder is just a way of creating a syntactic way of constructing an object that mimics the syntax of the programming language groovy. The snippet below uses initializer lists to do so.
 ```c++
 struct P : Tag {
@@ -122,7 +122,7 @@ TEST(BuilderPatternGrovyStyleBuilder, Example) {
    };
  }
 ```
-### Composite Builder
+#### Composite Builder
 The composite builder is simply just a aggregation of different builders.
 ```c++
 class PersonBuilderBase {
@@ -143,6 +143,63 @@ public:
   }
 };
 ```
+### Chapter 3: Factories
+#### Factory Method
+The Factory Method design pattern is used instead of the regular class constructor for keeping within the SOLID principle of programming, decoupling the construction of objects from the objects themselves [Wikipedia](https://en.wikipedia.org/wiki/Factory_method_pattern).
+
+#### Inner Factory
+Is basically the same as a factory class besides the fact that it resides within the class of the object it creates. Here is a code snipped:
+```c++
+struct InnerPoint {
+protected:
+  float x_, y_;
+
+private:
+  InnerPoint(float x, float y) : x_{ x }, y_{ y } {}
+
+public:
+  using Factory = PointFactory;
+  struct PointFactory {
+    static InnerPoint NewCartesian(float, float);
+    static InnerPoint NewPolar(float, float);
+  };  
+};
+
+TEST(InnerFactoryClass, BasicIntro) {
+    auto p = InnerPoint::Factory::NewPolar(5, 2.14 / 2);
+  }
+```
+#### Abstract Factory
+The abstract factory is an extension of a classical factory class but with the usage of inheritance, meaning a abstract factory class is defined for the creation of a concrete factory:
+
+```c++
+struct HotDrinkFactory {
+  virtual std::unique_ptr<HotDrink> make() const = 0;
+};
+
+struct CoffeeFactory : public HotDrinkFactory {
+  std::unique_ptr<HotDrink> make() const override;
+};
+
+struct TeaFactory : public HotDrinkFactory {
+  std::unique_ptr<HotDrink> make() const override;
+};
+
+class DrinkFactory {
+  std::map<std::string, std::unique_ptr<HotDrinkFactory>> hot_factories;
+
+public:
+  DrinkFactory();
+  std::unique_ptr<HotDrink> make_drink(const std::string& name);
+};
+```
+#### Functional Factory
+If someone passes in a std::function that returns a type T into some function, this is typically referred to as a Factory, not a Factory Method [Dmitri Nesteruk](https://www.pluralsight.com/authors/dmitri-nesteruk).
+
+**Note**<br>
+A factory is simply a wrapper function around a constructor (possibly one in a different class). The key difference is that a factory method pattern requires the entire object to be built in a single method call, with all the parameters pass in on a single line. The final object will be returned.
+
+A builder pattern, on the other hand, is in essence a wrapper object around all the possible parameters you might want to pass into a constructor invocation. This allows you to use setter methods to slowly build up your parameter list. One additional method on a builder class is a build() method, which simply passes the builder object into the desired constructor, and returns the result. [Stackoverflow](https://stackoverflow.com/questions/757743/what-is-the-difference-between-builder-design-pattern-and-factory-design-pattern).
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
