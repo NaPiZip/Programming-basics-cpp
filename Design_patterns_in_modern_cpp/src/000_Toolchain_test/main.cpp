@@ -1,6 +1,7 @@
-#include <gtest/gtest.h>
-#include "Workspace.hpp"
+// Copyright 2019, Nawin
 
+#include <gtest\gtest.h>
+#include "Workspace.h"
 
 
 int main(int argc, char** argv) {

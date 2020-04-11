@@ -1,9 +1,11 @@
-set(EXE_NAME "000_Toolchain_test")
+set(EXE_NAME "000_Toolchain")
 
 set(CMAKE_CXX_STANDARD 17)
 
 file(GLOB project_SRC
     "*.h"
+    "*.hpp"
+    "*.c"
     "*.cpp"
 )
 
