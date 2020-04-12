@@ -194,7 +194,7 @@ public:
 };
 ```
 #### Functional Factory
-If someone passes in a std::function that returns a type T into some function, this is typically referred to as a Factory, not a Factory Method [Dmitri Nesteruk](https://www.pluralsight.com/authors/dmitri-nesteruk).
+If someone passes in a `std::function` that returns a type T into some function, this is typically referred to as a Factory, not a Factory Method [Dmitri Nesteruk](https://www.pluralsight.com/authors/dmitri-nesteruk).
 
 **Note**<br>
 A factory is simply a wrapper function around a constructor (possibly one in a different class). The key difference is that a factory method pattern requires the entire object to be built in a single method call, with all the parameters pass in on a single line. The final object will be returned.
