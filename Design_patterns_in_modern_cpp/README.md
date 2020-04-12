@@ -90,9 +90,9 @@ TEST(BuilderPatternIntro, Before) {
    std::cout << builder.str();
  }
 ```
+
 #### Fluent Builder
 The fluent builder basically adds a little bit of functionality to the builder class, allowing e.g. chaining and a more wider scope of adding elements, see code snippet below.
-
 ```c++
 TEST(BuilderPatternFluentBuilder, MoreAdvancedExample) {
   auto builder = HtmlElemenUpdated::build("ul");
@@ -101,6 +101,7 @@ TEST(BuilderPatternFluentBuilder, MoreAdvancedExample) {
   std::cout << builder->str();
 }
 ```
+
 #### Groovy-Style Builder
 A groovy style builder is just a way of creating a syntactic way of constructing an object that mimics the syntax of the programming language groovy. The snippet below uses initializer lists to do so.
 ```c++
@@ -122,6 +123,7 @@ TEST(BuilderPatternGrovyStyleBuilder, Example) {
    };
  }
 ```
+
 #### Composite Builder
 The composite builder is simply just a aggregation of different builders.
 ```c++
@@ -143,6 +145,7 @@ public:
   }
 };
 ```
+
 ### Chapter 3: Factories
 #### Factory Method
 The Factory Method design pattern is used instead of the regular class constructor for keeping within the SOLID principle of programming, decoupling the construction of objects from the objects themselves [Wikipedia](https://en.wikipedia.org/wiki/Factory_method_pattern).
@@ -169,9 +172,9 @@ TEST(InnerFactoryClass, BasicIntro) {
     auto p = InnerPoint::Factory::NewPolar(5, 2.14 / 2);
   }
 ```
+
 #### Abstract Factory
 The abstract factory is an extension of a classical factory class but with the usage of inheritance, meaning a abstract factory class is defined for the creation of a concrete factory:
-
 ```c++
 struct HotDrinkFactory {
   virtual std::unique_ptr<HotDrink> make() const = 0;
@@ -193,6 +196,7 @@ public:
   std::unique_ptr<HotDrink> make_drink(const std::string& name);
 };
 ```
+
 #### Functional Factory
 If someone passes in a `std::function` that returns a type T into some function, this is typically referred to as a Factory, not a Factory Method [Dmitri Nesteruk](https://www.pluralsight.com/authors/dmitri-nesteruk).
 
@@ -200,6 +204,37 @@ If someone passes in a `std::function` that returns a type T into some function,
 A factory is simply a wrapper function around a constructor (possibly one in a different class). The key difference is that a factory method pattern requires the entire object to be built in a single method call, with all the parameters pass in on a single line. The final object will be returned.
 
 A builder pattern, on the other hand, is in essence a wrapper object around all the possible parameters you might want to pass into a constructor invocation. This allows you to use setter methods to slowly build up your parameter list. One additional method on a builder class is a build() method, which simply passes the builder object into the desired constructor, and returns the result. [Stackoverflow](https://stackoverflow.com/questions/757743/what-is-the-difference-between-builder-design-pattern-and-factory-design-pattern).
+
+### Chapter 4: Prototype
+#### Ordinary Duplication
+The general idea is to create an object and copy is's attributes with the help of e.g. an `operator=`.
+```c++
+SomeWeirdClass prototype{"An attribute", 5};
+SomeWeirdClass different_obj;
+// here we are using a prototype for initialization of the values of different_obj
+different_obj = prototype;
+
+// customizing it
+different_obj.a_value = 7;
+
+```
+
+#### Duplication via Copy Constructor
+Duplication can also occur via the copy constructor.
+```c++
+SomeWeirdClass prototype{"An attribute", 5};
+SomeWeirdClass different_obj = prototype;
+
+// customizing it
+different_obj.a_value = 7;
+```
+
+#### Prototype Factory
+Is creating an object via a factory pattern with the help of an instantiated object which is used as a blue print.
+
+### Chapter 5: Singelton
+#### Ordinary Duplication
+
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
