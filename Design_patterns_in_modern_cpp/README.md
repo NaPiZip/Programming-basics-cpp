@@ -263,6 +263,18 @@ class Printer
 };
 ```
 
+## Part 2: Structural Patterns
+Structural pattern describe how to design objects and classes. It gives guidelines on how the internal arrangement should be and how it should be organized. We commonly use tree types:
+- Inheritance
+An object automatically acquires the nonprivate fields and functions of its base class.
+or classes.
+- Composition
+It describes a class that references one or more objects of other classes in instance variables (it consists of).
+- Aggregation
+Is very similar as composition, with the difference that we do not own, pointer to an object, meaning we are not responsible for live time handling (it uses).
+
+### Chapter 6: Adapters
+
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
