@@ -232,8 +232,36 @@ different_obj.a_value = 7;
 #### Prototype Factory
 Is creating an object via a factory pattern with the help of an instantiated object which is used as a blue print.
 
-### Chapter 5: Singelton
-#### Ordinary Duplication
+### Chapter 5: Singleton
+#### Classic Implementation
+A singleton is a type which only can be instantiate once.
+
+```c++
+class Singleton
+{
+   public:
+       static S& getInstance()
+        {
+            static S    instance; // Guaranteed to be destroyed.
+                                  // Instantiated on first use.
+            return instance;
+        }
+     S(S const&)               = delete;
+      void operator=(S const&)  = delete;
+};
+```
+
+#### Monostate
+A monostate is a singleton class which looks like an ordinary class but is under the hood only instantiate once.
+```c++
+class Printer
+{
+  static int id;
+  public:
+    int get_id() const { return id; }
+    void set_id(int value) { id = value; }
+};
+```
 
 
 ## Contributing
