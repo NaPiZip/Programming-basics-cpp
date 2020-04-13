@@ -274,6 +274,34 @@ It describes a class that references one or more objects of other classes in ins
 Is very similar as composition, with the difference that we do not own, pointer to an object, meaning we are not responsible for live time handling (it uses).
 
 ### Chapter 6: Adapters
+#### Adapters
+The adapter design pattern consists of having a fixed interface which is given, but we want to use it with our own object types. The example shows the `DrawPoints` function which is based on `std::vector<Point>::iterator`, but we want to use `Line` objects.
+
+```c++
+
+struct Point {
+  int x_, y_;
+};
+
+struct Line {
+  Point begin_, end_;
+};
+
+void DrawPoints(CPaintDC& dc, std::vector<Point>::iterator start, std::vector<Point>::iterator end);
+```
+
+We can accieve this by using a adapter:
+```c++
+struct LineToPointAdapter {
+  using Points = std::vector<Point>;
+  LineToPointAdapter(Line& line);
+  virtual Points::iterator begin();
+  virtual Points::iterator end();
+
+  private:
+  Points points_;
+};
+```
 
 
 ## Contributing
