@@ -276,7 +276,6 @@ Is very similar as composition, with the difference that we do not own, pointer 
 ### Chapter 6: Adapters
 #### Adapters
 The adapter design pattern consists of having a fixed interface which is given, but we want to use it with our own object types. The example shows the `DrawPoints` function which is based on `std::vector<Point>::iterator`, but we want to use `Line` objects.
-
 ```c++
 
 struct Point {
@@ -289,7 +288,6 @@ struct Line {
 
 void DrawPoints(CPaintDC& dc, std::vector<Point>::iterator start, std::vector<Point>::iterator end);
 ```
-
 We can accieve this by using a adapter:
 ```c++
 struct LineToPointAdapter {
@@ -303,6 +301,26 @@ struct LineToPointAdapter {
 };
 ```
 
+### Chapter 7: Bridge
+#### The Pimpl Idiom
+The PIMPL Idiom (Pointer to IMPLementation) is a technique for implementation hiding in which a public class wraps a structure or class that cannot be seen outside the library the public class is part of [Stackoverflow](https://stackoverflow.com/questions/60570/why-should-the-pimpl-idiom-be-used).
+```c++
+struct Person {
+  void greet();
+
+  Person(std::string);
+  ~Person();
+
+  struct PersonImpl;
+  PersonImpl* pimpl_;
+};
+
+void Person::greet() {
+  pimpl_->greet(this);
+};
+
+```
+The implementation is now hidden for the user.
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).

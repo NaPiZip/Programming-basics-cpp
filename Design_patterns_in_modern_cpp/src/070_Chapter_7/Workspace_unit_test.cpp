@@ -23,4 +23,9 @@ namespace {
     EXPECT_EQ(2 + 3, 5);
   }
 
- } // namespace
+  TEST(Bridge, PimplIdiomExample) {
+    Person nawin{ "Nawin" };
+    nawin.greet();
+  }
+
+} // namespace
