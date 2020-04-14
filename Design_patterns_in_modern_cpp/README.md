@@ -318,9 +318,21 @@ struct Person {
 void Person::greet() {
   pimpl_->greet(this);
 };
-
 ```
 The implementation is now hidden for the user.
+#### Bridge
+The bridge pattern is meant to decouple an abstraction form its implementation, similar to the `pimpl` idiom. The following example shows how we can pass a `VectorRenderer` or a `RasterRenderer` to the `Circle` constructor.
+```c++
+TEST(Bridge, ABasicBridge) {
+  std::shared_ptr<VectorRenderer> v_renderer = std::make_shared<VectorRenderer>();
+  std::shared_ptr<RasterRenderer> r_renderer = std::make_shared<RasterRenderer>();
+
+  std::unique_ptr<Circle> v_shape = std::make_unique<Circle>(*v_renderer, 1, 1, 1);
+  std::unique_ptr<Circle> r_shape = std::make_unique<Circle>(*v_renderer, 1, 1, 1);
+  v_shape->draw();
+  r_shape->draw();
+}
+```
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
