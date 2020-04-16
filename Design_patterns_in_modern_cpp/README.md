@@ -337,7 +337,6 @@ TEST(Bridge, ABasicBridge) {
 ### Chapter 8: Composite
 #### The Composite Pattern
 A composition pattern tries to give single objects and groups of objects an identical interface. The follow example shows the nesting of an element type `Group` into another group.
-
 ```c++
 Group root("root");
 Circle c1, c2;
@@ -350,6 +349,9 @@ root.objects.push_back(&subgroup);
 
 root.draw();
 ```
+
+### Chapter 9: Decorator
+#### The Dynamic Decorator
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
