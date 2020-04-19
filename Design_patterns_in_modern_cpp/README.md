@@ -352,6 +352,81 @@ root.draw();
 
 ### Chapter 9: Decorator
 #### The Dynamic Decorator
+The decorator pattern allows to enhance feature with out breaking the single responsible pattern.
 
+```c++
+struct Shape {
+  virtual std::string str() const = 0;
+};
+
+struct ColoredShape : public Shape {
+  Shape& shape_;
+  std::string color_;
+
+  ColoredShape(Shape& shape, const std::string& color) : shape_{ shape }, color_{ color } {}
+  std::string str() const override;
+};
+
+struct TransparentShape : public Shape {
+  Shape& shape_;
+  uint8_t transparency_;
+
+  TransparentShape(Shape& shape, uint8_t transparency) : shape_{ shape }, transparency_{ transparency } {}
+  std::string str() const override;
+};
+
+TEST(DecoratorPattern, DynamicDecoratorEnhancment) {
+   std::unique_ptr<TransparentShape> demi_square = std::make_unique<TransparentShape>(Square(5), 85);
+
+   std::cout << demi_square->str() << '\n';
+
+   std::unique_ptr<ColoredShape> red_circle = std::make_unique<ColoredShape>(Circle(3.0f), "red");
+   std::unique_ptr<TransparentShape> custom_circle = std::make_unique<TransparentShape>(*red_circle, 200);
+
+   std::cout << custom_circle->str() << '\n';
+ }
+```
+
+#### The Static Decorator
+Static decorator follow the same idea, but with using template meta programming technique. See here how the ctor is forwarded:
+
+```c++
+template <typename T>
+struct NewTransparentShape2 : T {
+  static_assert(std::is_base_of<Shape, T>::value,
+      "Template argument needs to be a type of shape");
+
+  uint8_t transparency_;
+  template <typename... Args>
+  NewTransparentShape2(uint8_t transparency, Args... args) : T(std::forward<Args>(args)...), transparency_{ transparency } {}
+  std::string str() const override {
+    float transparency_in_percent = static_cast<float>(transparency_) / 255.f * 100.f;
+    return T::str() + " has " + std::to_string(transparency_in_percent) + "% transparency";
+  }
+};
+```
+
+#### Functional Decorator
+Is the application of the decorator pattern for functions instead of classes.
+
+```c++
+template <typename>
+struct Logger3;
+
+template <typename R, typename... Args>
+struct Logger3<R(Args...)> {
+  std::function<R(Args...)> func_;
+  std::string name_;
+
+  Logger3(std::function<R(Args...)> func, const std::string& name) : func_{ func }, name_{ name } {}
+
+  R operator()(Args... args) {
+    std::cout << "Entering " << name_ << '\n';
+    R result = func_(args...);
+    std::cout << "Exiting " << name_ << '\n';
+    return result;
+  }
+};
+```
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
