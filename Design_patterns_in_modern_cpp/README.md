@@ -447,5 +447,41 @@ struct ConsoleCreationParameters
 Console::Console(const ConsoleCreationParameters& ccp);
 ```
 
+### Chapter 11: Flyweight
+#### General Description
+The flyweight is a pattern which is used to save space or to reduce the overhead of content. The example below shows how to save names in a hash map like structure, an name only gets inserted if it does not exists yet otherwise the reference to the existing object is used.
+
+```c++
+struct User {
+  User(const std::string& first_name, const std::string& last_name) : first_name_{ add(first_name) }, last_name_{ add(last_name) } {}
+  const std::string& get_first_name() const;
+  const std::string& get_last_name() const;
+
+protected:
+  key first_name_, last_name_;
+  static key seed_;
+  static boost::bimap<key, std::string> names_;
+  static key add(const std::string& s);
+
+private:
+  friend std::ostream& operator<<(std::ostream& os, const User& obj);
+};
+
+key User::seed_ = 0;
+boost::bimap<key, std::string> User::names_ = {};
+
+key User::add(const std::string& s) {
+  auto it = names_.right.find(s);
+  if (it == names_.right.end()) {
+    names_.insert({ ++seed_, s });
+    return seed_;
+  }
+  return it->second;
+}
+
+```
+
+
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
