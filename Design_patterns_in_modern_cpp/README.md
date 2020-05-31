@@ -235,7 +235,6 @@ Is creating an object via a factory pattern with the help of an instantiated obj
 ### Chapter 5: Singleton
 #### Classic Implementation
 A singleton is a type which only can be instantiate once.
-
 ```c++
 class Singleton
 {
@@ -288,6 +287,7 @@ struct Line {
 
 void DrawPoints(CPaintDC& dc, std::vector<Point>::iterator start, std::vector<Point>::iterator end);
 ```
+
 We can accieve this by using a adapter:
 ```c++
 struct LineToPointAdapter {
@@ -319,6 +319,7 @@ void Person::greet() {
   pimpl_->greet(this);
 };
 ```
+
 The implementation is now hidden for the user.
 #### Bridge
 The bridge pattern is meant to decouple an abstraction form its implementation, similar to the `pimpl` idiom. The following example shows how we can pass a `VectorRenderer` or a `RasterRenderer` to the `Circle` constructor.
@@ -353,7 +354,6 @@ root.draw();
 ### Chapter 9: Decorator
 #### The Dynamic Decorator
 The decorator pattern allows to enhance feature with out breaking the single responsible pattern.
-
 ```c++
 struct Shape {
   virtual std::string str() const = 0;
@@ -389,7 +389,6 @@ TEST(DecoratorPattern, DynamicDecoratorEnhancment) {
 
 #### The Static Decorator
 Static decorator follow the same idea, but with using template meta programming technique. See here how the ctor is forwarded:
-
 ```c++
 template <typename T>
 struct NewTransparentShape2 : T {
@@ -408,7 +407,6 @@ struct NewTransparentShape2 : T {
 
 #### Functional Decorator
 Is the application of the decorator pattern for functions instead of classes.
-
 ```c++
 template <typename>
 struct Logger3;
@@ -428,5 +426,26 @@ struct Logger3<R(Args...)> {
   }
 };
 ```
+
+### Chapter 10: Facade
+#### General Description
+A facade is a simple concept of hiding for example the initialization of a class with a vast number of arguments. It helps keeping the creation easy by removing the need of explicit initialization of all arguments. The following example shows how the arguments of the constructor gets replaced by a additional method which only takes a struct object to get initialized.
+```c++
+Console::Console(bool fullscreen, int char_width, int char_height, int width, int height, optional<Size> client_size)
+
+struct ConsoleCreationParameters
+{
+  optional<Size> client_size;
+  int character_width{10};
+  int character_height{14};
+  int width{20};
+  int height{30};
+  bool fullscreen{false};
+  bool create_default_view_and_buffer{true};
+};
+
+Console::Console(const ConsoleCreationParameters& ccp);
+```
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
