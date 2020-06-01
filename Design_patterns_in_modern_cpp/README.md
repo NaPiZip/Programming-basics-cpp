@@ -450,7 +450,6 @@ Console::Console(const ConsoleCreationParameters& ccp);
 ### Chapter 11: Flyweight
 #### General Description
 The flyweight is a pattern which is used to save space or to reduce the overhead of content. The example below shows how to save names in a hash map like structure, an name only gets inserted if it does not exists yet otherwise the reference to the existing object is used.
-
 ```c++
 struct User {
   User(const std::string& first_name, const std::string& last_name) : first_name_{ add(first_name) }, last_name_{ add(last_name) } {}
@@ -481,7 +480,38 @@ key User::add(const std::string& s) {
 
 ```
 
+### Chapter 12: Proxy
+#### General Description
+A proxy pattern basically provides a interface to an API. This can be used to either customize, adapt or extend an existing API. There are various different kind of proxy depending on their functionality:
+- Property Proxies, replace fields and perform additional behavior.
+- Virtual Proxies, provide additional functionality by maintaining the interface combability.
+- Communication Proxies, keeps the same API by changing the underling invoked object.
 
+```c++
+
+struct Bitmap : Image {
+  Bitmap(const std::string& filename);
+  void draw() override;
+};
+
+struct LazyBitmap : Image {
+  LazyBitmap(const std::string& filename) : Image{ filename } {};
+  ~LazyBitmap() { delete bmp_; }
+  void draw() override {
+  if (!bmp_)
+    bmp_ = new Bitmap(filename_);
+  bmp_->draw();
+};
+
+private:
+  Bitmap* bmp_{ nullptr };
+};
+```
+
+## Part 3: Behavioral Patterns
+
+### Chapter 13: Chain of Responsibility
+#### General Description
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
