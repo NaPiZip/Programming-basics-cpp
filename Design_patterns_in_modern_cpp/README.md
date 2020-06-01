@@ -509,9 +509,37 @@ private:
 ```
 
 ## Part 3: Behavioral Patterns
+Behavioral pattern address the topic of the deal with the way the program flow is executed, depending on the developer defined environmental constrains. It basically covers all general cases which are left.
 
 ### Chapter 13: Chain of Responsibility
 #### General Description
+The chain of Responsibility is the consecutive invocation of methods, this can either be implemented via:
+- Pointer Chain, it is basic just traversing a linked list or a vector.
+- Broker Chain , is a managed approach with the usage of a central service which keeps track  of what happend.
+
+```c++
+struct Query {
+  std::string creature_name_;
+  enum Argument { attack,
+    defense } argument;
+  int result;
+};
+
+class Creature2 {
+  Game& game_;
+  int attack_, defense_;  
+
+public:  
+  std::string name_;
+  Creature2(Game& game, const std::string& name, int attack, int defense) : game_{ game }, name_{ name }, attack_{ attack }, defense_{defense} {};
+  int get_attack() const {
+    Query q{ name_, Query::Argument::attack, attack_ };
+    game_.queries(q);
+    return q.result;
+  }
+};
+
+```
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
