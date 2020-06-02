@@ -541,5 +541,51 @@ public:
 
 ```
 
+### Chapter 14: Command
+#### General Description
+With the help of the command pattern can objects modify and query state information with the help of using special objects aka. the command. This is helpful e.g. if you want to maintain a history of actions.
+```c++
+struct BankAccount {
+  int balance_ = 0;
+  int overdraft_limit_ = -500;
+
+  void deposit(int amount);
+  bool withdraw(int amount);
+};
+
+
+struct Command {
+  virtual void call() = 0;
+  virtual void undo() = 0;
+};
+
+
+struct BankAccountCommand : Command {
+  BankAccount& account_;
+  enum Action { deposit,
+    withdraw } action_;
+  int amount_;
+  bool withdrawal_succeeded_{ false };
+
+  BankAccountCommand(BankAccount& account, const Action action, const int amount) : account_{ account }, action_{ action }, amount_{ amount } {  }
+  void call() override;
+  void undo() override;
+};
+
+void BankAccountCommand::call() {
+  switch (action_) {
+  case BankAccountCommand::deposit:
+    account_.deposit(amount_);
+    break;
+  case BankAccountCommand::withdraw:
+    withdrawal_succeeded_ = account_.withdraw(amount_);
+    break;
+  default:
+    break;
+  }
+}
+```
+
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
