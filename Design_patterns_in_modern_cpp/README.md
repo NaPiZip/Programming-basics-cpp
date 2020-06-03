@@ -586,6 +586,46 @@ void BankAccountCommand::call() {
 }
 ```
 
+### Chapter 15: The Interpreter
+#### General Description
+The interpreter pattern is mostly used to parse text input. Interpreter are usually divided in tow parts the lexer and the parser:
+- lexer: Tokenizes  the given input.
+- parser: Transforms the tokens into AST (Abstract Syntax Tree) form.
+
+```c++
+struct Token {
+  enum class Type { integer,
+    plus,
+    minus,
+    lparen,
+    rparen } type_;
+  std::string text_;
+
+  explicit Token(Type type, const std::string& text) : type_{ type }, text_{ text } {}
+};
+
+std::vector<Token> lex(const std::string& input);
+
+
+struct Element {
+  virtual int eval() const = 0;
+};
+
+struct Integer : Element {
+  int value_;
+  explicit Integer(int value) : value_{ value } {}
+  int eval() const override;
+};
+
+struct BinaryOperation : Element {
+  enum class Type {addition, subtraction} type_;
+  std::shared_ptr<Element> lhs_, rhs_;
+  int eval() const override;
+};
+
+std::shared_ptr<Element> parse(const std::vector<Token>& tokens);
+```
+
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
