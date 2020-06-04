@@ -586,7 +586,7 @@ void BankAccountCommand::call() {
 }
 ```
 
-### Chapter 15: The Interpreter
+### Chapter 15: Interpreter
 #### General Description
 The interpreter pattern is mostly used to parse text input. Interpreter are usually divided in tow parts the lexer and the parser:
 - lexer: Tokenizes  the given input.
@@ -626,6 +626,20 @@ struct BinaryOperation : Element {
 std::shared_ptr<Element> parse(const std::vector<Token>& tokens);
 ```
 
+### Chapter 15: Iterator
+#### General Description
+An iterator is a helper which defines a fixed set of assumptions, depending on its type. The following snippet show a `std::iterator` base class:
 
+```c++
+template <class Category, class T, class Distance = ptrdiff_t,
+          class Pointer = T*, class Reference = T&>
+  struct iterator {
+    typedef T         value_type;
+    typedef Distance  difference_type;
+    typedef Pointer   pointer;
+    typedef Reference reference;
+    typedef Category  iterator_category;
+  };
+```
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
