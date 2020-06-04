@@ -1,4 +1,4 @@
-get_filename_component(EXE_NAME "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+set(EXE_NAME "170_Chapter_17")
 
 set(CMAKE_CXX_STANDARD 17)
 
