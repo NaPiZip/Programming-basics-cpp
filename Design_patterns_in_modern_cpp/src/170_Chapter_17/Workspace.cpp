@@ -3,7 +3,6 @@
 #include "Workspace.h"
 
 #include <algorithm>
-#include <iostream>
 #include <iterator>
 
 void ChatRoom::join(Person* p) {
@@ -41,4 +40,15 @@ void Person::receive(const std::string& origin, const std::string& message) {
   std::string s{ origin + ":\"" + message + "\"" };
   std::cout << "[" << name_ << "'a chat session] " << s << '\n';
   chat_log_.emplace_back(s);
+}
+
+void PlayerScoredData::print() const {
+  std::cout << player_name_ << " has scored! (their " << goals_scored_so_far_ << " goal)"
+            << "\n";
+}
+
+void Player::score() {
+  goals_scored_++;
+  PlayerScoredData ps{ name_, goals_scored_ };
+  game_.events(&ps);
 }

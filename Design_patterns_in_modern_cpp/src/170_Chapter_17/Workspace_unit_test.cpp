@@ -36,4 +36,16 @@ namespace {
     simon.say("Hi to all!");
     jane.pm("Simon", "Glad you made it!");
   }
+
+  TEST(BOOSTMediatorExample, Positive) {
+    Game game;
+    Player sam{ "Sam", game };
+    Coach c_smith{ game };
+
+    sam.score();
+    sam.score();
+    sam.score();
+    sam.score();
+
+  }
  } // namespace

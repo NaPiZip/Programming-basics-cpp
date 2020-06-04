@@ -626,7 +626,7 @@ struct BinaryOperation : Element {
 std::shared_ptr<Element> parse(const std::vector<Token>& tokens);
 ```
 
-### Chapter 15: Iterator
+### Chapter 16: Iterator
 #### General Description
 An iterator is a helper which defines a fixed set of assumptions, depending on its type. The following snippet show a `std::iterator` base class:
 
@@ -641,5 +641,34 @@ template <class Category, class T, class Distance = ptrdiff_t,
     typedef Category  iterator_category;
   };
 ```
+
+### Chapter 17: Mediator
+#### General Description
+The Mediator is a mechanism for facilitating communication between the components. It removes the direct communication and adds a layer of indirection, similar to the saying need to know principle.
+```c++
+struct ChatRoom;
+
+struct Person {
+  std::string name_;
+  ChatRoom* room_ = nullptr;
+  std::vector<std::string> chat_log_;
+
+  Person(const std::string& name) : name_{ name } {}
+
+  void receive(const std::string& origin, const std::string& message);
+  void say(const std::string& message) const;
+  void pm(const std::string& who, const std::string& message) const;
+};
+
+struct ChatRoom {
+  std::vector<Person*> people_;
+
+  void join(Person* p);
+  void broadcast(const std::string& orign, const std::string& message);
+  void message(const std::string& origin, const std::string& who, const std::string& message);
+};
+```
+
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
