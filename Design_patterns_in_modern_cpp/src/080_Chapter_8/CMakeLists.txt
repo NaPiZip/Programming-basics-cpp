@@ -1,4 +1,4 @@
-set(EXE_NAME "080_Chapter_08")
+get_filename_component(EXE_NAME "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 
 set(CMAKE_CXX_STANDARD 17)
 
