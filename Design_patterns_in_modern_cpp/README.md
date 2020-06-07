@@ -669,6 +669,49 @@ struct ChatRoom {
 };
 ```
 
+### Chapter 18: Memento
+#### General Description
+The memento pattern is about creating tokens which makes it possible to restore the state of an object, very similar to the command pattern with a history function.
+```c++
+
+class Memento {
+  int balance_;
+public:
+  Memento(int balance) : balance_{ balance } {}
+  friend class BankAccount;
+  friend class BankAccount2;
+};
+
+class BankAccount2 {
+  int balance_ = 0;
+  std::vector<std::shared_ptr<Memento>> changes_;
+  int current_;
+
+public:
+  explicit BankAccount2(int balance) : balance_{ balance } {
+    changes_.emplace_back(std::make_shared<Memento>(balance));
+    current_ = 0;
+  }
+  std::shared_ptr<Memento> deposit(int amount);
+  void restore(const std::shared_ptr<Memento>& m);
+  std::shared_ptr<Memento> undo();
+  std::shared_ptr<Memento> redo();
+
+   private:
+  friend std::ostream& operator<<(std::ostream& os, const BankAccount2& obj);
+};
+
+std::shared_ptr<Memento> BankAccount2::undo() {
+  if (current_ > 0) {
+    --current_;
+    auto m = changes_[current_];
+    balance_ = m->balance_;
+    return m;
+  }
+  return {};
+}
+
+```
 
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
