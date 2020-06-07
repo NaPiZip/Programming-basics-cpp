@@ -710,7 +710,22 @@ std::shared_ptr<Memento> BankAccount2::undo() {
   }
   return {};
 }
+```
 
+### Chapter 19: Null Object
+#### General Description
+A null object is basically just a mock of an object with no functionality.
+```c++
+struct Logger {
+  virtual ~Logger() = default;
+  virtual void info(const std::string& s) = 0;
+  virtual void warn(const std::string& s) = 0;
+};
+
+struct NullLogger : Logger {
+  void info(const std::string& s) override {}
+  void warn(const std::string& s) override {}
+};
 ```
 
 ## Contributing
