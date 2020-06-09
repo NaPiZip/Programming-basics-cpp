@@ -755,5 +755,43 @@ void PersonWithSignal::set_age(int age) {
 };
 ```
 
+### Chapter 21: State
+#### General Description
+The state pattern just describes a finite state machine, an example can be seen below.:
+```c++
+class MyDevice
+{
+    int m_nCurrentState;
+
+public:
+    MyDevice()
+    {
+        m_nCurrentState= STATE_OFF;
+    }
+    // Function handling the state changes
+    void HandleState();
+};
+
+void MyDevice::HandleState()
+{
+    /* changing state depends on the current state */
+   if(STATE_OFF == m_nCurrentState)
+   {
+       m_nCurrentState = STATE_ON;
+   }
+   else if(STATE_ON == m_nCurrentState)
+   {
+       m_nCurrentState = STATE_ACQUIRING;
+   }
+   else if(STATE_ACQUIRING == m_nCurrentState)
+   {
+       m_nCurrentState = STATE_SAVE;
+   }
+  ....
+  ....
+  // We can add more states here
+}
+```
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
