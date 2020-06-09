@@ -728,5 +728,32 @@ struct NullLogger : Logger {
 };
 ```
 
+### Chapter 20: Observer
+#### General Description
+The observer pattern consists of mainly tow parts, an observable and the observer. The observable is the target which we want to observer, also the event source, and the observer is the sink of the event or consumer. The main purpose is to keep track of important events and perform actions if they occur.
+```c++
+template <typename T>
+struct ObservableWithSignal {
+  boost::signals2::signal<void(T&, const std::string&)> property_changed_;
+};
+
+struct PersonWithSignal : ObservableWithSignal<PersonWithSignal> {
+private:
+  int age_;
+
+public:
+  PersonWithSignal(int age) : age_{ age } {}
+  void set_age(int age);
+};
+
+void PersonWithSignal::set_age(int age) {
+
+  if (this->age_ == age)
+    return;
+  this->age_ = age;
+  property_changed_(*this, "age");
+};
+```
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
