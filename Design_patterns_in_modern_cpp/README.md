@@ -753,6 +753,18 @@ void PersonWithSignal::set_age(int age) {
   this->age_ = age;
   property_changed_(*this, "age");
 };
+
+TEST(DynamicProcessor, Positive) {
+  TextProcessor tp;
+  tp.set_output_format(OutputFormat::markdown);
+  tp.append_list({ "foo", "bar", "baz" });
+  std::cout << tp.str() << std::endl;
+
+  tp.clear();
+  tp.set_output_format(OutputFormat::html);
+  tp.append_list({ "foo", "bar", "baz" });
+  std::cout << tp.str() << std::endl;
+}
 ```
 
 ### Chapter 21: State
@@ -790,6 +802,56 @@ void MyDevice::HandleState()
   ....
   ....
   // We can add more states here
+}
+```
+
+### Chapter 22: Strategy
+#### General Description
+The Strategy design pattern allows you to define a skeleton of an algorithm and then use composition to supply the missing implementation details related to a particular strategy.
+```c++
+enum class OutputFormat {
+  markdown,
+  html
+};
+
+struct ListStrategy {
+  virtual void start(std::ostringstream& oss) {}
+  virtual void add_list_item(std::ostringstream& oss, const std::string& item) {}
+  virtual void end(std::ostringstream& oss) {}
+};
+
+struct TextProcessor {
+  void append_list(const std::vector<std::string>& items);
+  void clear();
+  void set_output_format(const OutputFormat format);
+
+  std::string str() const;
+
+private:
+  std::ostringstream oss_;
+  std::unique_ptr<ListStrategy> list_strategy_;
+};
+
+struct HtmlListStrategy : ListStrategy {
+  void start(std::ostringstream&) override;
+  void add_list_item(std::ostringstream&, const std::string&) override;
+  void end(std::ostringstream&) override;
+};
+
+struct MarkdownListStrategy : ListStrategy {
+  void add_list_item(std::ostringstream&, const std::string&) override;
+};
+
+TEST(DynamicProcessor, Positive) {
+  TextProcessor tp;
+  tp.set_output_format(OutputFormat::markdown);
+  tp.append_list({ "foo", "bar", "baz" });
+  std::cout << tp.str() << std::endl;
+
+  tp.clear();
+  tp.set_output_format(OutputFormat::html);
+  tp.append_list({ "foo", "bar", "baz" });
+  std::cout << tp.str() << std::endl;
 }
 ```
 
