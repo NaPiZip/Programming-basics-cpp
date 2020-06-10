@@ -855,7 +855,7 @@ TEST(DynamicProcessor, Positive) {
 }
 ```
 
-### Chapter 23: Template Mehtod
+### Chapter 23: Template Method
 #### General Description
 The template method pattern is very similar to the strategy pattern, but instead of using composition the template pattern uses inheritance. This can be seen in the following snippet.
 ```c++
