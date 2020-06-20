@@ -892,5 +892,116 @@ private:
   int turns_{ 0 }, max_turns_{ 10 };
 };
 ```
+
+### Chapter 24: Visitor
+Visitor's primary purpose is to abstract functionality that can be applied to an aggregate hierarchy of "element" objects. The approach encourages designing lightweight Element classes - because processing functionality is removed from their list of responsibilities. New functionality can easily be added to the original inheritance hierarchy by creating a new Visitor subclass [link](https://sourcemaking.com/design_patterns/visitor).
+
+#### Double Dispatch
+The double dispatch is a cool way to resolve overload resolution  without using a `dynamic_cast`:
+```C++
+struct Stuff {}
+struct Foo : Stuff {}
+struct Bar : Stuff {}
+
+void func(Foo* foo) {}
+void func(Bar* bar) {}
+
+Foo *foo = new Foo;
+func(foo); // ok
+
+Stuff *stuff = new Foo;
+func(stuff); // oops!
+
+```
+The issue here is that we are using a pointer of type `Stuff`, this can be solved as followed without the use of a `dynamic_cast`
+
+```c++
+struct Foo;
+struct Bar;
+
+void func(Foo*);
+void func(Bar*);
+
+struct Stuff {
+  virtual void call() = 0;
+};
+
+struct Foo : Stuff {
+  void call() override {
+    func(this);
+  }
+};
+
+struct Bar : Stuff {
+  void call() override {
+    func(this);
+  }
+};
+
+Stuff *stuff = new Foo;
+stuff->call(); // effectively calls func(stuff) -> func(Foo);
+```
+
+#### Classic Visitor
+The “classic” implementation of the Visitor design pattern uses double
+dispatch, and follows the following conventions:
+
+• Member functions of the visitor are called `visit()`.
+• Member functions implemented called `accept()` and are defined in an interface class.
+
+```c++
+struct CV_Expression {
+  virtual void accept(CV_ExpressionVisitor* visitor) = 0;
+};
+
+struct CV_DoubleExpression : CV_Expression {
+  double value_;
+  explicit CV_DoubleExpression(double value) : value_{ value } {}
+
+  void accept(CV_ExpressionVisitor* visitor) override;
+};
+void CV_DoubleExpression::accept(CV_ExpressionVisitor* visitor) {
+  visitor->visit(this);
+}
+struct CV_AdditionExpression : CV_Expression {
+  CV_Expression *left_, *right_;
+
+  CV_AdditionExpression(CV_Expression* const left, CV_Expression* const right) : left_{ left }, right_{ right } {}
+  ~CV_AdditionExpression() {
+    delete left_;
+    delete right_;
+  }
+  void accept(CV_ExpressionVisitor* visitor) override;
+};
+
+void CV_AdditionExpression::accept(CV_ExpressionVisitor* visitor) {
+  visitor->visit(this);
+}
+
+struct CV_ExpressionVisitor {
+  virtual void visit(CV_DoubleExpression* de) = 0;
+  virtual void visit(CV_AdditionExpression* ae) = 0;
+};
+
+struct CV_ExpressionPrinter : CV_ExpressionVisitor {
+  std::ostringstream _oss;
+  std::string str() const { return _oss.str(); };
+  void visit(CV_DoubleExpression* de) override;
+  void visit(CV_AdditionExpression* ae) override;
+};
+
+void CV_ExpressionPrinter::visit(CV_DoubleExpression* de) {
+  _oss << de->value_;
+}
+
+void CV_ExpressionPrinter::visit(CV_AdditionExpression* ae) {
+  _oss << "(";
+  ae->left_->accept(this);
+  _oss << "+";
+  ae->right_->accept(this);
+  _oss << ")";
+}
+```
+
 ## Contributing
 To get started with contributing to my GitHub repository, please contact me [Slack](https://join.slack.com/t/napi-friends/shared_invite/enQtNDg3OTg5NDc1NzUxLWU1MWNhNmY3ZTVmY2FkMDM1ODg1MWNlMDIyYTk1OTg4OThhYzgyNDc3ZmE5NzM1ZTM2ZDQwZGI0ZjU2M2JlNDU).
